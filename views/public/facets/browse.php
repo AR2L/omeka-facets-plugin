@@ -3,10 +3,12 @@
   $facetCollection = array();
   $facetItemType = array();
   $facetTag = array();
+
 ?>
-<?php foreach ($items as $item): ?>
+<?php
+if (isset($items)):
+  foreach ($items as $item): ?>
   <!-- item Ids -->
-  <?php //$itemsArray[] = $item->id; ?>
 
   <!-- collection (Thématique) -->
   <?php if($collection = $item->getCollection()): ?>
@@ -22,10 +24,13 @@
     <?php $facetItemType[$itemType_id] = $itemType_name; ?>
   <?php endif; ?>
 
-<?php endforeach; ?>
+  <?php endforeach; ?>
+<?php else: ?>
+
+<?php endif; ?>
 <?php
   // tags
-  $tags = $this->get_tags_for_items_array($itemsArray);
+  $tags = get_tags_for_items_array($itemsArray);
   foreach ($tags as $tag) {
     $facetTag[$tag->name] = $tag->id;
   }
@@ -33,7 +38,7 @@
   $facetTag = array_unique($facetTag);
 
   // collections
-  $collections = $this->get_collections_for_items_array($itemsArray);
+  $collections = get_collections_for_items_array($itemsArray);
   foreach ($collections as $collection) {
    $facetCollection[$collection->id] = $collection->getDisplayTitle();
   }
@@ -41,7 +46,7 @@
   $facetCollection = array_unique($facetCollection);
 
   // item types
-  $itemTypes = $this->get_item_types_for_items_array($itemsArray);
+  $itemTypes = get_item_types_for_items_array($itemsArray);
   foreach ($itemTypes as $itemType) {
     $facetItemType[$itemType->id] = $itemType->name;
   }
@@ -52,73 +57,67 @@
       <div class="container">
         <h4>AFFINER LES RESULTATS</h4>
         <form class="" action="index.html" method="post">
-          <?php if($html = $this->get_dc_facet_select($itemsArray, 'Creator')): ?>
+          <?php if($html = get_dc_facet_select($itemsArray, 'Creator')): ?>
           <div class="container-fluid">
-            <label for="">PAR AUTEUR</label>
+            <label for=""><?php echo html_escape(__('Creator')); ?></label>
           </div>
           <?php echo $html; ?>
           <?php endif; ?>
-          <?php if($html = $this->get_dc_facet_select($itemsArray, 'Contributor')): ?>
+          <?php if($html = get_dc_facet_select($itemsArray, 'Contributor')): ?>
             <div class="container-fluid">
-              <label for="">PAR CONTRIBUTEUR</label>
+              <label for=""><?php echo html_escape(__('Contributor')); ?></label>
             </div>
             <?php echo $html; ?>
           <?php endif; ?>
-          <?php if($html = $this->get_dc_facet_select($itemsArray, 'Publisher')): ?>
+          <?php if($html = get_dc_facet_select($itemsArray, 'Publisher')): ?>
             <div class="container-fluid">
-              <label for="">PAR EDITEUR</label>
+              <label for=""><?php echo html_escape(__('Publisher')); ?></label>
             </div>
             <?php echo $html; ?>
           <?php endif; ?>
-          <?php if($html = $this->get_dc_facet_select($itemsArray, 'Date')): ?>
+          <?php if($html = get_dc_facet_select($itemsArray, 'Date')): ?>
             <div class="container-fluid">
-              <label for="">PAR SIECLE</label>
+              <label for=""><?php echo html_escape(__('Date')); ?></label>
             </div>
             <?php echo $html; ?>
           <?php endif; ?>
-          <?php if($pageOrigin !== "Sujets"):?>
           <div class="container-fluid">
-            <label for="">PAR SUJET</label>
+            <label for=""><?php echo html_escape(__('Tag')); ?></label>
           </div>
           <div class="select-arrow">
             <select class="" name="">
-              <option value="" data-url="<?php echo $this->getFieldUrl('tag_id'); ?>">Sélectionner...</option>
+              <option value="" data-url="<?php echo getFieldUrl('tag_id'); ?>">Sélectionner...</option>
               <?php foreach($facetTag as $tagName => $tagId):?>
-                <option value="<?php echo $tagId; ?>" data-url="<?php echo $this->getFieldUrl('tag_id',$tagId); ?>" <?php echo (isset($_GET['tag_id']) && $tagId == $_GET['tag_id'] ? "selected": ""); ?>><?php echo $tagName ?></option>
+                <option value="<?php echo $tagId; ?>" data-url="<?php echo getFieldUrl('tag_id',$tagId); ?>" <?php echo (isset($_GET['tag_id']) && $tagId == $_GET['tag_id'] ? "selected": ""); ?>><?php echo $tagName ?></option>
               <?php endforeach;?>
             </select>
           </div>
-        <?php endif; ?>
-          <?php if($pageOrigin !== "Thématiques"):?>
           <div class="container-fluid">
-            <label for="">PAR THÉMATIQUE</label>
+            <label for=""><?php echo html_escape(__('Collection')); ?></label>
           </div>
           <div class="select-arrow">
             <select class="" name="">
-              <option value="" data-url="<?php echo $this->getFieldUrl('collection'); ?>">Sélectionner...</option>
+              <option value="" data-url="<?php echo getFieldUrl('collection'); ?>">Sélectionner...</option>
               <?php foreach($facetCollection as $collectionId => $collectionName):?>
-                <option value="<?php echo $collectionId ?>" data-url="<?php echo $this->getFieldUrl('collection',$collectionId); ?>" <?php echo (isset($_GET['collection']) && $collectionId == $_GET['collection'] ? "selected": ""); ?>><?php echo $collectionName ?></option>
+                <option value="<?php echo $collectionId ?>" data-url="<?php echo getFieldUrl('collection',$collectionId); ?>" <?php echo (isset($_GET['collection']) && $collectionId == $_GET['collection'] ? "selected": ""); ?>><?php echo $collectionName ?></option>
               <?php endforeach;?>
             </select>
           </div>
-          <?php endif; ?>
-          <?php if($pageOrigin !== "Collections"):?>
           <div class="container-fluid">
-            <label for="">PAR TYPE</label>
+            <label for=""><?php echo html_escape(__('Type')); ?></label>
           </div>
           <div class="select-arrow">
             <select class="" name="">
-              <option value="" data-url="<?php echo $this->getFieldUrl('type'); ?>">Sélectionner...</option>
+              <option value="" data-url="<?php echo getFieldUrl('type'); ?>">Sélectionner...</option>
               <?php foreach($facetItemType as $itemTypeId => $itemTypeName):?>
-                <option value="<?php echo $itemTypeId ?>" data-url="<?php echo $this->getFieldUrl('type',$itemTypeId); ?>" <?php echo (isset($_GET['type']) && $itemTypeId == $_GET['type'] ? "selected": ""); ?>><?php echo $itemTypeName ?></option>
+                <option value="<?php echo $itemTypeId ?>" data-url="<?php echo getFieldUrl('type',$itemTypeId); ?>" <?php echo (isset($_GET['type']) && $itemTypeId == $_GET['type'] ? "selected": ""); ?>><?php echo $itemTypeName ?></option>
               <?php endforeach;?>
             </select>
             </select>
           </div>
-        <?php endif; ?>
-          <?php if($html = $this->get_dc_facet_select($itemsArray, 'Provenance')): ?>
+          <?php if($html = get_dc_facet_select($itemsArray, 'Provenance')): ?>
             <div class="container-fluid">
-              <label for="">PAR ETABLISSEMENT<br> DE CONSERVATION</label>
+              <label for=""><?php echo html_escape(__('Provenance')); ?></label>
             </div>
             <?php echo $html; ?>
           <?php endif; ?>
@@ -128,3 +127,11 @@
         </form>
       </div>
     </div>
+    <script type="text/javascript">
+    window.jQuery( document ).ready(function() {
+      window.jQuery('select').change(function() {
+        var option = window.jQuery(this).find('option:selected');
+        window.location.href = option.data("url");
+      });
+    });
+    </script>

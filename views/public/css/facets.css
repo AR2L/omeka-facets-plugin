@@ -1,0 +1,110 @@
+.container-fluid {
+    display: flex;
+}
+
+.search-container h4 {
+  font-family: 'montserrat-light';
+  text-align: center;
+  width: 80%;
+  color: #56575a;
+  font-size: 16px;
+}
+
+.search-container {
+  width: 350px;
+}
+
+.search-container .container {
+  width: 100%;
+}
+
+.search-container form {
+  padding-bottom: 25px;
+  background-color: #F1F1F1;
+  width: 80%;
+}
+
+.search-container .container .container-fluid {
+  padding-top: 20px;
+}
+
+.search-container form label {
+  /* font-family: 'montserrat-regular'; */
+  margin-left: auto;
+  margin-right: auto;
+  /* font-size: 15px; */
+  margin-bottom: 8px;
+  color: #545759;
+}
+
+.search-container form select {
+  font-family: 'open-italic';
+  width: 100%;
+  border-radius: 0;
+  border: 0;
+  padding: 2px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #FFF;
+  text-align: center;
+}
+
+.facet-selected {
+  color: #FFF;
+  background-color: #545759!important;
+}
+
+.search-container .select-arrow, .search-container .select-cross {
+  position: relative;
+  font-family: "open-italic";
+  width: 73%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-container .select-arrow select::-ms-expand, .search-container .select-cross select::-ms-expand {
+  display: none;
+}
+
+.search-container .select-cross:after {
+    pointer-events: none;
+    position: absolute;
+    content: '';
+    top: 9px;
+    right: 10px;
+    height: 10px;
+    width: 10px;
+    background-size: cover!important;
+    background: url('../images/cross.svg');
+}
+
+.search-container .select-arrow:after {
+    width: 0;
+    pointer-events: none;
+    position: absolute;
+    content: '';
+    top: 8px;
+    right: 10px;
+    border-top: 8px solid #3D3D3D;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
+.search-container .select-arrow span, .container-fluid .search-container .select-cross span {
+  padding-right:5%;
+}
+
+.search-container button {
+  width: 73%;
+  font-family: 'open-bold';
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-radius: 0;
+  border: 0;
+  background-color: #FF5E4D;
+  color: white;
+}

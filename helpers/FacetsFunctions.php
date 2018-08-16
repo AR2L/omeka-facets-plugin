@@ -2,8 +2,8 @@
 /**
  * Helper to display a Facets Block
  */
-class Facets_View_Helper_UniversalViewer extends Zend_View_Helper_Abstract
-{
+// class Facets_View_Helper_Facets extends Zend_View_Helper_Abstract
+// {
 
     /**
      * Return Tags associated with Array of Items Ids.
@@ -306,5 +306,5 @@ class Facets_View_Helper_UniversalViewer extends Zend_View_Helper_Abstract
         // return $_SERVER['HTTP_HOST'] . "?" . http_build_query($params);
         return 'browse?' . http_build_query($params);
     }
-}
+// }
 ?>
