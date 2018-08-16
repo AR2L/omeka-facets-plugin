@@ -4,9 +4,9 @@ Allows you to insert a Facets block made of Option blocks containing available m
 
 ![Facets screenshot](./facets.jpg)
 
-## credits
+## Credits
 
-This Development is part of the [Armarium](http://www.armarium-hauts-de-france.fr) Project, managed by the french association " AR2L Hauts de France".
+This Development is part of the [Armarium](https://www.armarium-hautsdefrance.fr/) Project, managed by the french association [AR2L Hauts de France](http://www.ar2l-hdf.fr/).
 
 ## How to Use
 
