@@ -33,6 +33,7 @@ if (isset($items)):
   $tags = get_tags_for_items_array($itemsArray);
   foreach ($tags as $tag) {
     $facetTag[$tag->name] = $tag->id;
+    $facetTag[$tag->name] = $tag->name;
   }
 
   $facetTag = array_unique($facetTag);
@@ -55,7 +56,7 @@ if (isset($items)):
    ?>
     <div class="search-container">
       <div class="container">
-        <h4>AFFINER LES RESULTATS</h4>
+        <h4><?php echo html_escape(__('Facets')); ?></h4>
         <form class="" action="index.html" method="post">
           <?php if($html = get_dc_facet_select($itemsArray, 'Creator')): ?>
           <div class="container-fluid">
@@ -86,9 +87,10 @@ if (isset($items)):
           </div>
           <div class="select-arrow">
             <select class="" name="">
-              <option value="" data-url="<?php echo getFieldUrl('tag_id'); ?>">Sélectionner...</option>
+              <option value="" data-url="<?php echo getFieldUrl('tag_id'); ?>"><?php echo html_escape(__('Select')); ?>...</option>
               <?php foreach($facetTag as $tagName => $tagId):?>
-                <option value="<?php echo $tagId; ?>" data-url="<?php echo getFieldUrl('tag_id',$tagId); ?>" <?php echo (isset($_GET['tag_id']) && $tagId == $_GET['tag_id'] ? "selected": ""); ?>><?php echo $tagName ?></option>
+                <!-- <option value="<?php echo $tagId; ?>" data-url="<?php echo getFieldUrl('tag_id',$tagId); ?>" <?php echo (isset($_GET['tag_id']) && $tagId == $_GET['tag_id'] ? "selected": ""); ?>><?php echo $tagName ?></option> -->
+                <option value="<?php echo $tagId; ?>" data-url="<?php echo getFieldUrl('tag',$tagId); ?>" <?php echo (isset($_GET['tag']) && $tagId == $_GET['tag'] ? "selected": ""); ?>><?php echo $tagName ?></option>
               <?php endforeach;?>
             </select>
           </div>
@@ -97,7 +99,7 @@ if (isset($items)):
           </div>
           <div class="select-arrow">
             <select class="" name="">
-              <option value="" data-url="<?php echo getFieldUrl('collection'); ?>">Sélectionner...</option>
+              <option value="" data-url="<?php echo getFieldUrl('collection'); ?>"><?php echo html_escape(__('Select')); ?>...</option>
               <?php foreach($facetCollection as $collectionId => $collectionName):?>
                 <option value="<?php echo $collectionId ?>" data-url="<?php echo getFieldUrl('collection',$collectionId); ?>" <?php echo (isset($_GET['collection']) && $collectionId == $_GET['collection'] ? "selected": ""); ?>><?php echo $collectionName ?></option>
               <?php endforeach;?>
@@ -108,7 +110,7 @@ if (isset($items)):
           </div>
           <div class="select-arrow">
             <select class="" name="">
-              <option value="" data-url="<?php echo getFieldUrl('type'); ?>">Sélectionner...</option>
+              <option value="" data-url="<?php echo getFieldUrl('type'); ?>"><?php echo html_escape(__('Select')); ?>...</option>
               <?php foreach($facetItemType as $itemTypeId => $itemTypeName):?>
                 <option value="<?php echo $itemTypeId ?>" data-url="<?php echo getFieldUrl('type',$itemTypeId); ?>" <?php echo (isset($_GET['type']) && $itemTypeId == $_GET['type'] ? "selected": ""); ?>><?php echo $itemTypeName ?></option>
               <?php endforeach;?>

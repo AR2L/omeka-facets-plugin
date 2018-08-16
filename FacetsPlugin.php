@@ -113,9 +113,13 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
         $itemsArray[] = $item->id;
       }
 
+      // echo get_view()->partial('facets/browse.php',array(
+      //     'itemsArray' => $itemsArray,
+      //     'items' => $items
+      //   ));
+
       echo get_view()->partial('facets/browse.php',array(
-          'itemsArray' => $itemsArray,
-          'items' => $items
+          'itemsArray' => $itemsArray
         ));
     }
 }

@@ -208,11 +208,11 @@
         if(isset($term)){
           $html =  "<div class=\"select-cross\"><select id=\"".$element_id."\" class=\"facet-selected\" name=\"".$dcElementName."\">";
           $url = getElementFieldUrl($element_id);
-          $html .= "<option value=\"\" data-url=\"" . $url . "\">Dé-sélectionner...</option>";
+          $html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove')) . "...</option>";
           $html .= "<option selected value=\"\">$term</option>";
         } else {
           $html =  "<div class=\"select-arrow\"><select id=\"".$element_id."\" class=\"facet\" name=\"".$dcElementName."\">";
-          $html .= "<option value=\"\">Sélectionner...</option>";
+          $html .= "<option value=\"\">" . html_escape(__('Select')) . "...</option>";
         }
 
         foreach($facet as $name => $count){
