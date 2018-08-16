@@ -1,5 +1,7 @@
 # Omeka Facets Plugin
 
+This is a plugin, for the [Omeka Classic](https://omeka.org/classic/) Publishing platform.
+
 Allows you to insert a Facets block made of Option blocks containing available metadata values extracted from browsing context.
 
 ![Facets screenshot](./facets.jpg)
@@ -28,3 +30,6 @@ You can Edit your Theme (should be in YOUR_THEME/items/browse) & place the plugi
 ```php
 <?php fire_plugin_hook('public_items_browse', array('items' => $items, 'view' => $this)); ?>
 ```
+
+## Licence
+MIT Licence, please credit AR2L [AR2L Hauts de France](http://www.ar2l-hdf.fr/)
