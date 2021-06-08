@@ -1,5 +1,4 @@
 <?php
-	// $itemsArray = array();
 	$facetCollections = array();
 	$facetItemTypes = array();
 	$facetTags = array();
