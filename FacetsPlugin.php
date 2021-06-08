@@ -167,30 +167,29 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		if (!($controller == 'search' && $action == 'index') && !($controller == 'items' && $action == 'browse')) return;
 		
 		$itemsArray = array();
-		$params = array('advanced' => $_GET['advanced'], 'collection' => $_GET['collection'], 'type' => $_GET['type'], 'tags' => $_GET['tags']);
-
-		if (count($items) > 0) {
-			if ($controller == 'items') {
-				$items = get_records('item', $params, null);
+		if ($controller == 'items') {
+			$params = array('advanced' => $_GET['advanced'], 'collection' => $_GET['collection'], 'type' => $_GET['type'], 'tags' => $_GET['tags']);
+			$items = get_records('item', $params, null);
+			if (count($items) > 0) {
 				foreach ($items as $item) {
 					$itemsArray[] = $item->id;
 				}
 				echo get_view()->partial('facets/browse.php', array(
 					'itemsArray' => $itemsArray
 				));
-			} elseif ($controller == 'search') {
-				// this would be for the site-wide simple search;
-				// main problem is that, differently from advanced search,
-				// it uses its own "search_texts" table, so results from that
-				// would have to be crossjoined with the "advanced" ones used
-				// by the facets;
-				// besides, advanced search works only for Items, so one might
-				// want to check whether the site-wide search has been performed
-				// just on Items.
-				if ($recordTypes = $_GET['record_types']) {
-					if (count($recordTypes) == 1 && in_array('Item', $recordTypes)) {
-						// site-wide search was performend just on Items
-					}
+			}
+		} elseif ($controller == 'search') {
+			// this would be for the site-wide simple search;
+			// main problem is that, differently from advanced search,
+			// it uses its own "search_texts" table, so results from that
+			// would have to be crossjoined with the "advanced" ones used
+			// by the facets;
+			// besides, advanced search works only for Items, so one might
+			// want to check whether the site-wide search has been performed
+			// just on Items.
+			if ($recordTypes = $_GET['record_types']) {
+				if (count($recordTypes) == 1 && in_array('Item', $recordTypes)) {
+					// site-wide search was performend just on Items
 				}
 			}
 		}
