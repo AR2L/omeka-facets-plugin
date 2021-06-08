@@ -19,8 +19,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		'install',
 		'uninstall',
 		'initialize',
-        'config_form',
-        'config',
+		'config_form',
+		'config',
 		'define_routes',
 		'public_head',
 		'public_items_browse',
@@ -33,17 +33,17 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	public function hookInstall()
 	{
 		set_option('facets_public_hook', 'public_items_browse');
-        set_option('facets_description', '');
-        set_option('facets_hide_single_entries', 0);
-        set_option('facets_sort_order', 'count_alpha');
+		set_option('facets_description', '');
+		set_option('facets_hide_single_entries', 0);
+		set_option('facets_sort_order', 'count_alpha');
 
 		$defaults = array(
-            'item_elements' => array()
-        );
-        set_option('facets_elements', json_encode($defaults));
-        set_option('facets_item_types', 1);
-        set_option('facets_collections', 1);
-        set_option('facets_tags', 0);
+			'item_elements' => array()
+		);
+		set_option('facets_elements', json_encode($defaults));
+		set_option('facets_item_types', 1);
+		set_option('facets_collections', 1);
+		set_option('facets_tags', 0);
 	}
 
 	/**
@@ -52,13 +52,13 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	public function hookUninstall()
 	{
 		delete_option('facets_public_hook');
-        delete_option('facets_description');
-        delete_option('facets_hide_single_entries');
-        delete_option('facets_sort_order');
-        delete_option('facets_elements');
-        delete_option('facets_item_types');
-        delete_option('facets_collections');
-        delete_option('facets_tags');
+		delete_option('facets_description');
+		delete_option('facets_hide_single_entries');
+		delete_option('facets_sort_order');
+		delete_option('facets_elements');
+		delete_option('facets_item_types');
+		delete_option('facets_collections');
+		delete_option('facets_tags');
 	}
 
 	/**
@@ -68,49 +68,49 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	{
 		get_view()->addHelperPath(dirname(__FILE__) . '/views/helpers', 'Facets_View_Helper_');
 
-        $settings = json_decode(get_option('facets_elements'), true);
-        $this->_settings = $settings;
+		$settings = json_decode(get_option('facets_elements'), true);
+		$this->_settings = $settings;
 	}
 
-    /**
-     * Shows plugin configuration page.
-     */
-    public function hookConfigForm($args)
-    {
-        $settings = $this->_settings;
+	/**
+	 * Shows plugin configuration page.
+	 */
+	public function hookConfigForm($args)
+	{
+		$settings = $this->_settings;
 
-        $table = get_db()->getTable('Element');
-        $select = $table->getSelect()
+		$table = get_db()->getTable('Element');
+		$select = $table->getSelect()
 			->where('element_sets.name = \'Dublin Core\'')
-            ->order('elements.element_set_id')
-            ->order('ISNULL(elements.order)')
-            ->order('elements.order');
-        $elements = $table->fetchObjects($select);
+			->order('elements.element_set_id')
+			->order('ISNULL(elements.order)')
+			->order('elements.order');
+		$elements = $table->fetchObjects($select);
 
-        include('config_form.php');
-    }
+		include('config_form.php');
+	}
 
-    /**
-     * Handle the config form.
-     */
-    public function hookConfig($args)
-    {
-        $post = $args['post'];
+	/**
+	 * Handle the config form.
+	 */
+	public function hookConfig($args)
+	{
+		$post = $args['post'];
 		
-        set_option('facets_public_hook', $post['facets_public_hook']);
-        set_option('facets_description', $post['facets_description']);
-        set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
-        set_option('facets_sort_order', $post['facets_sort_order']);
+		set_option('facets_public_hook', $post['facets_public_hook']);
+		set_option('facets_description', $post['facets_description']);
+		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
+		set_option('facets_sort_order', $post['facets_sort_order']);
 
 		$settings = array(
-            'item_elements' => isset($post['item_elements']) ? $post['item_elements'] : array()
-        );
-        set_option('facets_elements', json_encode($settings));
+			'item_elements' => isset($post['item_elements']) ? $post['item_elements'] : array()
+		);
+		set_option('facets_elements', json_encode($settings));
 
-        set_option('facets_item_types', $post['facets_item_types']);
-        set_option('facets_collections', $post['facets_collections']);
-        set_option('facets_tags', $post['facets_tags']);
-   }
+		set_option('facets_item_types', $post['facets_item_types']);
+		set_option('facets_collections', $post['facets_collections']);
+		set_option('facets_tags', $post['facets_tags']);
+	}
 
 	public function hookPublicHead($args)
 	{
