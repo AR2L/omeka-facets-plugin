@@ -68,9 +68,21 @@
 			null,
 			array(
 				'alpha' => __('Alphabetical'),
-				'count_alpha' => __('Count first, then alphabetical'),
+				'count_alpha' => __('Popularity first, then alphabetical'),
 			)); 
 		?>
+    </div>
+</div>
+
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_hide_popularity', __('Hide popularity')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('If checked, values\'s popularity will not be displayed (sorting order will still take it into consideration, if required).'); ?>
+		</p>
+		<?php echo $view->formCheckbox('facets_hide_popularity', get_option('facets_hide_popularity'), null, array('1', '0')); ?>
     </div>
 </div>
 
