@@ -11,11 +11,19 @@
 	 * @param itemsArray
 	 * @param hideSingleEntries
 	 * @param sortOrder
+	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_tags_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha') {
+	function get_tags_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
 		// Return, if no Item is available
 		if (empty($itemsArray)) return "";
+
+		// Define Order by clause
+		if ($sortOrder == 'count_alpha') {
+			$orderBy = array('tagCount DESC', 'name ASC');
+		} else {
+			$orderBy = array('name ASC');
+		}
 
 		// Get the database.
 		$db = get_db();
@@ -25,13 +33,15 @@
 		$select = $table->getSelectForFindBy();
 		$table->filterByTagType($select, 'Item');
 		$select->where('items.id IN ('. implode(', ', $itemsArray) . ')');
-		$select->order('tags.name');
+		$select->order($orderBy);
 
 		if ($tags = $table->fetchObjects($select)) {
 			// Build array
 			$facetTags = array();
 			foreach ($tags as $tag) {
-				$facetTags[$tag->id] = $tag->name;
+				$facetTags[$tag->id]['id'] = $tag->id;
+				$facetTags[$tag->id]['name'] = $tag->name;
+				$facetTags[$tag->id]['count'] = $tag->tagCount;
 			}
 			
 			// Stores data for selected tag, if any
@@ -55,8 +65,8 @@
 			}
 
 			if ($addOptions) {
-				foreach ($facetTags as $tag_id => $tag_name) {
-					$html .= "<option value=\"" . $tag_id . "\" data-url=\"" . getFieldUrl('tags', $tag_name) . "\">" . $tag_name . "</option>";
+				foreach ($facetTags as $tag) {
+					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl('tags', $tag['name']) . "\">" . $tag['name'] . ($hidePopularity ? "" : " (" . $tag['count'] . ")") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -73,9 +83,10 @@
 	 * @param itemsArray
 	 * @param hideSingleEntries
 	 * @param sortOrder
+	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_collections_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha') {
+	function get_collections_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
 		// Return, if no Item is available
 		if (empty($itemsArray)) return "";
 
@@ -131,7 +142,7 @@
 
 			if ($addOptions) {
 				foreach ($facetCollections as $collection) {
-					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl('collection', $collection['id']) . "\">" . $collection['name'] . " (" . $collection['count'] . ")</option>";
+					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl('collection', $collection['id']) . "\">" . $collection['name'] . ($hidePopularity ? "" : " (" . $collection['count'] . ")") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -148,11 +159,19 @@
 	 * @param itemsArray
 	 * @param hideSingleEntries
 	 * @param sortOrder
+	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_item_types_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha') {
+	function get_item_types_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
 		// Return, if no Item is available
 		if (empty($itemsArray)) return "";
+
+		// Define Order by clause
+		if ($sortOrder == 'count_alpha') {
+			$orderBy = array('count DESC', 'text ASC');
+		} else {
+			$orderBy = array('text ASC');
+		}
 
 		// Get the database.
 		$db = get_db();
@@ -164,7 +183,8 @@
 			->joinInner(array('items' => $db->Items),
 				'item_types.id = items.item_type_id', array())
 			->where('items.id IN ('. implode(', ', $itemsArray) . ')')
-			->group('item_types.id');
+			->group('item_types.id')
+			->order(orderBy);
 
 		if ($itemTypes = $table->fetchObjects($select)) {
 			// Build array
@@ -185,13 +205,6 @@
 				$facetItemTypes = array_filter($facetItemTypes, "isNotSingleEntry");
 			}			
 
-			// Sort array
-			if ($sortOrder == 'count_alpha') {
-				array_multisort(array_column($facetItemTypes, 'count'), SORT_DESC, array_column($facetItemTypes, 'name'), SORT_ASC, $facetItemTypes);
-			} else {
-				array_multisort(array_column($facetItemTypes, 'name'), SORT_ASC, $facetItemTypes);
-			}
-
 			$addOptions = false;
 			// get current parameters to check if one is selected
 			if (isset($selectedItemType)) {
@@ -206,7 +219,7 @@
 
 			if ($addOptions) {
 				foreach ($facetItemTypes as $itemType) {
-					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl('type', $itemType['id']) . "\">" . $itemType['name'] . " (" . $itemType['count'] . ")</option>";
+					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl('type', $itemType['id']) . "\">" . $itemType['name'] . ($hidePopularity ? "" : " (" . $itemType['count'] . ")") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -225,9 +238,10 @@
 	 * @param isDate
 	 * @param hideSingleEntries
 	 * @param sortOrder
+	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_dc_facet_select($itemsArray = array(), $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha') {
+	function get_dc_facet_select($itemsArray = array(), $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
 		if (empty($itemsArray)) return "";
 		
 		// Get the database.
@@ -309,7 +323,7 @@
 			if ($addOptions) {
 				foreach ($facet as $name => $count) {
 					$url = getElementFieldUrl($element_id, $name, $isDate);
-					$html .= "<option value=\"" . $name . "\" data-url=\"" . $url . "\">" . $name . " (" . $count . ")</option>";
+					$html .= "<option value=\"" . $name . "\" data-url=\"" . $url . "\">" . $name . ($hidePopularity ? "" : " (" . $count . ")") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
