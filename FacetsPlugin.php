@@ -68,6 +68,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	 */
 	public function hookInitialize()
 	{
+		add_translation_source(dirname(__FILE__) . '/languages');
+
 		get_view()->addHelperPath(dirname(__FILE__) . '/views/helpers', 'Facets_View_Helper_');
 
 		$settings = json_decode(get_option('facets_elements'), true);
