@@ -168,10 +168,10 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		
 		$itemsArray = array();
 		$params = array('advanced' => $_GET['advanced'], 'collection' => $_GET['collection'], 'type' => $_GET['type'], 'tags' => $_GET['tags']);
-		$items = get_records('item', $params, null);
 
 		if (count($items) > 0) {
 			if ($controller == 'items') {
+				$items = get_records('item', $params, null);
 				foreach ($items as $item) {
 					$itemsArray[] = $item->id;
 				}
