@@ -158,7 +158,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, search refinement by Tags will be available.'); ?>
+			<?php echo __('If checked, search refinement by Tag will be available.'); ?>
 		</p>
 		<?php echo $view->formCheckbox('facets_tags', get_option('facets_tags'), null, array('1', '0')); ?>
     </div>
