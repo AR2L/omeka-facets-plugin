@@ -19,7 +19,7 @@
 
 <div class="search-container">
 	<div class="container">
-		<h4><?php echo html_escape(__('Refine search by...')) ?></h4>
+		<h4><?php echo html_escape(__('Refine search by')) ?>...</h4>
 
 		<?php 
 			if ($description = get_option('facets_description')) {
