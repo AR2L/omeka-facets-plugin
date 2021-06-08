@@ -41,7 +41,7 @@ Similarly, one can choose to also include <b>Item Types</b>, <b>Collections</b> 
 
 Single values can be exluded as not really significant, although they will be listed anyway if less than 10 values are available.
 
-Sorting order can be alphabetical, or first by popularity and then alphabetical.
+Sorting order can be alphabetical, or first by popularity and then alphabetical. Popularity count can be hidden, if needed.
 
 <b>Date</b> element filter's behaviour is a bit different: dates are ordered decrescently, and only year is displayed; consequently, the matching will be with the beginning of the date (assuming the format is 'yyyy-mm-dd').
 
