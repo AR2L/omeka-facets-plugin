@@ -36,6 +36,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_description', '');
 		set_option('facets_hide_single_entries', 0);
 		set_option('facets_sort_order', 'count_alpha');
+		set_option('facets_hide_popularity', 0);
 
 		$defaults = array(
 			'item_elements' => array()
@@ -55,6 +56,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_description');
 		delete_option('facets_hide_single_entries');
 		delete_option('facets_sort_order');
+		delete_option('facets_hide_popularity');
 		delete_option('facets_elements');
 		delete_option('facets_item_types');
 		delete_option('facets_collections');
@@ -101,6 +103,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_description', $post['facets_description']);
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
 		set_option('facets_sort_order', $post['facets_sort_order']);
+		set_option('facets_hide_popularity', $post['facets_hide_popularity']);
 
 		$settings = array(
 			'item_elements' => isset($post['item_elements']) ? $post['item_elements'] : array()
