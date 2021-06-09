@@ -14,11 +14,11 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_tags_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Return, if no Item is available
-		if (empty($itemsArray)) return "";
+	function get_tags_facet_select($itemsSubsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Define Where clause
+		$where = createWhereClause($itemsSubsetSQL);
 
-		// Define Order by clause
+		// Define Order By clause
 		if ($sortOrder == 'count_alpha') {
 			$orderBy = array('tagCount DESC', 'name ASC');
 		} else {
@@ -32,7 +32,7 @@
 		// Build the select query.
 		$select = $table->getSelectForFindBy();
 		$table->filterByTagType($select, 'Item');
-		$select->where('items.id IN ('. implode(', ', $itemsArray) . ')');
+		$select->where($where);
 		$select->order($orderBy);
 
 		if ($tags = $table->fetchObjects($select)) {
@@ -53,7 +53,7 @@
 			}			
 
 			$addOptions = false;
-			// get current parameters to check if one is selected
+			// Build first part of the select tag
 			if ($selectedTagName != '') {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
 				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('tags', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
@@ -64,6 +64,7 @@
 				$addOptions = true;
 			}
 
+			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetTags as $tag) {
 					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl('tags', $tag['name']) . "\">" . $tag['name'] . ($hidePopularity ? "" : " (" . $tag['count'] . ")") . "</option>";
@@ -86,9 +87,9 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_collections_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Return, if no Item is available
-		if (empty($itemsArray)) return "";
+	function get_collections_facet_select($itemsSubsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Define Where clause
+		$where = createWhereClause($itemsSubsetSQL);
 
 		// Get the database.
 		$db = get_db();
@@ -99,7 +100,7 @@
 			->columns('COUNT(collections.id) AS count')
 			->joinInner(array('items' => $db->Items),
 				'collections.id = items.collection_id', array())
-			->where('items.id IN ('. implode(', ', $itemsArray) . ')')
+			->where($where)
 			->group('collections.id');
 
 		if ($collections = $table->fetchObjects($select)) {
@@ -121,7 +122,7 @@
 				$facetCollections = array_filter($facetCollections, "isNotSingleEntry");
 			}			
 
-			// Sort array
+			// Sort array (have to do it now instead than in select because of the way we get the Collection name)
 			if ($sortOrder == 'count_alpha') {
 				array_multisort(array_column($facetCollections, 'count'), SORT_DESC, array_column($facetCollections, 'name'), SORT_ASC, $facetCollections);
 			} else {
@@ -129,7 +130,7 @@
 			}
 
 			$addOptions = false;
-			// get current parameters to check if one is selected
+			// Build first part of the select tag
 			if (isset($selectedCollection)) {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"collection\">";
 				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('collection', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
@@ -140,6 +141,7 @@
 				$addOptions = true;
 			}
 
+			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetCollections as $collection) {
 					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl('collection', $collection['id']) . "\">" . $collection['name'] . ($hidePopularity ? "" : " (" . $collection['count'] . ")") . "</option>";
@@ -162,9 +164,9 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_item_types_facet_select($itemsArray = array(), $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Return, if no Item is available
-		if (empty($itemsArray)) return "";
+	function get_item_types_facet_select($itemsSubsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Define Where clause
+		$where = createWhereClause($itemsSubsetSQL);
 
 		// Define Order by clause
 		if ($sortOrder == 'count_alpha') {
@@ -182,7 +184,7 @@
 			->columns('COUNT(item_types.id) AS count')
 			->joinInner(array('items' => $db->Items),
 				'item_types.id = items.item_type_id', array())
-			->where('items.id IN ('. implode(', ', $itemsArray) . ')')
+			->where($where)
 			->group('item_types.id')
 			->order($orderBy);
 
@@ -206,7 +208,7 @@
 			}			
 
 			$addOptions = false;
-			// get current parameters to check if one is selected
+			// Build first part of the select tag
 			if (isset($selectedItemType)) {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"type\">";
 				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('type', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
@@ -217,6 +219,7 @@
 				$addOptions = true;
 			}
 
+			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetItemTypes as $itemType) {
 					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl('type', $itemType['id']) . "\">" . $itemType['name'] . ($hidePopularity ? "" : " (" . $itemType['count'] . ")") . "</option>";
@@ -241,13 +244,10 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_dc_facet_select($itemsArray = array(), $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		if (empty($itemsArray)) return "";
-		
-		// Get the database.
-		$db = get_db();
-		// Get the table.
-		$table = $db->getTable('ElementText');
+	function get_dc_facet_select($itemsSubsetSQL, $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Define Where clause
+		$where = createWhereClause($itemsSubsetSQL);
+
 		// Create the orderby rules
 		if ($isDate) {
 			$groupBy = 'year';
@@ -264,6 +264,11 @@
 				$orderBy = array('text ASC');
 			}
 		}
+
+		// Get the database.
+		$db = get_db();
+		// Get the table.
+		$table = $db->getTable('ElementText');
 		// Build the select query.
 		$select = $table->getSelect()
 			->columns(array('SUBSTR(element_texts.text, 1, 4) AS year', 'COUNT(text) AS count'))
@@ -275,7 +280,7 @@
 				'items.id = element_texts.record_id', array())
 			->where('element_sets.name = '. $db->quote('Dublin Core'))
 			->where('elements.name = '. $db->quote($dcElementName))
-			->where('items.id IN ('. implode(', ', $itemsArray) . ')')
+			->where($where)
 			->group($groupBy)
 			->order($orderBy);
 		
@@ -291,13 +296,12 @@
 			}
 			$element_id = $element->element_id;
 
-			// remove single entries if required
+			// Remove single entries if required
 			if ($hideSingleEntries && count($facet) > FACETS_MINIMUM_AMOUNT) {
 				$facet = array_filter($facet, "isNotSingleEntry");
 			}			
 
-			// get current parameters to check if one is selected
-			// Get the current facets.
+			// Get current parameters to check if one is selected
 			if (!empty($_GET['advanced'])) {
 				$search = $_GET['advanced'];
 				foreach ($search as $Searchindex => $SearchArray){
@@ -309,6 +313,7 @@
 			}
 
 			$addOptions = false;
+			// Build first part of the select tag
 			if (isset($term)){
 				$html =	"<div class=\"select-cross\"><select id=\"" . $element_id . "\" class=\"facet-selected\" name=\"" . $dcElementName . "\">";
 				$url = getElementFieldUrl($element_id, null, $isDate);
@@ -320,6 +325,7 @@
 				$addOptions = true;
 			}
 
+			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facet as $name => $count) {
 					$url = getElementFieldUrl($element_id, $name, $isDate);
@@ -421,5 +427,13 @@
 	
 	function isNotSingleEntry($count) {
 		return ($count != 1);
+	}
+	
+	function createWhereClause($sql) {
+		if ($sql != '') {
+			return 'items.id IN (' . $sql . ')';
+		} else {
+			return '1=1';
+		}
 	}
 ?>
