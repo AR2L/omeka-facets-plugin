@@ -4,7 +4,7 @@
 	$facetTags = array();
 	$facetsElements = json_decode(get_option('facets_elements'), true);
 	$hideSingleEntries = (bool)get_option('facets_hide_single_entries');
-	$sortOrder = get_option('facets_sort_order');
+	$sortOrder = (string)get_option('facets_sort_order');
 	$hidePopularity = (bool)get_option('facets_hide_popularity');
 
 	$table = get_db()->getTable('Element');
@@ -14,6 +14,8 @@
 		->order('ISNULL(elements.order)')
 		->order('elements.order');
 	$elements = $table->fetchObjects($select);
+	
+	$itemsSubsetSQL = str_replace('`items`.*', '`items`.`id`', (string)get_db()->getTable('Item')->getSelectForFindBy($params));
 ?>
 
 <div class="search-container">
@@ -30,7 +32,7 @@
 				foreach ($elements as $element) {
 					if (isFacetActive($element->name, $facetsElements)) {
 						$isDate = in_array($element->name, array('Date'));
-						if ($html = get_dc_facet_select($itemsArray, $element->name, $isDate, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+						if ($html = get_dc_facet_select($itemsSubsetSQL, $element->name, $isDate, $hideSingleEntries, $sortOrder, $hidePopularity)) {
 							echo "<div class=\"container-fluid\">\n";
 							echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 							echo "</div>";
@@ -42,7 +44,7 @@
 
 			<?php
 				if (get_option('facets_item_types')) {
-					if ($html = get_item_types_facet_select($itemsArray, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+					if ($html = get_item_types_facet_select($itemsSubsetSQL, $hideSingleEntries, $sortOrder, $hidePopularity)) {
 						echo "<div class=\"container-fluid\">\n";
 						echo "<label for=\"\">" . html_escape(__('Item Type')) . "</label>\n";
 						echo "</div>";
@@ -53,7 +55,7 @@
 			
 			<?php
 				if (get_option('facets_collections')) {
-					if ($html = get_collections_facet_select($itemsArray, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+					if ($html = get_collections_facet_select($itemsSubsetSQL, $hideSingleEntries, $sortOrder, $hidePopularity)) {
 						echo "<div class=\"container-fluid\">\n";
 						echo "<label for=\"\">" . html_escape(__('Collection')) . "</label>\n";
 						echo "</div>";
@@ -64,7 +66,7 @@
 
 			<?php
 				if (get_option('facets_tags')) {
-					if ($html = get_tags_facet_select($itemsArray, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+					if ($html = get_tags_facet_select($itemsSubsetSQL, $hideSingleEntries, $sortOrder, $hidePopularity)) {
 						echo "<div class=\"container-fluid\">\n";
 						echo "<label for=\"\">" . html_escape(__('Tags')) . "</label>\n";
 						echo "</div>";
