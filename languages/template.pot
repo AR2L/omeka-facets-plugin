@@ -39,14 +39,14 @@ msgid "Use"
 msgstr ""
 
 #: config_form.php:15
-msgid "Public hook"
+msgid "Public hooks"
 msgstr ""
 
 #: config_form.php:19
 msgid ""
-"The hook you want to use: Omeka's default <code>public_items_browse</code>, already coded into every page "
-"(so no change is needed), normally showing up at the end of the page; or the plugin's own "
-"<code>public_items_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
+"The hooks you want to use: Omeka's default <code>public_items_browse</code> and <code>public_collections_browse</code>, "
+"already coded into every page (so no changes are needed), normally showing up at the end of the page; or the plugin's "
+"own <code>public_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
 msgstr ""
 
 #: config_form.php:32
@@ -102,33 +102,37 @@ msgid "The Dublin Core elements that can be used for search refinement."
 msgstr ""
 
 #: config_form.php:102
-msgid "Element"
+msgid "Element name"
 msgstr ""
 
 #: config_form.php:103
-msgid "Active"
+msgid "Item"
 msgstr ""
 
-#: config_form.php:133
+#: config_form.php:104
+msgid "Collection"
+msgstr ""
+
+#: config_form.php:144
 msgid "Item Types"
 msgstr ""
 
-#: config_form.php:137
-msgid "If checked, search refinement by Item Type will be available."
+#: config_form.php:148
+msgid "If checked, search refinement by Item Type will be available (Items only)."
 msgstr ""
 
-#: config_form.php:145
+#: config_form.php:156
 msgid "Collections"
 msgstr ""
 
-#: config_form.php:149
-msgid "If checked, search refinement by Collection will be available."
+#: config_form.php:160
+msgid "If checked, search refinement by Collection will be available (Items only)."
 msgstr ""
 
-#: config_form.php:157
+#: config_form.php:168
 msgid "Tags"
 msgstr ""
 
-#: config_form.php:161
-msgid "If checked, search refinement by Tag will be available."
+#: config_form.php:172
+msgid "If checked, search refinement by Tag will be available (Items only)."
 msgstr ""

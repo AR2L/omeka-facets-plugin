@@ -8,139 +8,131 @@ msgstr ""
 "Project-Id-Version: Reference\n"
 "Report-Msgid-Bugs-To: http://github.com/Daniel-KM/Reference/issues\n"
 "POT-Creation-Date: 2021-06-08 13:56-0000\n"
-"PO-Revision-Date: 2021-06-09 15:09-0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: it\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: browse.php:22
 msgid "Refine search by"
-msgstr "Raffina la ricerca per"
+msgstr "Rafini serĉon per"
 
 #: FacetsFunctions.php:59
 #: FacetsFunctions.php:135
 #: FacetsFunctions.php:212
 #: FacetsFunctions.php:315
 msgid "Remove filter"
-msgstr "Rimuovi filtro"
+msgstr "Forigi filtron"
 
 #: FacetsFunctions.php:63
 #: FacetsFunctions.php:139
 #: FacetsFunctions.php:216
 #: FacetsFunctions.php:319
 msgid "Select"
-msgstr "Seleziona"
+msgstr "Elektu"
 
 #: config_form.php:11
 msgid "Use"
-msgstr "Utilizzo"
+msgstr ""
 
 #: config_form.php:15
 msgid "Public hooks"
-msgstr "Hook pubblici"
+msgstr ""
 
 #: config_form.php:19
 msgid ""
 "The hooks you want to use: Omeka's default <code>public_items_browse</code> and <code>public_collections_browse</code>, "
 "already coded into every page (so no changes are needed), normally showing up at the end of the page; or the plugin's "
 "own <code>public_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
-
-"The hook you want to use: Omeka's default <code>public_items_browse</code>, already coded into every page "
-"(so no change is needed), normally showing up at the end of the page; or the plugin's own "
-"<code>public_items_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
 msgstr ""
-"Gli hook che si vogliono usare: quelli di default di Omeka (<code>public_items_browse</code> e <code>public_collections_browse</code>), "
-"già codificati in ogni pagina (così nessuna modifica è necessaria), solitamente mostrati alla fine della pagina; oppure, "
-"quello proprio del plugin (<code>public_facets</code>), che deve essere codificato nelle giuste pagine del tema "
-"ma può essere usato ovunque lo si ritenga opportuno."
 
 #: config_form.php:32
 msgid "Aspect"
-msgstr "Aspetto"
+msgstr ""
 
 #: config_form.php:36
 msgid "Description"
-msgstr "Descrizione"
+msgstr ""
 
 #: config_form.php:40
 msgid "Text to be used as additional description (tip: keep it short)."
-msgstr "Testo da usare come descrizione addizionale (consiglio: mantenerlo corto)."
+msgstr ""
 
 #: config_form.php:48
 msgid "Hide single entries"
-msgstr "Nascondi valori singoli"
+msgstr ""
 
 #: config_form.php:52
 msgid "If checked, values with just one entry will not be listed (unless there's less than %s entries in the list)."
-msgstr "Se selezionato, i valori singoli non verranno elencati (a meno che non ci siano meno di %s valori nella lista)."
+msgstr ""
 
 #: config_form.php:60
 msgid "Sort order"
-msgstr "Direzione ordinamento"
+msgstr ""
 
 #: config_form.php:64
 msgid "The sorting order for values in select fields."
-msgstr "La direzione di ordinamento per i valori dei campi di selezione."
+msgstr ""
 
 #: config_form.php:70
 msgid "Alphabetical"
-msgstr "Alfabetico"
+msgstr ""
 
 #: config_form.php:71
 msgid "Popularity first, then alphabetical"
-msgstr "Prima popolarità, poi alfabetico"
+msgstr ""
 
 #: config_form.php:79
 msgid "Hide popularity"
-msgstr "Nascondi popolarità"
+msgstr ""
 
 #: config_form.php:83
 msgid "If checked, values's popularity will not be displayed (sorting order will still take it into consideration, if required)."
-msgstr "Se selezionato, la popolarità dei valori non verrà mostrata (la direzione di ordinamento ne terrà comunque conto, se necessario)."
+msgstr ""
 
 #: config_form.php:89
 msgid "Elements"
-msgstr "Elementi"
+msgstr ""
 
 #: config_form.php:97
 msgid "The Dublin Core elements that can be used for search refinement."
-msgstr "Gli elementi Dublin Core che possono essere usati per il raffinamento della ricerca."
+msgstr ""
 
 #: config_form.php:102
 msgid "Element name"
-msgstr "Nome elemento"
+msgstr ""
 
 #: config_form.php:103
 msgid "Item"
-msgstr "Documento"
+msgstr ""
 
 #: config_form.php:104
 msgid "Collection"
-msgstr "Collezione"
+msgstr ""
 
 #: config_form.php:144
 msgid "Item Types"
-msgstr "Tipologie documento"
+msgstr ""
 
 #: config_form.php:148
 msgid "If checked, search refinement by Item Type will be available (Items only)."
-msgstr "Se selezionata, il raffinamento della ricerca per Tipologia di Documento sarà disponibile (solo per Documenti)."
+msgstr ""
 
 #: config_form.php:156
 msgid "Collections"
-msgstr "Collezioni"
+msgstr ""
 
 #: config_form.php:160
 msgid "If checked, search refinement by Collection will be available (Items only)."
-msgstr "Se selezionata, il raffinamento della ricerca per Collezione sarà disponibile (solo per Documenti)."
+msgstr ""
 
 #: config_form.php:168
 msgid "Tags"
-msgstr "Etichette"
+msgstr ""
 
 #: config_form.php:172
 msgid "If checked, search refinement by Tag will be available (Items only)."
-msgstr "Se selezionata, il raffinamento della ricerca per Etichetta sarà disponibile (solo per Documenti)."
+msgstr ""
