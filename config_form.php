@@ -16,14 +16,14 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('The hook you want to use: Omeka\'s default <code>public_items_browse</code>, already coded into every page (so no change is needed), normally showing up at the end of the page; or the plugin\'s own <code>public_items_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right.'); ?>
+			<?php echo __('The hooks you want to use: Omeka\'s default <code>public_items_browse</code> and <code>public_collections_browse</code>, already coded into every page (so no changes are needed), normally showing up at the end of the page; or the plugin\'s own <code>public_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right.'); ?>
 		</p>
 		<?php echo $view->formRadio('facets_public_hook',
 			get_option('facets_public_hook'),
 			null,
 			array(
-				'public_items_browse' => __('public_items_browse'),
-				'public_items_facets' => __('public_items_facets'),
+				'default' => 'public_items_browse + public_collections_browse',
+				'custom' => 'public_facets',
 			)); 
 		?>
     </div>
@@ -99,8 +99,9 @@
 		<table id="facets_elements-table">
 			<thead>
 				<tr>
-					<th class="boxes"><?php echo __('Element'); ?></th>
-					<th class="boxes"><?php echo __('Active'); ?></th>
+					<th class="boxes"><?php echo __('Element name'); ?></th>
+					<th class="boxes"><?php echo __('Item'); ?></th>
+					<th class="boxes"><?php echo __('Collection'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -119,6 +120,16 @@
 							)
 						); ?>
 					</td>
+					<td class="boxes">
+						<?php echo $view->formCheckbox(
+							"collection_elements[{$element->set_name}][{$element->name}]",
+							'1', 
+							array(
+								'disableHidden' => true,
+								'checked' => isset($settings['collection_elements'][$element->set_name][$element->name])
+							)
+						); ?>
+					</td>
 				</tr>
 			<?php 
 				endforeach;
@@ -134,7 +145,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, search refinement by Item Type will be available.'); ?>
+			<?php echo __('If checked, search refinement by Item Type will be available (Items only).'); ?>
 		</p>
 		<?php echo $view->formCheckbox('facets_item_types', get_option('facets_item_types'), null, array('1', '0')); ?>
     </div>
@@ -146,7 +157,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, search refinement by Collection will be available.'); ?>
+			<?php echo __('If checked, search refinement by Collection will be available (Items only).'); ?>
 		</p>
 		<?php echo $view->formCheckbox('facets_collections', get_option('facets_collections'), null, array('1', '0')); ?>
     </div>
@@ -158,7 +169,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, search refinement by Tag will be available.'); ?>
+			<?php echo __('If checked, search refinement by Tag will be available (Items only).'); ?>
 		</p>
 		<?php echo $view->formCheckbox('facets_tags', get_option('facets_tags'), null, array('1', '0')); ?>
     </div>
