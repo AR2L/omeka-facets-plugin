@@ -14,9 +14,9 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_tags_facet_select($itemsSubsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Define Where clause
-		$where = createWhereClause($itemsSubsetSQL);
+	function get_tags_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Create Where clause
+		$whereSubset = createWhereSubsetClause('item', $subsetSQL);
 
 		// Define Order By clause
 		if ($sortOrder == 'count_alpha') {
@@ -32,7 +32,7 @@
 		// Build the select query.
 		$select = $table->getSelectForFindBy();
 		$table->filterByTagType($select, 'Item');
-		$select->where($where);
+		$select->where($whereSubset);
 		$select->order($orderBy);
 
 		if ($tags = $table->fetchObjects($select)) {
@@ -48,7 +48,7 @@
 			$selectedTagName = $_GET['tags'];
 
 			// Remove single entries if required
-			if ($hideSingleEntries && count($facetTags) > FACETS_MINIMUM_AMOUNT) {
+			if ($hideSingleEntries && count(array_filter($facetTags, 'excludeSingleValues')) > FACETS_MINIMUM_AMOUNT) {
 				$facetTags = array_filter($facetTags, "isNotSingleEntry");
 			}			
 
@@ -87,9 +87,9 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_collections_facet_select($itemsSubsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Define Where clause
-		$where = createWhereClause($itemsSubsetSQL);
+	function get_collections_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Create Where clause
+		$whereSubset = createWhereSubsetClause('item', $subsetSQL);
 
 		// Get the database.
 		$db = get_db();
@@ -100,7 +100,7 @@
 			->columns('COUNT(collections.id) AS count')
 			->joinInner(array('items' => $db->Items),
 				'collections.id = items.collection_id', array())
-			->where($where)
+			->where($whereSubset)
 			->group('collections.id');
 
 		if ($collections = $table->fetchObjects($select)) {
@@ -118,7 +118,7 @@
 			}
 
 			// Remove single entries if required
-			if ($hideSingleEntries && count($facetCollections) > FACETS_MINIMUM_AMOUNT) {
+			if ($hideSingleEntries && count(array_filter($facetCollections, 'excludeSingleValues')) > FACETS_MINIMUM_AMOUNT) {
 				$facetCollections = array_filter($facetCollections, "isNotSingleEntry");
 			}			
 
@@ -164,9 +164,9 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_item_types_facet_select($itemsSubsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Define Where clause
-		$where = createWhereClause($itemsSubsetSQL);
+	function get_item_types_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Create Where Subset clause
+		$whereSubset = createWhereSubsetClause('item', $subsetSQL);
 
 		// Define Order by clause
 		if ($sortOrder == 'count_alpha') {
@@ -184,7 +184,7 @@
 			->columns('COUNT(item_types.id) AS count')
 			->joinInner(array('items' => $db->Items),
 				'item_types.id = items.item_type_id', array())
-			->where($where)
+			->where($whereSubset)
 			->group('item_types.id')
 			->order($orderBy);
 
@@ -203,7 +203,7 @@
 			}
 
 			// Remove single entries if required
-			if ($hideSingleEntries && count($facetItemTypes) > FACETS_MINIMUM_AMOUNT) {
+			if ($hideSingleEntries && count(array_filter($facetItemTypes, 'excludeSingleValues')) > FACETS_MINIMUM_AMOUNT) {
 				$facetItemTypes = array_filter($facetItemTypes, "isNotSingleEntry");
 			}			
 
@@ -244,12 +244,14 @@
 	 * @param hidePopularity
 	 * @return html.
 	 */
-	function get_dc_facet_select($itemsSubsetSQL, $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
-		// Define Where clause
-		$where = createWhereClause($itemsSubsetSQL);
+	function get_dc_facet_select($recordType, $subsetSQL, $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+		// Create Where clauses
+		$whereRecordType = createWhereRecordTypeClause($recordType);
+		$whereSubset = createWhereSubsetClause($recordType, $subsetSQL);
 
-		// Create the orderby rules
+		// Create the columns, groupBy and orderBy clauses
 		if ($isDate) {
+			$columns = array('SUBSTR(element_texts.text, 1, 4) AS year', 'COUNT(text) AS count');
 			$groupBy = 'year';
 			if ($sortOrder == 'count_alpha') {
 				$orderBy = array('count DESC', 'year DESC');
@@ -257,6 +259,7 @@
 				$orderBy = array('year DESC');
 			}
 		} else {
+			$columns = array('COUNT(text) AS count');
 			$groupBy = 'text';
 			if ($sortOrder == 'count_alpha') {
 				$orderBy = array('count DESC', 'text ASC');
@@ -270,21 +273,27 @@
 		// Get the table.
 		$table = $db->getTable('ElementText');
 		// Build the select query.
-		$select = $table->getSelect()
-			->columns(array('SUBSTR(element_texts.text, 1, 4) AS year', 'COUNT(text) AS count'))
-			->joinInner(array('elements' => $db->Elements),
-				'element_texts.element_id = elements.id', array())
-			->joinInner(array('element_sets' => $db->ElementSet),
-				'element_sets.id = elements.element_set_id', array())
-			->joinInner(array('items' => $db->Item),
-				'items.id = element_texts.record_id', array())
-			->where('element_sets.name = '. $db->quote('Dublin Core'))
-			->where('elements.name = '. $db->quote($dcElementName))
-			->where($where)
-			->group($groupBy)
-			->order($orderBy);
-		
-		// Build table
+		$select = $table->getSelect();
+		$select->columns($columns);
+		$select->joinInner(array('elements' => $db->Elements),
+				'element_texts.element_id = elements.id', array());
+		$select->joinInner(array('element_sets' => $db->ElementSet),
+				'element_sets.id = elements.element_set_id', array());
+		if ($recordType == 'item') {
+			$select->joinInner(array('items' => $db->Item),
+					'items.id = element_texts.record_id', array());
+		} else {
+			$select->joinInner(array('collections' => $db->Collection),
+					'collections.id = element_texts.record_id', array());
+		}
+		$select->where('element_sets.name = '. $db->quote('Dublin Core'));
+		$select->where('elements.name = '. $db->quote($dcElementName));
+		$select->where($whereRecordType);
+		$select->where($whereSubset);
+		$select->group($groupBy);
+		$select->order($orderBy);
+
+		// Build array
 		if ($elements = $table->fetchObjects($select)) {
 			$facet = array();
 			foreach ($elements as $element) {
@@ -297,7 +306,7 @@
 			$element_id = $element->element_id;
 
 			// Remove single entries if required
-			if ($hideSingleEntries && count($facet) > FACETS_MINIMUM_AMOUNT) {
+			if ($hideSingleEntries && count(array_filter($facet, 'excludeSingleValues')) > FACETS_MINIMUM_AMOUNT) {
 				$facet = array_filter($facet, "isNotSingleEntry");
 			}			
 
@@ -421,19 +430,27 @@
 		return 'browse?' . http_build_query($params);
 	}
 	
-	function isFacetActive($element_name, $settings) {
-		return ($settings['item_elements']['Dublin Core'][$element_name] == 1);
+	function isFacetActive($recordType, $element_name, $settings) {
+		return ($settings[$recordType . '_elements']['Dublin Core'][$element_name] == 1);
 	}
 	
 	function isNotSingleEntry($count) {
 		return ($count != 1);
 	}
 	
-	function createWhereClause($sql) {
+	function createWhereRecordTypeClause($recordType) {
+		return 'element_texts.record_type = \'' . ucfirst($recordType) . '\'';
+	}
+	
+	function createWhereSubsetClause($recordType, $sql) {
 		if ($sql != '') {
-			return 'items.id IN (' . $sql . ')';
+			return $recordType . 's.id IN (' . $sql . ')';
 		} else {
 			return '1=1';
 		}
+	}
+	
+	function excludeSingleValues($element) {
+		if ($element > 1) return $element;
 	}
 ?>
