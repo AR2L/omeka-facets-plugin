@@ -184,7 +184,7 @@
 				'item_types.id = items.item_type_id', array())
 			->where('items.id IN ('. implode(', ', $itemsArray) . ')')
 			->group('item_types.id')
-			->order(orderBy);
+			->order($orderBy);
 
 		if ($itemTypes = $table->fetchObjects($select)) {
 			// Build array
