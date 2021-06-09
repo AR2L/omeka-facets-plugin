@@ -163,22 +163,20 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		$controller = $request->getControllerName();
 		$action = $request->getActionName();
 		
-		// checks whether it's one of the facet cases
-		if (!($controller == 'search' && $action == 'index') && !($controller == 'items' && $action == 'browse')) return;
-		
-		$itemsArray = array();
-		if ($controller == 'items') {
-			$params = array('advanced' => $_GET['advanced'], 'collection' => $_GET['collection'], 'type' => $_GET['type'], 'tags' => $_GET['tags']);
-			$items = get_records('item', $params, null);
-			if (count($items) > 0) {
-				foreach ($items as $item) {
-					$itemsArray[] = $item->id;
-				}
+		if ($controller == 'items' && $action == 'browse') {
+			$params = array(
+				'advanced' => $_GET['advanced'], 
+				'collection' => $_GET['collection'], 
+				'type' => $_GET['type'], 
+				'tags' => $_GET['tags']
+			);
+			if (count(get_records('item', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
-					'itemsArray' => $itemsArray
+					'itemsArray' => $itemsArray,
+					'params' => $params
 				));
 			}
-		} elseif ($controller == 'search') {
+		} elseif ($controller == 'search' && $action == 'index') {
 			// this would be for the site-wide simple search;
 			// main problem is that, differently from advanced search,
 			// it uses its own "search_texts" table, so results from that
@@ -189,7 +187,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 			// just on Items.
 			if ($recordTypes = $_GET['record_types']) {
 				if (count($recordTypes) == 1 && in_array('Item', $recordTypes)) {
-					// site-wide search was performend just on Items
+					// site-wide search was performed just on Items
 				}
 			}
 		}
