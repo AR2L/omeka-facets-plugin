@@ -12,7 +12,7 @@ Settings allow to choose the hook to be used, which elements use for search refi
 
 Original development is part of the [Armarium](https://www.armarium-hautsdefrance.fr/) Project, managed by the french association [AR2L Hauts de France](http://www.ar2l-hdf.fr/).
 
-Fixed and improved version by [DBinaghi].
+Fixed and improved version by [DBinaghi](https://github.com/DBinaghi).
 
 ## Installation
 Uncompress files and rename plugin folder "Facets".
