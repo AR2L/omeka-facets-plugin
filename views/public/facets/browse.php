@@ -4,8 +4,6 @@
 	$facetTags = array();
 	$facetsElements = json_decode(get_option('facets_elements'), true);
 	$hideSingleEntries = (bool)get_option('facets_hide_single_entries');
-	$sortOrder = (string)get_option('facets_sort_order');
-	$hidePopularity = (bool)get_option('facets_hide_popularity');
 
 	$table = get_db()->getTable('Element');
 	$select = $table->getSelect()
@@ -38,7 +36,8 @@
 					foreach ($elements as $element) {
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
-							if ($html = get_dc_facet_select('collection', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+							$facetElement = $facetsElements['collection_elements']['Dublin Core'][$element->name];
+							if ($html = get_dc_facet_select('collection', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $facetElement['active'], $facetElement['showPopularity'])) {
 								echo "<div class=\"container-fluid\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo "</div>";
@@ -50,7 +49,8 @@
 					foreach ($elements as $element) {
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
-							if ($html = get_dc_facet_select('item', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+							$facetElement = $facetsElements['item_elements']['Dublin Core'][$element->name];
+							if ($html = get_dc_facet_select('item', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $facetElement['active'], $facetElement['showPopularity'])) {
 								echo "<div class=\"container-fluid\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo "</div>";
@@ -59,8 +59,8 @@
 						}
 					}
 
-					if (get_option('facets_item_types')) {
-						if ($html = get_item_types_facet_select($subsetSQL, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+					if (get_option('facets_item_types_active') != '') {
+						if ($html = get_item_types_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_item_types_active'), get_option('facets_item_types_show_popularity'))) {
 							echo "<div class=\"container-fluid\">\n";
 							echo "<label for=\"\">" . html_escape(__('Item Type')) . "</label>\n";
 							echo "</div>";
@@ -68,8 +68,8 @@
 						}
 					}
 
-					if (get_option('facets_collections')) {
-						if ($html = get_collections_facet_select($subsetSQL, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+					if (get_option('facets_collections_active')) {
+						if ($html = get_collections_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_collections_active'), get_option('facets_collections_show_popularity'))) {
 							echo "<div class=\"container-fluid\">\n";
 							echo "<label for=\"\">" . html_escape(__('Collection')) . "</label>\n";
 							echo "</div>";
@@ -77,8 +77,8 @@
 						}
 					}
 
-					if (get_option('facets_tags')) {
-						if ($html = get_tags_facet_select($subsetSQL, $hideSingleEntries, $sortOrder, $hidePopularity)) {
+					if (get_option('facets_tags_active')) {
+						if ($html = get_tags_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_tags_active'), get_option('facets_tags_show_popularity'))) {
 							echo "<div class=\"container-fluid\">\n";
 							echo "<label for=\"\">" . html_escape(__('Tags')) . "</label>\n";
 							echo "</div>";
