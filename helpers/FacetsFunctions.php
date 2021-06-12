@@ -11,10 +11,10 @@
 	 * @param itemsArray
 	 * @param hideSingleEntries
 	 * @param sortOrder
-	 * @param hidePopularity
+	 * @param showPopularity
 	 * @return html.
 	 */
-	function get_tags_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+	function get_tags_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
 		// Create Where clause
 		$whereSubset = createWhereSubsetClause('item', $subsetSQL);
 
@@ -67,7 +67,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetTags as $tag) {
-					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl('tags', $tag['name']) . "\">" . $tag['name'] . ($hidePopularity ? "" : " (" . $tag['count'] . ")") . "</option>";
+					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl('tags', $tag['name']) . "\">" . $tag['name'] . ($showPopularity ? " (" . $tag['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -84,10 +84,10 @@
 	 * @param itemsArray
 	 * @param hideSingleEntries
 	 * @param sortOrder
-	 * @param hidePopularity
+	 * @param showPopularity
 	 * @return html.
 	 */
-	function get_collections_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+	function get_collections_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
 		// Create Where clause
 		$whereSubset = createWhereSubsetClause('item', $subsetSQL);
 
@@ -144,7 +144,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetCollections as $collection) {
-					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl('collection', $collection['id']) . "\">" . $collection['name'] . ($hidePopularity ? "" : " (" . $collection['count'] . ")") . "</option>";
+					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl('collection', $collection['id']) . "\">" . $collection['name'] . ($showPopularity ? " (" . $collection['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -161,18 +161,18 @@
 	 * @param itemsArray
 	 * @param hideSingleEntries
 	 * @param sortOrder
-	 * @param hidePopularity
+	 * @param showPopularity
 	 * @return html.
 	 */
-	function get_item_types_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+	function get_item_types_facet_select($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
 		// Create Where Subset clause
 		$whereSubset = createWhereSubsetClause('item', $subsetSQL);
 
 		// Define Order by clause
 		if ($sortOrder == 'count_alpha') {
-			$orderBy = array('count DESC', 'text ASC');
+			$orderBy = array('count DESC', 'name ASC');
 		} else {
-			$orderBy = array('text ASC');
+			$orderBy = array('name ASC');
 		}
 
 		// Get the database.
@@ -222,7 +222,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetItemTypes as $itemType) {
-					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl('type', $itemType['id']) . "\">" . $itemType['name'] . ($hidePopularity ? "" : " (" . $itemType['count'] . ")") . "</option>";
+					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl('type', $itemType['id']) . "\">" . $itemType['name'] . ($showPopularity ? " (" . $itemType['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -241,10 +241,10 @@
 	 * @param isDate
 	 * @param hideSingleEntries
 	 * @param sortOrder
-	 * @param hidePopularity
+	 * @param showPopularity
 	 * @return html.
 	 */
-	function get_dc_facet_select($recordType, $subsetSQL, $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $hidePopularity = false) {
+	function get_dc_facet_select($recordType, $subsetSQL, $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
 		// Create Where clauses
 		$whereRecordType = createWhereRecordTypeClause($recordType);
 		$whereSubset = createWhereSubsetClause($recordType, $subsetSQL);
@@ -338,7 +338,7 @@
 			if ($addOptions) {
 				foreach ($facet as $name => $count) {
 					$url = getElementFieldUrl($element_id, $name, $isDate);
-					$html .= "<option value=\"" . $name . "\" data-url=\"" . $url . "\">" . $name . ($hidePopularity ? "" : " (" . $count . ")") . "</option>";
+					$html .= "<option value=\"" . $name . "\" data-url=\"" . $url . "\">" . $name . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -431,7 +431,7 @@
 	}
 	
 	function isFacetActive($recordType, $element_name, $settings) {
-		return ($settings[$recordType . '_elements']['Dublin Core'][$element_name] == 1);
+		return ($settings[$recordType . '_elements']['Dublin Core'][$element_name]['active'] != '');
 	}
 	
 	function isNotSingleEntry($count) {
