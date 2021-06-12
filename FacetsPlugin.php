@@ -39,16 +39,18 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_hide_single_entries', 0);
 
 		$defaults = array(
-			'item_elements' => array('active', 'showPopularity'),
-			'collection_elements' => array('active', 'showPopularity')
+			'elements' => array('item', 'collection', 'sort', 'popularity')
 		);
 		set_option('facets_elements', json_encode($defaults));
-		set_option('facets_item_types_active', 'count_alpha');
-		set_option('facets_item_types_show_popularity', 1);
-		set_option('facets_collections_active', 'count_alpha');
-		set_option('facets_collections_show_popularity', 1);
-		set_option('facets_tags_active', '');
-		set_option('facets_tags_show_popularity', 1);
+		set_option('facets_item_types_active', 0);
+		set_option('facets_item_types_sort', '');
+		set_option('facets_item_types_popularity', 0);
+		set_option('facets_collections_active', 1);
+		set_option('facets_collections_sort', 'count_alpha');
+		set_option('facets_collections_popularity', 1);
+		set_option('facets_tags_active', 0);
+		set_option('facets_tags_sort', '');
+		set_option('facets_tags_popularity', 0);
 	}
 
 	/**
@@ -61,11 +63,14 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_hide_single_entries');
 		delete_option('facets_elements');
 		delete_option('facets_item_types_active');
-		delete_option('facets_item_types_show_popularity');
+		delete_option('facets_item_types_sort');
+		delete_option('facets_item_types_popularity');
 		delete_option('facets_collections_active');
-		delete_option('facets_collections_show_popularity');
+		delete_option('facets_collections_sort');
+		delete_option('facets_collections_popularity');
 		delete_option('facets_tags_active');
-		delete_option('facets_tags_show_popularity');
+		delete_option('facets_tags_sort');
+		delete_option('facets_tags_popularity');
 	}
 
 	/**
@@ -111,17 +116,19 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
 
 		$settings = array(
-			'item_elements' => isset($post['item_elements']) ? $post['item_elements'] : array(),
-			'collection_elements' => isset($post['collection_elements']) ? $post['collection_elements'] : array()
+			'elements' => isset($post['elements']) ? $post['elements'] : array()
 		);
 		set_option('facets_elements', json_encode($settings));
 
 		set_option('facets_item_types_active', $post['facets_item_types_active']);
-		set_option('facets_item_types_show_popularity', $post['facets_item_types_show_popularity']);
+		set_option('facets_item_types_sort', $post['facets_item_types_sort']);
+		set_option('facets_item_types_popularity', $post['facets_item_types_popularity']);
 		set_option('facets_collections_active', $post['facets_collections_active']);
-		set_option('facets_collections_show_popularity', $post['facets_collections_show_popularity']);
+		set_option('facets_collections_sort', $post['facets_collections_sort']);
+		set_option('facets_collections_popularity', $post['facets_collections_popularity']);
 		set_option('facets_tags_active', $post['facets_tags_active']);
-		set_option('facets_tags_show_popularity', $post['facets_tags_show_popularity']);
+		set_option('facets_tags_sort', $post['facets_tags_sort']);
+		set_option('facets_tags_popularity', $post['facets_tags_popularity']);
 	}
 
 	public function hookDefineRoutes($args)
@@ -298,7 +305,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 				'type' => $_GET['type'], 
 				'tags' => $_GET['tags']
 			);
-			if (count($settings['item_elements']) > 0 && count(get_records('item', $params, null)) > 0) {
+
+			if (recordTypeActive('item', $settings['elements']) && count(get_records('item', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
 					'params' => $params,
 					'recordType' => 'item'
@@ -308,7 +316,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 			$params = array(
 				'advanced' => $_GET['advanced']
 			);
-			if (count($settings['collection_elements']) > 0 && count(get_records('collection', $params, null)) > 0) {
+			if (recordTypeActive('collection', $settings['elements']) && count(get_records('collection', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
 					'params' => $params,
 					'recordType' => 'collection'
