@@ -12,7 +12,7 @@
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_public_hook', __('Public hook')); ?>
+		<?php echo $view->formLabel('facets_public_hook', __('Public hooks')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
@@ -22,7 +22,7 @@
 			get_option('facets_public_hook'),
 			null,
 			array(
-				'default' => 'public_items_browse + public_collections_browse',
+				'default' => 'public_items_browse & public_collections_browse',
 				'custom' => 'public_facets',
 			)); 
 		?>
@@ -55,53 +55,27 @@
     </div>
 </div>
 
-<div class="field">
-	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_sort_order', __('Sort order')); ?>
-	</div>
-	<div class="inputs five columns omega">
-		<p class="explanation">
-			<?php echo __('The sorting order for values in select fields.'); ?>
-		</p>
-		<?php echo $view->formRadio('facets_sort_order',
-			get_option('facets_sort_order'),
-			null,
-			array(
-				'alpha' => __('Alphabetical'),
-				'count_alpha' => __('Popularity first, then alphabetical'),
-			)); 
-		?>
-    </div>
-</div>
+<h2><?php echo __('Dublin Core Elements'); ?></h2>
 
 <div class="field">
-	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_hide_popularity', __('Hide popularity')); ?>
-	</div>
-	<div class="inputs five columns omega">
-		<p class="explanation">
-			<?php echo __('If checked, values\'s popularity will not be displayed (sorting order will still take it into consideration, if required).'); ?>
-		</p>
-		<?php echo $view->formCheckbox('facets_hide_popularity', get_option('facets_hide_popularity'), null, array('1', '0')); ?>
-    </div>
-</div>
-
-<h2><?php echo __('Elements'); ?></h2>
-
-<div class="field">
-	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_elements-table', __('Dublin Core')); ?>
-	</div>
-	<div class="inputs five columns omega">
+	<div class="seven columns alpha">
 		<p class="explanation">
 			<?php echo __('The Dublin Core elements that can be used for search refinement.'); ?>
 		</p>
+	</div>
+	<div class="seven columns alpha">
 		<table id="facets_elements-table">
 			<thead>
 				<tr>
-					<th class="boxes"><?php echo __('Element name'); ?></th>
-					<th class="boxes"><?php echo __('Item'); ?></th>
-					<th class="boxes"><?php echo __('Collection'); ?></th>
+					<th class="boxes" rowspan="2"><?php echo __('Element name'); ?></th>
+					<th class="boxes" colspan="2"><?php echo __('Items'); ?></th>
+					<th class="boxes" colspan="2"><?php echo __('Collections'); ?></th>
+				</tr>
+				<tr>
+					<th class="boxes"><?php echo __('Active'); ?></th>
+					<th class="boxes"><?php echo __('Show popularity'); ?></th>
+					<th class="boxes"><?php echo __('Active'); ?></th>
+					<th class="boxes"><?php echo __('Show popularity'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -111,22 +85,46 @@
 				<tr>
 					<td><?php echo __($element->name); ?></td>
 					<td class="boxes">
+						<?php echo $view->formSelect(
+							"item_elements[{$element->set_name}][{$element->name}][active]",
+							$settings['item_elements'][$element->set_name][$element->name]['active'],
+							array(),
+							array(
+								'' => __('Not active'),
+								'alpha' => __('Alphabetical sort'),
+								'count_alpha' => __('Popularity + alphabetical sort')
+							)); 
+						?>
+					</td>
+					<td class="boxes">
 						<?php echo $view->formCheckbox(
-							"item_elements[{$element->set_name}][{$element->name}]",
+							"item_elements[{$element->set_name}][{$element->name}][showPopularity]",
 							'1', 
 							array(
 								'disableHidden' => true,
-								'checked' => isset($settings['item_elements'][$element->set_name][$element->name])
+								'checked' => isset($settings['item_elements'][$element->set_name][$element->name]['showPopularity'])
 							)
 						); ?>
 					</td>
 					<td class="boxes">
+						<?php echo $view->formSelect(
+							"collection_elements[{$element->set_name}][{$element->name}][active]",
+							$settings['collection_elements'][$element->set_name][$element->name]['active'],
+							array(),
+							array(
+								'' => __('Not active'),
+								'alpha' => __('Alphabetical sort'),
+								'count_alpha' => __('Popularity + alphabetical sort')
+							)); 
+						?>
+					</td>
+					<td class="boxes">
 						<?php echo $view->formCheckbox(
-							"collection_elements[{$element->set_name}][{$element->name}]",
+							"collection_elements[{$element->set_name}][{$element->name}][showPopularity]",
 							'1', 
 							array(
 								'disableHidden' => true,
-								'checked' => isset($settings['collection_elements'][$element->set_name][$element->name])
+								'checked' => isset($settings['collection_elements'][$element->set_name][$element->name]['showPopularity'])
 							)
 						); ?>
 					</td>
@@ -139,38 +137,107 @@
 	</div>
 </div>
 
+<h2><?php echo __('Item Types'); ?></h2>
+
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_item_types', __('Item Types')); ?>
+		<?php echo $view->formLabel('facets_item_types_active', __('Active')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
 			<?php echo __('If checked, search refinement by Item Type will be available (Items only).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('facets_item_types', get_option('facets_item_types'), null, array('1', '0')); ?>
+		<?php echo $view->formSelect(
+			'facets_item_types_active',
+			get_option('facets_item_types_active'),
+			array(),
+			array(
+				'' => __('Not active'),
+				'alpha' => __('Alphabetical sort'),
+				'count_alpha' => __('Popularity + alphabetical sort')
+			)); 
+		?>
     </div>
 </div>
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_collections', __('Collections')); ?>
+		<?php echo $view->formLabel('facets_item_types_show_popularity', __('Show popularity')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('If checked, values\'s popularity will be displayed.'); ?>
+		</p>
+		<?php echo $view->formCheckbox('facets_item_types_show_popularity', get_option('facets_item_types_show_popularity'), null, array('1', '0')); ?>
+    </div>
+</div>
+
+<h2><?php echo __('Collections'); ?></h2>
+
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_collections_active', __('Active')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
 			<?php echo __('If checked, search refinement by Collection will be available (Items only).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('facets_collections', get_option('facets_collections'), null, array('1', '0')); ?>
+		<?php echo $view->formSelect(
+			'facets_collections_active',
+			get_option('facets_collections_active'),
+			array(),
+			array(
+				'' => __('Not active'),
+				'alpha' => __('Alphabetical sort'),
+				'count_alpha' => __('Popularity + alphabetical sort')
+			)); 
+		?>
     </div>
 </div>
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_tags', __('Tags')); ?>
+		<?php echo $view->formLabel('facets_collections_show_popularity', __('Show popularity')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('If checked, values\'s popularity will be displayed.'); ?>
+		</p>
+		<?php echo $view->formCheckbox('facets_collections_show_popularity', get_option('facets_collections_show_popularity'), null, array('1', '0')); ?>
+    </div>
+</div>
+
+<h2><?php echo __('Tags'); ?></h2>
+
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_tags_active', __('Active')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
 			<?php echo __('If checked, search refinement by Tag will be available (Items only).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('facets_tags', get_option('facets_tags'), null, array('1', '0')); ?>
+		<?php echo $view->formSelect(
+			'facets_tags_active',
+			get_option('facets_tags_active'),
+			array(),
+			array(
+				'' => __('Not active'),
+				'alpha' => __('Alphabetical sort'),
+				'count_alpha' => __('Popularity + alphabetical sort')
+			)); 
+		?>
+    </div>
+</div>
+
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_tags_show_popularity', __('Show popularity')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('If checked, values\'s popularity will be displayed.'); ?>
+		</p>
+		<?php echo $view->formCheckbox('facets_tags_show_popularity', get_option('facets_tags_show_popularity'), null, array('1', '0')); ?>
     </div>
 </div>
