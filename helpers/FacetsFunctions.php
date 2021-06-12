@@ -431,7 +431,7 @@
 	}
 	
 	function isFacetActive($recordType, $element_name, $settings) {
-		return ($settings[$recordType . '_elements']['Dublin Core'][$element_name]['active'] != '');
+		return ((bool)$settings['elements'][$element_name][$recordType]);
 	}
 	
 	function isNotSingleEntry($count) {
@@ -453,4 +453,11 @@
 	function excludeSingleValues($element) {
 		if ($element > 1) return $element;
 	}
+	
+	function recordTypeActive($recordType, $elements) {
+		foreach ($elements as $element) {
+			if (array_key_exists($recordType, $element)) return true;
+		}
+		return false;
+	}	
 ?>
