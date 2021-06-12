@@ -37,17 +37,18 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', 'default');
 		set_option('facets_description', '');
 		set_option('facets_hide_single_entries', 0);
-		set_option('facets_sort_order', 'count_alpha');
-		set_option('facets_hide_popularity', 0);
 
 		$defaults = array(
-			'item_elements' => array(),
-			'collection_elements' => array()
+			'item_elements' => array('active', 'showPopularity'),
+			'collection_elements' => array('active', 'showPopularity')
 		);
 		set_option('facets_elements', json_encode($defaults));
-		set_option('facets_item_types', 1);
-		set_option('facets_collections', 1);
-		set_option('facets_tags', 0);
+		set_option('facets_item_types_active', 'count_alpha');
+		set_option('facets_item_types_show_popularity', 1);
+		set_option('facets_collections_active', 'count_alpha');
+		set_option('facets_collections_show_popularity', 1);
+		set_option('facets_tags_active', '');
+		set_option('facets_tags_show_popularity', 1);
 	}
 
 	/**
@@ -58,12 +59,13 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_public_hook');
 		delete_option('facets_description');
 		delete_option('facets_hide_single_entries');
-		delete_option('facets_sort_order');
-		delete_option('facets_hide_popularity');
 		delete_option('facets_elements');
-		delete_option('facets_item_types');
-		delete_option('facets_collections');
-		delete_option('facets_tags');
+		delete_option('facets_item_types_active');
+		delete_option('facets_item_types_show_popularity');
+		delete_option('facets_collections_active');
+		delete_option('facets_collections_show_popularity');
+		delete_option('facets_tags_active');
+		delete_option('facets_tags_show_popularity');
 	}
 
 	/**
@@ -107,8 +109,6 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', $post['facets_public_hook']);
 		set_option('facets_description', $post['facets_description']);
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
-		set_option('facets_sort_order', $post['facets_sort_order']);
-		set_option('facets_hide_popularity', $post['facets_hide_popularity']);
 
 		$settings = array(
 			'item_elements' => isset($post['item_elements']) ? $post['item_elements'] : array(),
@@ -116,30 +116,33 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		);
 		set_option('facets_elements', json_encode($settings));
 
-		set_option('facets_item_types', $post['facets_item_types']);
-		set_option('facets_collections', $post['facets_collections']);
-		set_option('facets_tags', $post['facets_tags']);
+		set_option('facets_item_types_active', $post['facets_item_types_active']);
+		set_option('facets_item_types_show_popularity', $post['facets_item_types_show_popularity']);
+		set_option('facets_collections_active', $post['facets_collections_active']);
+		set_option('facets_collections_show_popularity', $post['facets_collections_show_popularity']);
+		set_option('facets_tags_active', $post['facets_tags_active']);
+		set_option('facets_tags_show_popularity', $post['facets_tags_show_popularity']);
 	}
 
 	public function hookDefineRoutes($args)
 	{
-		if (is_admin_theme()) {
-			return;
-		}
+		// if (is_admin_theme()) {
+			// return;
+		// }
 
-		//Itemtypes browse
-		$router = $args['router'];
-		$router->addRoute(
-			'facets',
-			new Zend_Controller_Router_Route (
-				"facets",
-				array(
-					'module'	 => 'facets',
-					'controller' => 'facets',
-					'action'	 => 'browse'
-				)
-			)
-		);
+		// ItemTypes browse
+		// $router = $args['router'];
+		// $router->addRoute(
+			// 'facets',
+			// new Zend_Controller_Router_Route (
+				// "facets",
+				// array(
+					// 'module'	 => 'facets',
+					// 'controller' => 'facets',
+					// 'action'	 => 'browse'
+				// )
+			// )
+		// );
 	}
 
     /**
@@ -153,8 +156,10 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
         $db = $this->_db;
         $select = $args['select'];
         $params = $args['params'];
+
+		// if (array_key_exists('_advanced_0', $select->getPart('from')) return;
 		
-		if (strpos($select, '_advanced') !== false) return;
+		if (strpos($select, '_advanced_') !== false) return;
         
         if ($advancedTerms = @$params['advanced']) {
             $where = '';
