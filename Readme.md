@@ -43,15 +43,15 @@ For **Berlin** theme, instead, check **Block collapsable** option, set **Horizon
 
 The elements used for search refinement can be selected in the configuration page; best practice suggestion is to activate only elements that are displayed in the browse page, and that are offering some kind of data aggregation (a unique id would not offer any really useful refinement).
 
-Similarly, one can choose to also include <b>Item Types</b>, <b>Collections</b> and <b>Tags</b> to the facets block.
+Similarly, one can choose to also include **Item Types**, **Collections** and **Tags** to the facets block.
 
-Single values can be exluded as not really significant, although they will be listed anyway if less than 5 values are available.
+**Single values** can be exluded as not really significant, although they will be listed anyway if less than 5 values are available.
 
-Facets block can be set up for vertical or horizontal layout, according to the theme layout; and it can be made collapsable, to use less vertical space (recommended for horizontal layout).
+Facets block can be set up for **vertical** or **horizontal** layout, according to the theme layout; and it can be made **collapsable**, to use less vertical space (recommended for horizontal layout).
 
-Sorting order can be alphabetical, or first by popularity and then alphabetical. Popularity count can be hidden, if needed.
+Sorting order can be **alphabetical**, or **first by popularity and then alphabetical**. Popularity count can be shown, if needed.
 
-<b>Date</b> element filter's behaviour is a bit different: dates are ordered decrescently, and only year is displayed; consequently, the matching will be with the beginning of the date (assuming the format is 'yyyy-mm-dd').
+**Date** element filter's behaviour is a bit different: dates are ordered decrescently, and only year is displayed; consequently, the matching will be with the beginning of the date (assuming the format is 'yyyy-mm-dd').
 
 ## Licence
 MIT Licence, please credit AR2L [AR2L Hauts de France](http://www.ar2l-hdf.fr/)
