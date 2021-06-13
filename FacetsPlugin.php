@@ -21,7 +21,6 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		'initialize',
 		'config_form',
 		'config',
-		'define_routes',
         'collections_browse_sql',
 		'public_head',
 		'public_items_browse',
@@ -37,6 +36,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', 'default');
 		set_option('facets_description', '');
 		set_option('facets_hide_single_entries', 0);
+		set_option('facets_collapsable', 0);
+		set_option('facets_direction', 'vertical');
 
 		$defaults = array(
 			'elements' => array('item', 'collection', 'sort', 'popularity')
@@ -61,6 +62,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_public_hook');
 		delete_option('facets_description');
 		delete_option('facets_hide_single_entries');
+		delete_option('facets_collapsable');
+		delete_option('facets_direction');
 		delete_option('facets_elements');
 		delete_option('facets_item_types_active');
 		delete_option('facets_item_types_sort');
@@ -114,6 +117,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', $post['facets_public_hook']);
 		set_option('facets_description', $post['facets_description']);
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
+		set_option('facets_collapsable', $post['facets_collapsable']);
+		set_option('facets_direction', $post['facets_direction']);
 
 		$settings = array(
 			'elements' => isset($post['elements']) ? $post['elements'] : array()
@@ -129,27 +134,6 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_tags_active', $post['facets_tags_active']);
 		set_option('facets_tags_sort', $post['facets_tags_sort']);
 		set_option('facets_tags_popularity', $post['facets_tags_popularity']);
-	}
-
-	public function hookDefineRoutes($args)
-	{
-		// if (is_admin_theme()) {
-			// return;
-		// }
-
-		// ItemTypes browse
-		// $router = $args['router'];
-		// $router->addRoute(
-			// 'facets',
-			// new Zend_Controller_Router_Route (
-				// "facets",
-				// array(
-					// 'module'	 => 'facets',
-					// 'controller' => 'facets',
-					// 'action'	 => 'browse'
-				// )
-			// )
-		// );
 	}
 
     /**
