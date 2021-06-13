@@ -4,7 +4,7 @@
 
 Plugin for Omeka Classic. Once installed and active, allows to insert a Facets block made of option dropdown boxes containing available metadata values extracted from browsing context. Works for both Items and Collections.
 
-Settings allow to choose the hook to be used, which elements use for search refinement, whether to ignore single entries, sorting order for values.
+Settings allow to choose the hook to be used, which elements use for search refinement, whether to ignore single entries, sorting order for values, whether to show values popolarity, whether to use an horizontal or vertical layout, etc.
 
 ## Credits
 
@@ -17,7 +17,7 @@ Uncompress files and rename plugin folder "Facets".
 
 Then install it like any other Omeka plugin.
 
-## (Eventually) Customize your Theme
+## (optional) Theme customization
 
 Facets will appear by default in the **Items browse** and **Collections browse** pages, where the `public_items_browse` and `public_collections_browse` hooks are set. It is possible to use instead a custom `public_items_facets` hook, that can be positioned wherever needed (`YOUR_THEME/items/browse.php` or `YOUR_THEME/common/header.php`, f.i.) according to the theme used. 
 
