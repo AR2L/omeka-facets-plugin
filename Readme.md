@@ -30,12 +30,12 @@ For **Thanks, Roy** theme, for example, best way is to change `common/header.php
     <?php echo search_form(); ?>
     <?php endif; ?>
 </div>
-<?php fire_plugin_hook('public_items_facets', array('view' => $this, 'item' => $item)); ?>
+<?php fire_plugin_hook('public_items_facets', array('view' => $this)); ?>
 ```
-For **Berlin** theme, instead, check **Block collapsable** option, set **Horizontal** as **Block layout** and then add the custom hook in `items/browse.php`:
+For **Berlin** theme, instead, check **Block collapsable** option, set **Horizontal** as **Block layout** and then add the custom hook in `items/browse.php` and `collections/browse.php`:
 ```php
 <?php echo item_search_filters(); ?>
-<?php fire_plugin_hook('public_facets', array('view' => $this, 'item' => $item)); ?>
+<?php fire_plugin_hook('public_facets', array('view' => $this)); ?>
 <?php echo pagination_links(); ?>
 ```
 
