@@ -30,7 +30,7 @@ For **Thanks, Roy** theme, for example, best way is to change `common/header.php
     <?php echo search_form(); ?>
     <?php endif; ?>
 </div>
-<?php fire_plugin_hook('public_items_facets', array('view' => $this)); ?>
+<?php fire_plugin_hook('public_facets', array('view' => $this)); ?>
 ```
 For **Berlin** theme, instead, check **Block collapsable** option, set **Horizontal** as **Block layout** and then add the custom hook in `YOUR_THEME/items/browse.php` and `YOUR_THEME/collections/browse.php`:
 ```php
