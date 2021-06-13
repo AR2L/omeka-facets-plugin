@@ -1,9 +1,8 @@
 <?php
-	$facetCollections = array();
-	$facetItemTypes = array();
-	$facetTags = array();
 	$facetsElements = json_decode(get_option('facets_elements'), true);
 	$hideSingleEntries = (bool)get_option('facets_hide_single_entries');
+	$facetsCollapsable = (bool)get_option('facets_collapsable');
+	$facetsDirection = (string)get_option('facets_direction');
 
 	$table = get_db()->getTable('Element');
 	$select = $table->getSelect()
@@ -20,17 +19,16 @@
 	}
 ?>
 
-<div class="search-container">
+<div class="facets-container <?php echo "facets-layout-" . $facetsDirection; ?>">
+	<button <?php if ($facetsCollapsable) echo "class=\"facets-collapsed\""; ?>><?php echo html_escape(__('Refine search by')) ?>...</button>
 	<div class="container">
-		<h4><?php echo html_escape(__('Refine search by')) ?>...</h4>
-
 		<?php 
 			if ($description = get_option('facets_description')) {
-				echo "<h5>" . $description . "</h5>\n";
+				echo "<p class=\"description\">" . $description . "</p>\n";
 			}
 		?>
 		
-		<form class="" action="index.html" method="post">
+		<form action="index.html" method="post" <?php echo ($facetsDirection == 'horizontal' ? 'class="flex"': 'class=""'); ?>>
 			<?php
 				if ($recordType == 'collection') {
 					foreach ($elements as $element) {
@@ -38,10 +36,10 @@
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
 							if ($html = get_dc_facet_select('collection', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $facetElement['sort'], $facetElement['popularity'])) {
-								echo "<div class=\"container-fluid\">\n";
+								echo "<div class=\"container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
-								echo "</div>";
 								echo $html;
+								echo "</div>\n";
 							}
 						}
 					}
@@ -51,38 +49,38 @@
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
 							if ($html = get_dc_facet_select('item', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $facetElement['sort'], $facetElement['popularity'])) {
-								echo "<div class=\"container-fluid\">\n";
+								echo "<div class=\"container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
-								echo "</div>";
 								echo $html;
+								echo "</div>\n";
 							}
 						}
 					}
 
 					if ((bool)get_option('facets_item_types_active')) {
 						if ($html = get_item_types_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_item_types_sort'), get_option('facets_item_types_popularity'))) {
-							echo "<div class=\"container-fluid\">\n";
+							echo "<div class=\"container-" . $facetsDirection . "\">\n";
 							echo "<label for=\"\">" . html_escape(__('Item Type')) . "</label>\n";
-							echo "</div>";
 							echo $html;
+							echo "</div>\n";
 						}
 					}
 
 					if ((bool)get_option('facets_collections_active')) {
 						if ($html = get_collections_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_collections_sort'), get_option('facets_collections_popularity'))) {
-							echo "<div class=\"container-fluid\">\n";
+							echo "<div class=\"container-" . $facetsDirection . "\">\n";
 							echo "<label for=\"\">" . html_escape(__('Collection')) . "</label>\n";
-							echo "</div>";
 							echo $html;
+							echo "</div>\n";
 						}
 					}
 
 					if ((bool)get_option('facets_tags_active')) {
 						if ($html = get_tags_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_tags_sort'), get_option('facets_tags_popularity'))) {
-							echo "<div class=\"container-fluid\">\n";
+							echo "<div class=\"container-" . $facetsDirection . "\">\n";
 							echo "<label for=\"\">" . html_escape(__('Tags')) . "</label>\n";
-							echo "</div>";
 							echo $html;
+							echo "</div>\n";
 						}
 					}
 				}
@@ -91,10 +89,22 @@
 	</div>
 </div>
 <script type="text/javascript">
-	window.jQuery( document ).ready(function() {
+	jQuery('.facets-collapsed').next().addClass('hidden');
+	window.jQuery(document).ready(function() {
 		window.jQuery('select').change(function() {
 			var option = window.jQuery(this).find('option:selected');
 			if (typeof(option.data("url")) !== 'undefined') window.location.href = option.data("url");
+		});
+	});
+	jQuery('.facets-collapsed').click(function () {
+		$header = jQuery(this);
+		//getting the next element
+		$content = $header.next();
+		//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+		$content.slideToggle(300, function () {
+			//execute this after slideToggle is done
+			//change icon of header based on visibility of content div
+			$header.toggleClass( "facets-collapsible facets-collapsed" );
 		});
 	});
 </script>
