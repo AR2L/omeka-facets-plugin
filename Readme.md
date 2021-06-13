@@ -54,4 +54,4 @@ Sorting order can be **alphabetical**, or **first by popularity and then alphabe
 **Date** element filter's behaviour is a bit different: dates are ordered decrescently, and only year is displayed; consequently, the matching will be with the beginning of the date (assuming the format is 'yyyy-mm-dd').
 
 ## Licence
-MIT Licence, please credit AR2L [AR2L Hauts de France](http://www.ar2l-hdf.fr/)
+MIT Licence, please credit AR2L [AR2L Hauts de France](http://www.ar2l-hdf.fr/) and Daniele Binaghi.
