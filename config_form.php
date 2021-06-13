@@ -58,6 +58,38 @@
     </div>
 </div>
 
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_collapsable', __('Block collapsable')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('If checked, facets block will be collapsable (tip: as it saves space, it\'s particularly useful with horizontal layout).'); ?>
+		</p>
+		<?php echo $view->formCheckbox('facets_collapsable', get_option('facets_collapsable'), null, array('1', '0')); ?>
+    </div>
+</div>
+
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_direction', __('Block layout')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('The layout direction of the facets block.'); ?>
+		</p>
+		<?php echo $view->formSelect(
+			'facets_direction',
+			get_option('facets_direction'),
+			array(),
+			array(
+				'horizontal' => __('Horizontal (useful for themes with top main navigation menu)'),
+				'vertical' => __('Vertical (useful for themes with side main navigation menu)')
+			)); 
+		?>
+   </div>
+</div>
+
 <h2><?php echo __('Elements'); ?></h2>
 
 <div class="field">
