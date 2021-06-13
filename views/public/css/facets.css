@@ -1,52 +1,103 @@
-.container-fluid {
-	display: flex;
+.facets-container {
+	margin-bottom: 20px;
 }
 
-.search-container h4 {
+.facets-layout-vertical {
+	max-width: 350px;	
+}
+
+.facets-layout-horizontal {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.facets-container button {
+	width: 100%;
 	text-align: center;
+	font-weight: bold;
 	color: white;
-	background-color: black;
 	margin-bottom: 0;
 	padding: 10px;
 }
 
-.search-container h5 {
+.facets-collapsed:after {
+	font-size: larger;
+	content: '\002B';
+	float: right;
+	margin-left: 5px;
+}
+
+.facets-collapsible:after {
+	font-size: larger;
+	content: "\2212";
+	float: right;
+	margin-left: 5px;
+}
+
+.container-vertical {
+	max-width: 350px;
+}
+
+.container-vertical:not(:last-child) {
+	padding-bottom: 20px;
+}
+
+.flex {
+	/* We first create a flex layout context */
+	display: flex;
+	/* Then we define the flow direction 
+	 and if we allow the items to wrap 
+	* Remember this is the same as:
+	* flex-direction: row;
+	* flex-wrap: wrap;
+	*/
+	flex-flow: row wrap;
+
+	/* Then we define how is distributed the remaining space */
+	justify-content: space-between;
+}
+
+.container-horizontal {
+	max-width: 350px;
+	display: inline-block;
+	/* float: left; */
+	/* display: flex; */
+}
+
+.container-horizontal:not(:last-child) {
+	padding-bottom: 20px;
+}
+
+.facets-container p.description {
 	text-align: left;
 	color: #545759;
 	font-size: 90%;
-	margin: 10px 10px 0 10px;
+	margin: 0;
 	border-bottom: 1px solid #545759;
 	font-style: italic;
-	padding-bottom: 10px;
 	line-height: 140%;
+	padding: 10px;
 }
 
-.search-container {
-	max-width: 350px;
-	margin-bottom: 20px;
-}
-
-.search-container .container {
+.facets-container .container {
 	width: 100%;
 	background-color: #F1F1F1;
 }
 
-.search-container form {
+.facets-container .hidden {
+	display: none;
+}
+
+.facets-container form {
 	padding: 20px 10px;
 }
 
-.search-container .container .container-fluid:not(:first-child) {
-	padding-top: 20px;
-}
-
-.search-container form label {
-	/* margin-left: auto; */
-	/* margin-right: auto; */
+.facets-container form label {
 	margin-bottom: 8px;
 	color: #545759;
 }
 
-.search-container form select {
+.facets-container form select {
 	width: 100%;
 	border: 0;
 	appearance: none !important;
@@ -62,54 +113,12 @@
 	background-color: #545759!important;
 }
 
-.search-container .select-arrow, .search-container .select-cross {
+.facets-container .select-arrow, .facets-container .select-cross {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.search-container .select-arrow select::-ms-expand, .search-container .select-cross select::-ms-expand {
+.facets-container .select-arrow select::-ms-expand, .facets-container .select-cross select::-ms-expand {
 	display: none;
-}
-
-.search-container .select-cross:after {
-	/* pointer-events: none; */
-	/* position: absolute; */
-	/* content: ''; */
-	/* top: 9px; */
-	/* right: 10px; */
-	/* height: 10px; */
-	/* width: 10px; */
-	/* background-size: cover!important; */
-	/* background: url('../images/cross.svg'); */
-}
-
-.search-container .select-arrow:after {
-	/* width: 0; */
-	/* pointer-events: none; */
-	/* position: absolute; */
-	/* content: ''; */
-	/* top: 8px; */
-	/* right: 10px; */
-	/* border-top: 8px solid #3D3D3D; */
-	/* border-bottom: 8px solid transparent; */
-	/* border-left: 8px solid transparent; */
-	/* border-right: 8px solid transparent; */
-}
-
-.search-container .select-arrow span, .container-fluid .search-container .select-cross span {
-	/* padding-right: 5%; */
-}
-
-.search-container button {
-	width: 73%;
-	font-family: 'open-bold';
-	margin-left: auto;
-	margin-right: auto;
-	padding-top: 7px;
-	padding-bottom: 7px;
-	border-radius: 0;
-	border: 0;
-	background-color: #FF5E4D;
-	color: white;
 }
