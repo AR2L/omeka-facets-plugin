@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Reference\n"
 "Report-Msgid-Bugs-To: http://github.com/Daniel-KM/Reference/issues\n"
 "POT-Creation-Date: 2021-06-08 13:56-0000\n"
-"PO-Revision-Date: 2021-06-09 15:09-0000\n"
+"PO-Revision-Date: 2021-06-13 15:39-0000\n"
 "Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: browse.php:22
+#: browse.php:23
 msgid "Refine search by"
 msgstr "Raffina la ricerca per"
 
@@ -34,113 +34,151 @@ msgstr "Rimuovi filtro"
 msgid "Select"
 msgstr "Seleziona"
 
-#: config_form.php:11
+#: config_form.php:14
 msgid "Use"
 msgstr "Utilizzo"
 
-#: config_form.php:15
+#: config_form.php:18
 msgid "Public hooks"
 msgstr "Hook pubblici"
 
-#: config_form.php:19
+#: config_form.php:22
 msgid ""
 "The hooks you want to use: Omeka's default <code>public_items_browse</code> and <code>public_collections_browse</code>, "
 "already coded into every page (so no changes are needed), normally showing up at the end of the page; or the plugin's "
 "own <code>public_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
-
-"The hook you want to use: Omeka's default <code>public_items_browse</code>, already coded into every page "
-"(so no change is needed), normally showing up at the end of the page; or the plugin's own "
-"<code>public_items_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
 msgstr ""
 "Gli hook che si vogliono usare: quelli di default di Omeka (<code>public_items_browse</code> e <code>public_collections_browse</code>), "
 "già codificati in ogni pagina (così nessuna modifica è necessaria), solitamente mostrati alla fine della pagina; oppure, "
 "quello proprio del plugin (<code>public_facets</code>), che deve essere codificato nelle giuste pagine del tema "
 "ma può essere usato ovunque lo si ritenga opportuno."
 
-#: config_form.php:32
+#: config_form.php:35
 msgid "Aspect"
 msgstr "Aspetto"
 
-#: config_form.php:36
+#: config_form.php:39
 msgid "Description"
 msgstr "Descrizione"
 
-#: config_form.php:40
+#: config_form.php:43
 msgid "Text to be used as additional description (tip: keep it short)."
 msgstr "Testo da usare come descrizione addizionale (consiglio: mantenerlo corto)."
 
-#: config_form.php:48
+#: config_form.php:51
 msgid "Hide single entries"
 msgstr "Nascondi valori singoli"
 
-#: config_form.php:52
+#: config_form.php:55
 msgid "If checked, values with just one entry will not be listed (unless there's less than %s entries in the list)."
-msgstr "Se selezionato, i valori singoli non verranno elencati (a meno che non ci siano meno di %s valori nella lista)."
+msgstr "Se selezionata, i valori singoli non verranno elencati (a meno che non ci siano meno di %s valori nella lista)."
 
-#: config_form.php:60
-msgid "Sort order"
-msgstr "Direzione ordinamento"
+#: config_form.php:63
+msgid "Block collapsable"
+msgstr "Blocco contraibile"
 
-#: config_form.php:64
-msgid "The sorting order for values in select fields."
-msgstr "La direzione di ordinamento per i valori dei campi di selezione."
+#: config_form.php:67
+msgid "If checked, facets block will be collapsable (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
+msgstr ""
+"Se selezionata, il blocco filtri sarà contraibile (consiglio: dal momento che utilizza meno spazio, è particolarmente "
+"utile con i temi a layout orizzontale)."
 
-#: config_form.php:70
-msgid "Alphabetical"
-msgstr "Alfabetico"
-
-#: config_form.php:71
-msgid "Popularity first, then alphabetical"
-msgstr "Prima popolarità, poi alfabetico"
+#: config_form.php:75
+msgid "Block layout"
+msgstr "Layout blocco"
 
 #: config_form.php:79
-msgid "Hide popularity"
-msgstr "Nascondi popolarità"
+msgid "The layout direction of the facets block."
+msgstr "La direzione del layout del blocco filtri."
 
-#: config_form.php:83
-msgid "If checked, values's popularity will not be displayed (sorting order will still take it into consideration, if required)."
-msgstr "Se selezionato, la popolarità dei valori non verrà mostrata (la direzione di ordinamento ne terrà comunque conto, se necessario)."
+#: config_form.php:86
+msgid "Horizontal (useful for themes with top main navigation menu)"
+msgstr "Orizzontale (utile per i temi con un menu di navigazione principale superiore)"
 
-#: config_form.php:89
+#: config_form.php:87
+msgid "Vertical (useful for themes with side main navigation menu)"
+msgstr "Verticale (utile per i temi con un menu di navigazione principale laterale)"
+
+#: config_form.php:93
 msgid "Elements"
 msgstr "Elementi"
 
-#: config_form.php:97
+#: config_form.php:101
 msgid "The Dublin Core elements that can be used for search refinement."
 msgstr "Gli elementi Dublin Core che possono essere usati per il raffinamento della ricerca."
 
-#: config_form.php:102
+#: config_form.php:106
 msgid "Element name"
 msgstr "Nome elemento"
 
-#: config_form.php:103
+#: config_form.php:107
 msgid "Item"
 msgstr "Documento"
 
-#: config_form.php:104
+#: config_form.php:108
 msgid "Collection"
 msgstr "Collezione"
 
-#: config_form.php:144
+#: config_form.php:109
+#: config_form.php:185
+#: config_form.php:231
+#: config_form.php:277
+msgid "Ordinamento"
+msgstr ""
+
+#: config_form.php:110
+#: config_form.php:205
+#: config_form.php:251
+#: config_form.php:297
+msgid "Popularity"
+msgstr "Popolarità"
+
+#: config_form.php:145
+#: config_form.php:196
+#: config_form.php:242
+#: config_form.php:288
+msgid "Alphabetical"
+msgstr "Alfabetico"
+
+#: config_form.php:146
+#: config_form.php:197
+#: config_form.php:243
+#: config_form.php:289
+msgid "Popularity first, then alphabetical"
+msgstr "Popolarità prima, poi alfabetico"
+
+#: config_form.php:169
 msgid "Item Types"
 msgstr "Tipologie documento"
 
-#: config_form.php:148
+#: config_form.php:173
+#: config_form.php:219
+#: config_form.php:265
+msgid "Active"
+msgstr "Attivo"
+
+#: config_form.php:177
 msgid "If checked, search refinement by Item Type will be available (Items only)."
 msgstr "Se selezionata, il raffinamento della ricerca per Tipologia di Documento sarà disponibile (solo per Documenti)."
 
-#: config_form.php:156
+#: config_form.php:209
+#: config_form.php:255
+#: config_form.php:301
+msgid "If checked, values's popularity will be displayed."
+msgstr "Se selezionata, la poporità dei valori verrà mostrata."
+
+#: config_form.php:215
 msgid "Collections"
 msgstr "Collezioni"
 
-#: config_form.php:160
+#: config_form.php:223
 msgid "If checked, search refinement by Collection will be available (Items only)."
 msgstr "Se selezionata, il raffinamento della ricerca per Collezione sarà disponibile (solo per Documenti)."
 
-#: config_form.php:168
+#: config_form.php:261
 msgid "Tags"
 msgstr "Etichette"
 
-#: config_form.php:172
+#: config_form.php:269
 msgid "If checked, search refinement by Tag will be available (Items only)."
 msgstr "Se selezionata, il raffinamento della ricerca per Etichetta sarà disponibile (solo per Documenti)."
