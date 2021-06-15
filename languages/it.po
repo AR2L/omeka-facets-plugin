@@ -74,11 +74,11 @@ msgid "If checked, values with just one entry will not be listed (unless there's
 msgstr "Se selezionata, i valori singoli non verranno elencati (a meno che non ci siano meno di %s valori nella lista)."
 
 #: config_form.php:63
-msgid "Block collapsable"
+msgid "Block collapsible"
 msgstr "Blocco contraibile"
 
 #: config_form.php:67
-msgid "If checked, facets block will be collapsable (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
+msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
 msgstr ""
 "Se selezionata, il blocco filtri sarà contraibile (consiglio: dal momento che utilizza meno spazio, è particolarmente "
 "utile con i temi a layout orizzontale)."
