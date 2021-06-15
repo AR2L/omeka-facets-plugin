@@ -1,7 +1,7 @@
 <?php
 	$facetsElements = json_decode(get_option('facets_elements'), true);
 	$hideSingleEntries = (bool)get_option('facets_hide_single_entries');
-	$facetsCollapsable = (bool)get_option('facets_collapsable');
+	$facetsCollapsible = (bool)get_option('facets_collapsible');
 	$facetsDirection = (string)get_option('facets_direction');
 
 	$table = get_db()->getTable('Element');
@@ -20,8 +20,8 @@
 ?>
 
 <div class="facets-container <?php echo "facets-layout-" . $facetsDirection; ?>">
-	<button <?php if ($facetsCollapsable) echo "class=\"facets-collapsed\""; ?>><?php echo html_escape(__('Refine search by')) ?>...</button>
-	<div class="container">
+	<button id="facets-title" <?php if ($facetsCollapsible) echo "class=\"facets-collapsible\""; ?>><?php echo html_escape(__('Refine search by')) ?>...</button>
+	<div id="facets-body">
 		<?php 
 			if ($description = get_option('facets_description')) {
 				echo "<p class=\"description\">" . $description . "</p>\n";
@@ -89,22 +89,33 @@
 	</div>
 </div>
 <script type="text/javascript">
-	jQuery('.facets-collapsed').next().addClass('hidden');
+	// force block collapsible if screen size small
+	jQuery(window).on('load', function() {
+		if (jQuery(window).width() < 768) {
+			jQuery('#facets-title').addClass('facets-collapsed');
+			jQuery('#facets-body').addClass('hidden');
+		}
+	});
+	// hides facets block (but for title) on load
+	jQuery('#facets-body').next().addClass('hidden');
+	// submit results of refining search to reload the page
 	window.jQuery(document).ready(function() {
 		window.jQuery('select').change(function() {
 			var option = window.jQuery(this).find('option:selected');
-			if (typeof(option.data("url")) !== 'undefined') window.location.href = option.data("url");
+			if (typeof(option.data('url')) !== 'undefined') window.location.href = option.data('url');
 		});
 	});
-	jQuery('.facets-collapsed').click(function () {
+	// collapse/expands facets block
+	jQuery('#facets-title').click(function () {
 		$header = jQuery(this);
+		if (!$header.hasClass('facets-collapsible') && !$header.hasClass('facets-collapsed')) return;
 		//getting the next element
 		$content = $header.next();
 		//open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
 		$content.slideToggle(300, function () {
 			//execute this after slideToggle is done
 			//change icon of header based on visibility of content div
-			$header.toggleClass( "facets-collapsible facets-collapsed" );
+			$header.toggleClass('facets-collapsible facets-collapsed');
 		});
 	});
 </script>
