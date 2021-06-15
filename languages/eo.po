@@ -70,11 +70,11 @@ msgid "If checked, values with just one entry will not be listed (unless there's
 msgstr ""
 
 #: config_form.php:63
-msgid "Block collapsable"
+msgid "Block collapsible"
 msgstr ""
 
 #: config_form.php:67
-msgid "If checked, facets block will be collapsable (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
+msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
 msgstr ""
 
 #: config_form.php:75
