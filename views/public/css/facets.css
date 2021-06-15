@@ -43,7 +43,7 @@
 }
 
 .container-vertical {
-	max-width: 350px;
+	/* max-width: 350px; */
 }
 
 .container-vertical:not(:last-child) {
@@ -53,11 +53,9 @@
 .flex {
 	/* We first create a flex layout context */
 	display: flex;
+
 	/* Then we define the flow direction 
 	 and if we allow the items to wrap 
-	* Remember this is the same as:
-	* flex-direction: row;
-	* flex-wrap: wrap;
 	*/
 	flex-flow: row wrap;
 
@@ -68,8 +66,6 @@
 .container-horizontal {
 	max-width: 350px;
 	display: inline-block;
-	/* float: left; */
-	/* display: flex; */
 }
 
 .container-horizontal:not(:last-child) {
@@ -87,7 +83,7 @@
 	padding: 10px;
 }
 
-.facets-container .container {
+#facets-body {
 	width: 100%;
 	background-color: #F1F1F1;
 }
@@ -119,14 +115,4 @@
 .facet-selected {
 	color: #FFF;
 	background-color: #545759!important;
-}
-
-.facets-container .select-arrow, .facets-container .select-cross {
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.facets-container .select-arrow select::-ms-expand, .facets-container .select-cross select::-ms-expand {
-	display: none;
 }
