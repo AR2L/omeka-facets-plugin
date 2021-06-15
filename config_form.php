@@ -60,13 +60,13 @@
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_collapsable', __('Block collapsable')); ?>
+		<?php echo $view->formLabel('facets_collapsible', __('Block collapsible')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, facets block will be collapsable (tip: as it saves space, it\'s particularly useful with horizontal layout).'); ?>
+			<?php echo __('If checked, facets block will be collapsible (tip: as it saves space, it\'s particularly useful with horizontal layout).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('facets_collapsable', get_option('facets_collapsable'), null, array('1', '0')); ?>
+		<?php echo $view->formCheckbox('facets_collapsible', get_option('facets_collapsible'), null, array('1', '0')); ?>
     </div>
 </div>
 
