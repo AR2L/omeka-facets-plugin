@@ -21,7 +21,7 @@ Then install it like any other Omeka plugin.
 
 Facets will appear by default in the **Items browse** and **Collections browse** pages, where the `public_items_browse` and `public_collections_browse` hooks are set. It is possible to use instead a custom `public_items_facets` hook, that can be positioned wherever needed (`YOUR_THEME/items/browse.php` or `YOUR_THEME/common/header.php`, f.i.) according to the theme used. 
 
-For **Thanks, Roy** theme, for example, best way is to change `common/header.php` code using the custom hook, while unchecking **Block collapsable** option and setting **Vertical** as **Block layout**:
+For **Thanks, Roy** theme, for example, best way is to change `common/header.php` code using the custom hook, while unchecking **Block collapsible** option and setting **Vertical** as **Block layout**:
 ```php
 <div id="search-container" role="search">
     <?php if (get_theme_option('use_advanced_search') === null || get_theme_option('use_advanced_search')): ?>
@@ -32,7 +32,7 @@ For **Thanks, Roy** theme, for example, best way is to change `common/header.php
 </div>
 <?php fire_plugin_hook('public_facets', array('view' => $this)); ?>
 ```
-For **Berlin** theme, instead, check **Block collapsable** option, set **Horizontal** as **Block layout** and then add the custom hook in `items/browse.php` and `collections/browse.php`:
+For **Berlin** theme, instead, check **Block collapsible** option, set **Horizontal** as **Block layout** and then add the custom hook in `items/browse.php` and `collections/browse.php`:
 ```php
 <?php echo item_search_filters(); ?>
 <?php fire_plugin_hook('public_facets', array('view' => $this)); ?>
