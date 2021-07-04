@@ -113,8 +113,10 @@
 			}
 			
 			// Stores data for selected collection, if any
-			if ($collection_id = $_GET['collection']) {
-				$selectedCollection = $facetCollections[$collection_id];
+			if (isset($_GET['collection'])) {
+				if ($collection_id = $_GET['collection']) {
+					$selectedCollection = $facetCollections[$collection_id];
+				}
 			}
 
 			// Remove single entries if required
@@ -198,8 +200,10 @@
 			}
 			
 			// Stores data for selected item type, if any
-			if ($itemType_id = $_GET['type']) {
-				$selectedItemType = $facetItemTypes[$itemType_id];
+			if (isset($_GET['type'])) {
+				if ($itemType_id = $_GET['type']) {
+					$selectedItemType = $facetItemTypes[$itemType_id];
+				}
 			}
 
 			// Remove single entries if required
