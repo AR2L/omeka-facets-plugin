@@ -35,7 +35,7 @@
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
-							if ($html = get_dc_facet_select('collection', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $facetElement['sort'], $facetElement['popularity'])) {
+							if ($html = get_dc_facet_select('collection', $subsetSQL, $element->name, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
 								echo "<div class=\"container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo $html;
@@ -48,7 +48,7 @@
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
-							if ($html = get_dc_facet_select('item', $subsetSQL, $element->name, $isDate, $hideSingleEntries, $facetElement['sort'], $facetElement['popularity'])) {
+							if ($html = get_dc_facet_select('item', $subsetSQL, $element->name, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
 								echo "<div class=\"container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo $html;
