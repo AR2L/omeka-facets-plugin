@@ -45,7 +45,7 @@
 			}
 			
 			// Stores data for selected tag, if any
-			$selectedTagName = $_GET['tags'];
+			$selectedTagName = (isset($_GET['tags']) ? $_GET['tags'] : '');
 
 			// Remove single entries if required
 			if ($hideSingleEntries && count(array_filter($facetTags, 'excludeSingleValues')) > FACETS_MINIMUM_AMOUNT) {
