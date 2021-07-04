@@ -431,7 +431,10 @@
 	}
 	
 	function isFacetActive($recordType, $element_name, $settings) {
-		return ((bool)$settings['elements'][$element_name][$recordType]);
+		if (isset($settings['elements'][$element_name][$recordType]) {
+			return ((bool)$settings['elements'][$element_name][$recordType]);
+		}
+		return false;
 	}
 	
 	function isNotSingleEntry($count) {
