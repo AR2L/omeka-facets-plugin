@@ -104,7 +104,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 			->order('elements.order');
 		$elements = $table->fetchObjects($select);
 
-		include('config_form.php');
+		include 'config_form.php';
 	}
 
 	/**
@@ -284,10 +284,10 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
  		
 		if ($controller == 'items' && $action == 'browse') {
 			$params = array(
-				'advanced' => $_GET['advanced'], 
-				'collection' => $_GET['collection'], 
-				'type' => $_GET['type'], 
-				'tags' => $_GET['tags']
+				'advanced' => (isset($_GET['advanced']) ? $_GET['advanced'] : ''), 
+				'collection' => (isset($_GET['collection']) ? $_GET['collection'] : ''), 
+				'type' => (isset($_GET['type']) ? $_GET['type'] : ''),
+				'tags' => (isset($_GET['tags']) ? $_GET['tags'] : '')
 			);
 
 			if (recordTypeActive('item', $settings['elements']) && count(get_records('item', $params, null)) > 0) {
@@ -298,7 +298,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 			}
 		} elseif ($controller == 'collections' && $action == 'browse') {
 			$params = array(
-				'advanced' => $_GET['advanced']
+				'advanced' => (isset($_GET['advanced']) ? $_GET['advanced'] : '')
 			);
 			if (recordTypeActive('collection', $settings['elements']) && count(get_records('collection', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
