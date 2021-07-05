@@ -4,7 +4,7 @@
 
 Plugin for Omeka Classic. Once installed and active, allows to insert a Facets block made of option dropdown boxes containing available metadata values extracted from browsing context. Works for both Items and Collections.
 
-Settings allow to choose the hook to be used, which elements use for search refinement, whether to ignore single entries, sorting order for values, whether to show values popolarity, whether to use an horizontal or vertical layout, etc.
+Settings allow to choose the hook to be used, which criteria use for search refinement, whether to ignore single entries, sorting order for values, whether to show values popolarity, whether to use an horizontal or vertical layout, etc.
 
 ## Credits
 
