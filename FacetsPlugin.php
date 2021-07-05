@@ -6,9 +6,7 @@
  * @package FacetsPlugin
  */
 
-if (!defined('FACETS_PLUGIN_DIR')) {
-	define('FACETS_PLUGIN_DIR', dirname(__FILE__));
-}
+define('FACETS_PLUGIN_DIR', dirname(__FILE__));
 define('FACETS_MINIMUM_AMOUNT', 5);
 
 require_once FACETS_PLUGIN_DIR . '/helpers/FacetsFunctions.php';
@@ -98,7 +96,6 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 
 		$table = get_db()->getTable('Element');
 		$select = $table->getSelect()
-			->where('element_sets.name = \'Dublin Core\'')
 			->order('elements.element_set_id')
 			->order('ISNULL(elements.order)')
 			->order('elements.order');
