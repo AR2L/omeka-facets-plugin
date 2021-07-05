@@ -5,11 +5,12 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Reference\n"
-"Report-Msgid-Bugs-To: http://github.com/Daniel-KM/Reference/issues\n"
-"POT-Creation-Date: 2021-06-08 13:56-0000\n"
-"PO-Revision-Date: 2021-06-13 15:39-0000\n"
-"Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
+"Project-Id-Version: Facets\n"
+"Report-Msgid-Bugs-To: https://github.com/DBinaghi/plugin-Facets/issues\n"
+"POT-Creation-Date: 2021-06-08 13:56-0001\n"
+"PO-Revision-Date: 2021-06-13 15:39-0001\n"
+"PO-Revision-Date: 2021-07-05 15:17-0001\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -104,81 +105,59 @@ msgid "Elements"
 msgstr "Elementi"
 
 #: config_form.php:101
-msgid "The Dublin Core elements that can be used for search refinement."
-msgstr "Gli elementi Dublin Core che possono essere usati per il raffinamento della ricerca."
+msgid 
+"The elements that can be used for search refinement. Item and Collection columns to (de)activate, "
+"Sort order column to choose sorting order, Popularity column to show counters near names."
+msgstr 
+"Gli elementi che possono essere usati per il raffinamento della ricerca. Colonne Documento e Collezione "
+"per (dis)attivare, Ordinamento per scegliere il criterio di ordinamento, Popolarità per mostrare i "
+"contatori vicino ai nomi."
 
-#: config_form.php:106
+#: config_form.php:103
 msgid "Element name"
 msgstr "Nome elemento"
 
-#: config_form.php:107
+#: config_form.php:104
 msgid "Item"
 msgstr "Documento"
 
-#: config_form.php:108
+#: config_form.php:105
 msgid "Collection"
 msgstr "Collezione"
 
-#: config_form.php:109
-#: config_form.php:185
-#: config_form.php:231
-#: config_form.php:277
+#: config_form.php:106
 msgid "Ordinamento"
 msgstr ""
 
-#: config_form.php:110
-#: config_form.php:205
-#: config_form.php:251
-#: config_form.php:297
+#: config_form.php:107
 msgid "Popularity"
 msgstr "Popolarità"
 
-#: config_form.php:145
-#: config_form.php:196
-#: config_form.php:242
-#: config_form.php:288
+#: config_form.php:159
+#: config_form.php:201
+#: config_form.php:243
+#: config_form.php:285
 msgid "Alphabetical"
 msgstr "Alfabetico"
 
-#: config_form.php:146
-#: config_form.php:197
-#: config_form.php:243
-#: config_form.php:289
+#: config_form.php:160
+#: config_form.php:202
+#: config_form.php:244
+#: config_form.php:286
 msgid "Popularity first, then alphabetical"
 msgstr "Popolarità prima, poi alfabetico"
 
-#: config_form.php:169
+#: config_form.php:178
+#: config_form.php:182
 msgid "Item Types"
 msgstr "Tipologie documento"
 
-#: config_form.php:173
-#: config_form.php:219
-#: config_form.php:265
-msgid "Active"
-msgstr "Attivo"
-
-#: config_form.php:177
-msgid "If checked, search refinement by Item Type will be available (Items only)."
-msgstr "Se selezionata, il raffinamento della ricerca per Tipologia di Documento sarà disponibile (solo per Documenti)."
-
-#: config_form.php:209
-#: config_form.php:255
-#: config_form.php:301
-msgid "If checked, values's popularity will be displayed."
-msgstr "Se selezionata, la poporità dei valori verrà mostrata."
-
-#: config_form.php:215
+#: config_form.php:220
+#: config_form.php:224
 msgid "Collections"
 msgstr "Collezioni"
 
-#: config_form.php:223
-msgid "If checked, search refinement by Collection will be available (Items only)."
-msgstr "Se selezionata, il raffinamento della ricerca per Collezione sarà disponibile (solo per Documenti)."
-
-#: config_form.php:261
+#: config_form.php:262
+#: config_form.php:266
 msgid "Tags"
 msgstr "Etichette"
-
-#: config_form.php:269
-msgid "If checked, search refinement by Tag will be available (Items only)."
-msgstr "Se selezionata, il raffinamento della ricerca per Etichetta sarà disponibile (solo per Documenti)."
