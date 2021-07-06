@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: browse.php:23
-msgid "Refine search by"
-msgstr "Raffina la ricerca per"
+msgid "Refine search"
+msgstr "Raffina la ricerca"
 
 #: FacetsFunctions.php:59
 #: FacetsFunctions.php:135
