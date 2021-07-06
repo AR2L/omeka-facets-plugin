@@ -19,7 +19,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		'initialize',
 		'config_form',
 		'config',
-        'collections_browse_sql',
+		'collections_browse_sql',
 		'public_head',
 		'public_items_browse',
 		'public_collections_browse',
@@ -34,7 +34,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', 'default');
 		set_option('facets_description', '');
 		set_option('facets_hide_single_entries', 0);
-		set_option('facets_collapsable', 0);
+		set_option('facets_collapsible', 0);
 		set_option('facets_direction', 'vertical');
 
 		$defaults = array(
@@ -60,7 +60,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_public_hook');
 		delete_option('facets_description');
 		delete_option('facets_hide_single_entries');
-		delete_option('facets_collapsable');
+		delete_option('facets_collapsible');
 		delete_option('facets_direction');
 		delete_option('facets_elements');
 		delete_option('facets_item_types_active');
@@ -79,7 +79,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	 */
 	public function hookInitialize()
 	{
-        add_translation_source(dirname(__FILE__) . '/languages');
+		add_translation_source(dirname(__FILE__) . '/languages');
 
 		get_view()->addHelperPath(dirname(__FILE__) . '/views/helpers', 'Facets_View_Helper_');
 
@@ -114,7 +114,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', $post['facets_public_hook']);
 		set_option('facets_description', $post['facets_description']);
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
-		set_option('facets_collapsable', $post['facets_collapsable']);
+		set_option('facets_collapsible', $post['facets_collapsible']);
 		set_option('facets_direction', $post['facets_direction']);
 
 		$settings = array(
@@ -133,117 +133,117 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_tags_popularity', $post['facets_tags_popularity']);
 	}
 
-    /**
-     * Hook into collections_browse_sql
-     *
-     * @select array $args
-     * @params array $args
-     */
-    public function hookCollectionsBrowseSql($args)
-    {
-        $db = $this->_db;
-        $select = $args['select'];
-        $params = $args['params'];
+	/**
+	 * Hook into collections_browse_sql
+	 *
+	 * @select array $args
+	 * @params array $args
+	 */
+	public function hookCollectionsBrowseSql($args)
+	{
+		$db = $this->_db;
+		$select = $args['select'];
+		$params = $args['params'];
 
 		// if (array_key_exists('_advanced_0', $select->getPart('from')) return;
 		
 		if (strpos($select, '_advanced_') !== false) return;
-        
-        if ($advancedTerms = @$params['advanced']) {
-            $where = '';
-            $advancedIndex = 0;
-            foreach ($advancedTerms as $v) {
-                // Do not search on blank rows.
-                if (empty($v['element_id']) || empty($v['type'])) {
-                    continue;
-                }
+		
+		if ($advancedTerms = @$params['advanced']) {
+			$where = '';
+			$advancedIndex = 0;
+			foreach ($advancedTerms as $v) {
+				// Do not search on blank rows.
+				if (empty($v['element_id']) || empty($v['type'])) {
+					continue;
+				}
 
-                $value = isset($v['terms']) ? $v['terms'] : null;
-                $type = $v['type'];
-                $elementId = (int) $v['element_id'];
-                $alias = "_advanced_{$advancedIndex}";
+				$value = isset($v['terms']) ? $v['terms'] : null;
+				$type = $v['type'];
+				$elementId = (int) $v['element_id'];
+				$alias = "_advanced_{$advancedIndex}";
 
-                $joiner = isset($v['joiner']) && $advancedIndex > 0 ? $v['joiner'] : null;
+				$joiner = isset($v['joiner']) && $advancedIndex > 0 ? $v['joiner'] : null;
 
-                $negate = false;
-                // Determine what the WHERE clause should look like.
-                switch ($type) {
-                    case 'does not contain':
-                        $negate = true;
-                    case 'contains':
-                        $predicate = "LIKE " . $db->quote('%'.$value .'%');
-                        break;
+				$negate = false;
+				// Determine what the WHERE clause should look like.
+				switch ($type) {
+					case 'does not contain':
+						$negate = true;
+					case 'contains':
+						$predicate = "LIKE " . $db->quote('%'.$value .'%');
+						break;
 
-                    case 'is not exactly':
-                        $negate = true;
-                    case 'is exactly':
-                        $predicate = ' = ' . $db->quote($value);
-                        break;
+					case 'is not exactly':
+						$negate = true;
+					case 'is exactly':
+						$predicate = ' = ' . $db->quote($value);
+						break;
 
-                    case 'is empty':
-                        $negate = true;
-                    case 'is not empty':
-                        $predicate = 'IS NOT NULL';
-                        break;
+					case 'is empty':
+						$negate = true;
+					case 'is not empty':
+						$predicate = 'IS NOT NULL';
+						break;
 
-                    case 'starts with':
-                        $predicate = "LIKE " . $db->quote($value.'%');
-                        break;
+					case 'starts with':
+						$predicate = "LIKE " . $db->quote($value.'%');
+						break;
 
-                    case 'ends with':
-                        $predicate = "LIKE " . $db->quote('%'.$value);
-                        break;
+					case 'ends with':
+						$predicate = "LIKE " . $db->quote('%'.$value);
+						break;
 
-                    case 'does not match':
-                        $negate = true;
-                    case 'matches':
-                        if (!strlen($value)) {
-                            continue 2;
-                        }
-                        $predicate = 'REGEXP ' . $db->quote($value);
-                        break;
+					case 'does not match':
+						$negate = true;
+					case 'matches':
+						if (!strlen($value)) {
+							continue 2;
+						}
+						$predicate = 'REGEXP ' . $db->quote($value);
+						break;
 
-                    default:
-                        throw new Omeka_Record_Exception(__('Invalid search type given!'));
-                }
+					default:
+						throw new Omeka_Record_Exception(__('Invalid search type given!'));
+				}
 
-                $predicateClause = "{$alias}.text {$predicate}";
+				$predicateClause = "{$alias}.text {$predicate}";
 
-                // Note that $elementId was earlier forced to int, so manual quoting
-                // is unnecessary here
-                $joinCondition = "{$alias}.record_id = collections.id AND {$alias}.record_type = 'Collection' AND {$alias}.element_id = $elementId";
+				// Note that $elementId was earlier forced to int, so manual quoting
+				// is unnecessary here
+				$joinCondition = "{$alias}.record_id = collections.id AND {$alias}.record_type = 'Collection' AND {$alias}.element_id = $elementId";
 
-                if ($negate) {
-                    $joinCondition .= " AND {$predicateClause}";
-                    $whereClause = "{$alias}.text IS NULL";
-                } else {
-                    $whereClause = $predicateClause;
-                }
+				if ($negate) {
+					$joinCondition .= " AND {$predicateClause}";
+					$whereClause = "{$alias}.text IS NULL";
+				} else {
+					$whereClause = $predicateClause;
+				}
 
-                $select->joinLeft(array($alias => $db->ElementText), $joinCondition, array());
-                if ($where == '') {
-                    $where = $whereClause;
-                } elseif ($joiner == 'or') {
-                    $where .= " OR $whereClause";
-                } else {
-                    $where .= " AND $whereClause";
-                }
+				$select->joinLeft(array($alias => $db->ElementText), $joinCondition, array());
+				if ($where == '') {
+					$where = $whereClause;
+				} elseif ($joiner == 'or') {
+					$where .= " OR $whereClause";
+				} else {
+					$where .= " AND $whereClause";
+				}
 
-                $advancedIndex++;
-            }
+				$advancedIndex++;
+			}
 
-            if ($where) {
-                $select->where($where);
-            }
-        }            
-    }
+			if ($where) {
+				$select->where($where);
+			}
+		}			
+	}
 
 	public function hookPublicHead($args)
 	{
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 		$controller = $request->getControllerName();
 		$action = $request->getActionName();
- 		
+		
 		if (($action == 'browse' && ($controller == 'items' || $controller == 'collections')) || ($controller == 'search' && $action == 'index')) {
 			queue_css_file('facets');
 		}
@@ -278,7 +278,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 		$controller = $request->getControllerName();
 		$action = $request->getActionName();
- 		
+		
 		if ($controller == 'items' && $action == 'browse') {
 			$params = array(
 				'advanced' => (isset($_GET['advanced']) ? $_GET['advanced'] : ''), 
