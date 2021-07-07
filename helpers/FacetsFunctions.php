@@ -302,7 +302,7 @@
 			$facet = array();
 			foreach ($elements as $element) {
 				if ($isDate) {
-					$facet[$element->year] = $facet[$element->year] + $element->count;
+					$facet[$element->year] = $element->count;
 				} else {
 					$facet[$element->text] = $element->count;
 				}
