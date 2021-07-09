@@ -6,7 +6,6 @@
 
 	$table = get_db()->getTable('Element');
 	$select = $table->getSelect()
-		->where('element_sets.name = \'Dublin Core\'')
 		->order('elements.element_set_id')
 		->order('ISNULL(elements.order)')
 		->order('elements.order');
@@ -35,7 +34,7 @@
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
-							if ($html = get_dc_facet_select('collection', $subsetSQL, $element->name, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
+							if ($html = get_facet_select('collection', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
 								echo "<div class=\"container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo $html;
@@ -48,7 +47,7 @@
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
-							if ($html = get_dc_facet_select('item', $subsetSQL, $element->name, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
+							if ($html = get_facet_select('item', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
 								echo "<div class=\"container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo $html;
