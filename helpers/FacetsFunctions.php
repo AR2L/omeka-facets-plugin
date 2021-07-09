@@ -241,14 +241,14 @@
 	 * Return HTML Select associated with Array of facets values.
 	 *
 	 * @param itemsArray
-	 * @param dcElementName
+	 * @param elementId
 	 * @param isDate
 	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
-	 * @return html.
+	 * @return html
 	 */
-	function get_dc_facet_select($recordType, $subsetSQL, $dcElementName = 'Title', $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function get_facet_select($recordType, $subsetSQL, $elementId = 50, $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
 		// Create Where clauses
 		$whereRecordType = createWhereRecordTypeClause($recordType);
 		$whereSubset = createWhereSubsetClause($recordType, $subsetSQL);
@@ -279,19 +279,15 @@
 		// Build the select query.
 		$select = $table->getSelect();
 		$select->columns($columns);
-		$select->joinInner(array('elements' => $db->Elements),
-				'element_texts.element_id = elements.id', array());
-		$select->joinInner(array('element_sets' => $db->ElementSet),
-				'element_sets.id = elements.element_set_id', array());
+		$select->joinInner(array('elements' => $db->Elements), 'element_texts.element_id = elements.id', array());
+		$select->joinInner(array('element_sets' => $db->ElementSet), 'element_sets.id = elements.element_set_id', array());
 		if ($recordType == 'item') {
-			$select->joinInner(array('items' => $db->Item),
-					'items.id = element_texts.record_id', array());
+			$select->joinInner(array('items' => $db->Item), 'items.id = element_texts.record_id', array());
 		} else {
-			$select->joinInner(array('collections' => $db->Collection),
-					'collections.id = element_texts.record_id', array());
+			$select->joinInner(array('collections' => $db->Collection), 'collections.id = element_texts.record_id', array());
 		}
-		$select->where('element_sets.name = '. $db->quote('Dublin Core'));
-		$select->where('elements.name = '. $db->quote($dcElementName));
+		// $select->where('element_sets.name = '. $db->quote('Dublin Core'));
+		$select->where('elements.id = '. $elementId);
 		$select->where($whereRecordType);
 		$select->where($whereSubset);
 		$select->group($groupBy);
