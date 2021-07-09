@@ -324,12 +324,12 @@
 			$addOptions = false;
 			// Build first part of the select tag
 			if (isset($term)){
-				$html =	"<div class=\"select-cross\"><select id=\"" . $element_id . "\" class=\"facet-selected\" name=\"" . $dcElementName . "\">";
+				$html =	"<div class=\"select-cross\"><select id=\"" . $element_id . "\" class=\"facet-selected\" name=\"" . $elementId . "\">";
 				$url = getElementFieldUrl($element_id, null, $isDate);
 				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">$term</option>";
 			} elseif (count($facet) > 0) {
-				$html =	"<div class=\"select-arrow\"><select id=\"" . $element_id . "\" class=\"facet\" name=\"" . $dcElementName . "\">";
+				$html =	"<div class=\"select-arrow\"><select id=\"" . $element_id . "\" class=\"facet\" name=\"" . $elementId . "\">";
 				$html .= "<option value=\"\">" . html_escape(__('Select')) . "...</option>";
 				$addOptions = true;
 			}
