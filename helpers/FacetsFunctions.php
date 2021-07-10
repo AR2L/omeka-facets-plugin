@@ -114,7 +114,7 @@
 			
 			// Stores data for selected collection, if any
 			if (isset($_GET['collection'])) {
-				if ($collection_id = $_GET['collection']) {
+				if ($collection_id = $_GET['collection'] && array_key_exists($collection_id, $facetCollections)) {
 					$selectedCollection = $facetCollections[$collection_id];
 				}
 			}
@@ -201,7 +201,7 @@
 			
 			// Stores data for selected item type, if any
 			if (isset($_GET['type'])) {
-				if ($itemType_id = $_GET['type']) {
+				if ($itemType_id = $_GET['type'] && array_key_exists($itemType_id, $facetItemTypes)) {
 					$selectedItemType = $facetItemTypes[$itemType_id];
 				}
 			}
@@ -286,7 +286,6 @@
 		} else {
 			$select->joinInner(array('collections' => $db->Collection), 'collections.id = element_texts.record_id', array());
 		}
-		// $select->where('element_sets.name = '. $db->quote('Dublin Core'));
 		$select->where('elements.id = '. $elementId);
 		$select->where($whereRecordType);
 		$select->where($whereSubset);
