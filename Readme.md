@@ -47,7 +47,7 @@ Similarly, one can choose to also include **Item Types**, **Collections** and **
 
 **Single values** can be exluded as not really significant, although they will be listed anyway if less than 5 values are available.
 
-Facets block can be set up for **vertical** or **horizontal** layout, according to the theme layout; and it can be made **collapsable**, to use less vertical space (recommended for horizontal layout).
+Facets block can be set up for **vertical** or **horizontal** layout, according to the theme layout; and it can be made **collapsible**, to use less vertical space (recommended for horizontal layout).
 
 Sorting order can be **alphabetical**, or **first by popularity and then alphabetical**. Popularity count can be shown, if needed.
 
