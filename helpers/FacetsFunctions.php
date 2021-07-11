@@ -114,8 +114,10 @@
 			
 			// Stores data for selected collection, if any
 			if (isset($_GET['collection'])) {
-				if ($collection_id = $_GET['collection'] && array_key_exists($collection_id, $facetCollections)) {
-					$selectedCollection = $facetCollections[$collection_id];
+				if ($collection_id = $_GET['collection']) {
+                                        if (array_key_exists($collection_id, $facetCollections)) {
+					        $selectedCollection = $facetCollections[$collection_id];
+                                        }
 				}
 			}
 
@@ -201,8 +203,10 @@
 			
 			// Stores data for selected item type, if any
 			if (isset($_GET['type'])) {
-				if ($itemType_id = $_GET['type'] && array_key_exists($itemType_id, $facetItemTypes)) {
-					$selectedItemType = $facetItemTypes[$itemType_id];
+				if ($itemType_id = $_GET['type']) {
+                                        if (array_key_exists($itemType_id, $facetItemTypes)) {
+					        $selectedItemType = $facetItemTypes[$itemType_id];
+                                        }
 				}
 			}
 
