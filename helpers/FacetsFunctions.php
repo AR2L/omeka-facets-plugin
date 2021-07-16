@@ -98,8 +98,7 @@
 		// Build the select query.
 		$select = $table->getSelect()
 			->columns('COUNT(collections.id) AS count')
-			->joinInner(array('items' => $db->Items),
-				'collections.id = items.collection_id', array())
+			->joinInner(array('items' => $db->Items), 'collections.id = items.collection_id', array())
 			->where($whereSubset)
 			->group('collections.id');
 
@@ -115,9 +114,9 @@
 			// Stores data for selected collection, if any
 			if (isset($_GET['collection'])) {
 				if ($collection_id = $_GET['collection']) {
-                                        if (array_key_exists($collection_id, $facetCollections)) {
-					        $selectedCollection = $facetCollections[$collection_id];
-                                        }
+					if (array_key_exists($collection_id, $facetCollections)) {
+						$selectedCollection = $facetCollections[$collection_id];
+					}
 				}
 			}
 
@@ -186,8 +185,7 @@
 		// Build the select query.
 		$select = $table->getSelect()
 			->columns('COUNT(item_types.id) AS count')
-			->joinInner(array('items' => $db->Items),
-				'item_types.id = items.item_type_id', array())
+			->joinInner(array('items' => $db->Items), 'item_types.id = items.item_type_id', array())
 			->where($whereSubset)
 			->group('item_types.id')
 			->order($orderBy);
@@ -204,9 +202,9 @@
 			// Stores data for selected item type, if any
 			if (isset($_GET['type'])) {
 				if ($itemType_id = $_GET['type']) {
-                                        if (array_key_exists($itemType_id, $facetItemTypes)) {
-					        $selectedItemType = $facetItemTypes[$itemType_id];
-                                        }
+					if (array_key_exists($itemType_id, $facetItemTypes)) {
+						$selectedItemType = $facetItemTypes[$itemType_id];
+					}
 				}
 			}
 
