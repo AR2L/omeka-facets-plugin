@@ -30,12 +30,12 @@ For **Thanks, Roy** theme, for example, best way is to change `common/header.php
     <?php echo search_form(); ?>
     <?php endif; ?>
 </div>
-<?php get_specific_plugin_hook_output('Facets', 'public_facets', array('view' => $this)); ?>
+<?php echo get_specific_plugin_hook_output('Facets', 'public_facets', array('view' => $this)); ?>
 ```
 For **Berlin** theme, instead, check **Block collapsible** option, set **Horizontal** as **Block layout** and then add the custom hook in `items/browse.php` and `collections/browse.php`:
 ```php
 <?php echo item_search_filters(); ?>
-<?php get_specific_plugin_hook_output('Facets', 'public_facets', array('view' => $this)); ?>
+<?php echo get_specific_plugin_hook_output('Facets', 'public_facets', array('view' => $this)); ?>
 <?php echo pagination_links(); ?>
 ```
 
