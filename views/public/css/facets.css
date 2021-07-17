@@ -44,19 +44,21 @@
 
 .facets-container-vertical {
 	/* max-width: 350px; */
+	clear: both;
 }
 
-.facets-container-vertical:not(:last-child) {
-	padding-bottom: 20px;
+.facets-container-vertical:not(:last-child), .facets-container-horizontal:not(:last-child) {
+	margin-bottom: 20px;
 }
 
 .facets-container-horizontal {
 	max-width: 350px;
+	clear: both;
 	display: inline-block;
 }
 
-.facets-container-horizontal:not(:last-child) {
-	padding-bottom: 20px;
+.facets-container-vertical label, .facets-container-horizontal label {
+	font-weight: bold;
 }
 
 .flex {
@@ -122,6 +124,11 @@
 .facet-visibility-toggle {
 	float: right;
 	cursor: pointer;
+	line-height: 90%;
+}
+
+.facet-visibility-toggle:hover {
+	font-weight: normal!important;
 }
 
 .facet-checkbox-count {
