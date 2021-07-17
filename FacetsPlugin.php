@@ -5,6 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @package FacetsPlugin
  */
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 define('FACETS_PLUGIN_DIR', dirname(__FILE__));
 define('FACETS_MINIMUM_AMOUNT', 5);
@@ -34,20 +37,25 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', 'default');
 		set_option('facets_description', '');
 		set_option('facets_hide_single_entries', 0);
-		set_option('facets_collapsible', 0);
 		set_option('facets_direction', 'vertical');
+		set_option('facets_collapsible', 0);
+		set_option('facets_checkbox_minimum_amount', FACETS_MINIMUM_AMOUNT);
 
 		$defaults = array(
-			'elements' => array('item', 'collection', 'sort', 'popularity')
+			'elements' => array('item', 'collection', 'type', 'sort', 'popularity')
 		);
 		set_option('facets_elements', json_encode($defaults));
+
 		set_option('facets_item_types_active', 0);
+		set_option('facets_item_types_style', '');
 		set_option('facets_item_types_sort', '');
 		set_option('facets_item_types_popularity', 0);
 		set_option('facets_collections_active', 1);
+		set_option('facets_collections_style', '');
 		set_option('facets_collections_sort', 'count_alpha');
 		set_option('facets_collections_popularity', 1);
 		set_option('facets_tags_active', 0);
+		set_option('facets_tags_style', '');
 		set_option('facets_tags_sort', '');
 		set_option('facets_tags_popularity', 0);
 	}
@@ -60,16 +68,20 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_public_hook');
 		delete_option('facets_description');
 		delete_option('facets_hide_single_entries');
-		delete_option('facets_collapsible');
 		delete_option('facets_direction');
+		delete_option('facets_collapsible');
+		delete_option('facets_checkbox_minimum_amount');
 		delete_option('facets_elements');
 		delete_option('facets_item_types_active');
+		delete_option('facets_item_types_style');
 		delete_option('facets_item_types_sort');
 		delete_option('facets_item_types_popularity');
 		delete_option('facets_collections_active');
+		delete_option('facets_collections_style');
 		delete_option('facets_collections_sort');
 		delete_option('facets_collections_popularity');
 		delete_option('facets_tags_active');
+		delete_option('facets_tags_style');
 		delete_option('facets_tags_sort');
 		delete_option('facets_tags_popularity');
 	}
@@ -114,8 +126,9 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_public_hook', $post['facets_public_hook']);
 		set_option('facets_description', $post['facets_description']);
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
-		set_option('facets_collapsible', $post['facets_collapsible']);
 		set_option('facets_direction', $post['facets_direction']);
+		set_option('facets_collapsible', $post['facets_collapsible']);
+		set_option('facets_checkbox_minimum_amount', $post['facets_checkbox_minimum_amount']);
 
 		$settings = array(
 			'elements' => isset($post['elements']) ? $post['elements'] : array()
@@ -123,12 +136,15 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_elements', json_encode($settings));
 
 		set_option('facets_item_types_active', $post['facets_item_types_active']);
+		set_option('facets_item_types_style', $post['facets_item_types_style']);
 		set_option('facets_item_types_sort', $post['facets_item_types_sort']);
 		set_option('facets_item_types_popularity', $post['facets_item_types_popularity']);
 		set_option('facets_collections_active', $post['facets_collections_active']);
+		set_option('facets_collections_style', $post['facets_collections_style']);
 		set_option('facets_collections_sort', $post['facets_collections_sort']);
 		set_option('facets_collections_popularity', $post['facets_collections_popularity']);
 		set_option('facets_tags_active', $post['facets_tags_active']);
+		set_option('facets_tags_style', $post['facets_tags_style']);
 		set_option('facets_tags_sort', $post['facets_tags_sort']);
 		set_option('facets_tags_popularity', $post['facets_tags_popularity']);
 	}
@@ -245,6 +261,13 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		$action = $request->getActionName();
 		
 		if (($action == 'browse' && ($controller == 'items' || $controller == 'collections')) || ($controller == 'search' && $action == 'index')) {
+			$language = array(
+				'ShowMore' => __('show more'),
+				'ShowLess' => __('show less')
+			);
+			$language = json_encode($language);
+			queue_js_string("facetsLanguage = {language: $language};");
+			queue_js_file('facets');
 			queue_css_file('facets');
 		}
 	}
