@@ -1,4 +1,4 @@
-.facets-container {
+#facets-container {
 	margin-bottom: 20px;
 }
 
@@ -19,7 +19,7 @@
 	width: 100%;
 }
 
-.facets-container button {
+#facets-container button {
 	width: 100%;
 	text-align: center;
 	font-weight: bold;
@@ -42,11 +42,20 @@
 	margin-left: 5px;
 }
 
-.container-vertical {
+.facets-container-vertical {
 	/* max-width: 350px; */
 }
 
-.container-vertical:not(:last-child) {
+.facets-container-vertical:not(:last-child) {
+	padding-bottom: 20px;
+}
+
+.facets-container-horizontal {
+	max-width: 350px;
+	display: inline-block;
+}
+
+.facets-container-horizontal:not(:last-child) {
 	padding-bottom: 20px;
 }
 
@@ -63,16 +72,7 @@
 	justify-content: space-between;
 }
 
-.container-horizontal {
-	max-width: 350px;
-	display: inline-block;
-}
-
-.container-horizontal:not(:last-child) {
-	padding-bottom: 20px;
-}
-
-.facets-container p.description {
+#facets-container p.description {
 	text-align: left;
 	color: #545759;
 	font-size: 90%;
@@ -88,20 +88,20 @@
 	background-color: #F1F1F1;
 }
 
-.facets-container .hidden {
+#facets-container .hidden {
 	display: none;
 }
 
-.facets-container form {
+#facets-container form {
 	padding: 20px 10px;
 }
 
-.facets-container form label {
+#facets-container form label {
 	margin-bottom: 8px;
 	color: #545759;
 }
 
-.facets-container form select {
+#facets-container form select {
 	width: 100%;
 	border: 0;
 	background-color: #FFF;
@@ -112,4 +112,27 @@
 .facet-selected {
 	color: #FFF;
 	background-color: #545759!important;
+}
+
+.facet-checkbox, .facet-checkbox-all, .facet-visibility-toggle {
+	display: block;
+	font-size: 90%;
+}
+
+.facet-visibility-toggle {
+	float: right;
+	cursor: pointer;
+}
+
+.facet-checkbox-count {
+	float: right;
+	color: #545759;
+}
+
+.hidden {
+    display: none;
+}
+
+.unhidden {
+    display: block;
 }
