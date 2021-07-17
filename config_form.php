@@ -60,13 +60,13 @@
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_collapsible', __('Block collapsible')); ?>
+		<?php echo $view->formLabel('facets_checkbox_minimum_amount', __('Minimum checkbox count')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, facets block will be collapsible (tip: as it saves space, it\'s particularly useful with horizontal theme layouts).'); ?>
+			<?php echo __('For all fields using the checkbox style, minimum amount of values to be displayed (0 means all values displayed).', FACETS_MINIMUM_AMOUNT); ?>
 		</p>
-		<?php echo $view->formCheckbox('facets_collapsible', get_option('facets_collapsible'), null, array('1', '0')); ?>
+		<?php echo $view->formText('facets_checkbox_minimum_amount', get_option('facets_checkbox_minimum_amount')); ?>
     </div>
 </div>
 
@@ -90,12 +90,24 @@
    </div>
 </div>
 
+<div class="field">
+	<div class="two columns alpha">
+		<?php echo $view->formLabel('facets_collapsible', __('Block collapsible')); ?>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation">
+			<?php echo __('If checked, facets block will be collapsible (tip: as it saves space, it\'s particularly useful with horizontal theme layouts).'); ?>
+		</p>
+		<?php echo $view->formCheckbox('facets_collapsible', get_option('facets_collapsible'), null, array('1', '0')); ?>
+    </div>
+</div>
+
 <h2><?php echo __('Elements'); ?></h2>
 
 <div class="field">
 	<div class="inputs seven columns alpha">
 		<p class="explanation">
-			<?php echo __('The elements that can be used for search refinement. Item and Collection columns to (de)activate, Sort order column to choose sorting order, Popularity column to show counters near names.'); ?>
+			<?php echo __('The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to choose the facet style, Sort order column to choose sorting order, Popularity column to show counters near names.'); ?>
 		</p>
 		<table id="facets_elements-table">
 			<thead>
@@ -103,6 +115,7 @@
 					<th class="boxes"><?php echo __('Element name'); ?></th>
 					<th class="boxes"><?php echo __('Item'); ?></th>
 					<th class="boxes"><?php echo __('Collection'); ?></th>
+					<th class="boxes"><?php echo __('Style'); ?></th>
 					<th class="boxes"><?php echo __('Sort order'); ?></th>
 					<th class="boxes"><?php echo __('Popularity'); ?></th>
 				</tr>
@@ -115,7 +128,7 @@
 							$current_element_set = $element->set_name;
 				?>
 				<tr>
-					<th colspan="5">
+					<th colspan="6">
 						<strong><?php echo __($current_element_set); ?></strong>
 					</th>
 				</tr>
@@ -150,6 +163,19 @@
 					</td>
 					<td class="boxes">
 						<?php 
+							$type = (isset($settings['elements'][$element->name]['type']) ? $settings['elements'][$element->name]['type'] : '');
+							echo $view->formSelect(
+							"elements[{$element->name}][type]",
+							$type,
+							array(),
+							array(
+								'dropdown' => __('Dropdown'),
+								'checkbox' => __('Checkbox')
+							)); 
+						?>
+					</td>
+					<td class="boxes">
+						<?php 
 							$sortOrder = (isset($settings['elements'][$element->name]['sort']) ? $settings['elements'][$element->name]['sort'] : '');
 							echo $view->formSelect(
 							"elements[{$element->name}][sort]",
@@ -174,7 +200,7 @@
 				</tr>
 			<?php endforeach; ?>
 				<tr>
-					<th colspan="5">
+					<th colspan="6">
 						<strong><?php echo __('Item Types'); ?></strong>
 					</th>
 				</tr>
@@ -190,6 +216,19 @@
 					</td>
 					<td class="boxes">
 						&nbsp
+					</td>
+					<td class="boxes">
+						<?php 
+							$type = (isset($settings['facets_item_types_style']) ? $settings['facets_item_types_style'] : '');
+							echo $view->formSelect(
+							"facets_item_types_style",
+							$type,
+							array(),
+							array(
+								'dropdown' => __('Dropdown'),
+								'checkbox' => __('Checkbox')
+							)); 
+						?>
 					</td>
 					<td class="boxes">
 						<?php 
@@ -216,7 +255,7 @@
 					</td>
 				</tr>				
 				<tr>
-					<th colspan="5">
+					<th colspan="6">
 						<strong><?php echo __('Collections'); ?></strong>
 					</th>
 				</tr>
@@ -232,6 +271,19 @@
 					</td>
 					<td class="boxes">
 						&nbsp
+					</td>
+					<td class="boxes">
+						<?php 
+							$type = (isset($settings['facets_collections_style']) ? $settings['facets_collections_style'] : '');
+							echo $view->formSelect(
+							"facets_collections_style",
+							$type,
+							array(),
+							array(
+								'dropdown' => __('Dropdown'),
+								'checkbox' => __('Checkbox')
+							)); 
+						?>
 					</td>
 					<td class="boxes">
 						<?php 
@@ -258,7 +310,7 @@
 					</td>
 				</tr>				
 				<tr>
-					<th colspan="5">
+					<th colspan="6">
 						<strong><?php echo __('Tags'); ?></strong>
 					</th>
 				</tr>
@@ -274,6 +326,19 @@
 					</td>
 					<td class="boxes">
 						&nbsp
+					</td>
+					<td class="boxes">
+						<?php 
+							$type = (isset($settings['facets_tags_style']) ? $settings['facets_tags_style'] : '');
+							echo $view->formSelect(
+							"facets_tags_style",
+							$type,
+							array(),
+							array(
+								'dropdown' => __('Dropdown'),
+								'checkbox' => __('Checkbox')
+							)); 
+						?>
 					</td>
 					<td class="boxes">
 						<?php 
