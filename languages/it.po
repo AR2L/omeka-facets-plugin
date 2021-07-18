@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: FacetsPlugin.php:11
+msgid "show more"
+msgstr "mostra altro"
+
+#: FacetsPlugin.php:12
+msgid "show less"
+msgstr "mostra meno"
+
 #: browse.php:23
 msgid "Refine search"
 msgstr "Raffina la ricerca"
