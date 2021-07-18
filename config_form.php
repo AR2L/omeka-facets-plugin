@@ -165,37 +165,41 @@
 						<?php 
 							$type = (isset($settings['elements'][$element->name]['type']) ? $settings['elements'][$element->name]['type'] : '');
 							echo $view->formSelect(
-							"elements[{$element->name}][type]",
-							$type,
-							array(),
-							array(
-								'dropdown' => __('Dropdown'),
-								'checkbox' => __('Checkbox')
-							)); 
+								"elements[{$element->name}][type]",
+								$type,
+								array(),
+								array(
+									'dropdown' => __('Dropdown'),
+									'checkbox' => __('Checkbox')
+								)
+							); 
 						?>
 					</td>
 					<td class="boxes">
 						<?php 
 							$sortOrder = (isset($settings['elements'][$element->name]['sort']) ? $settings['elements'][$element->name]['sort'] : '');
 							echo $view->formSelect(
-							"elements[{$element->name}][sort]",
-							$sortOrder,
-							array(),
-							array(
-								'alpha' => __('Alphabetical'),
-								'count_alpha' => __('Popularity first, then alphabetical')
-							)); 
+								"elements[{$element->name}][sort]",
+								$sortOrder,
+								array(),
+								array(
+									'alpha' => __('Alphabetical'),
+									'count_alpha' => __('Popularity first, then alphabetical')
+								)
+							); 
 						?>
 					</td>
 					<td class="boxes">
-						<?php echo $view->formCheckbox(
-							"elements[{$element->name}][popularity]",
-							'1', 
-							array(
-								'disableHidden' => true,
-								'checked' => isset($settings['elements'][$element->name]['popularity'])
-							)
-						); ?>
+						<?php 
+							echo $view->formCheckbox(
+								"elements[{$element->name}][popularity]",
+								'1', 
+								array(
+									'disableHidden' => true,
+									'checked' => isset($settings['elements'][$element->name]['popularity'])
+								)
+							); 
+						?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -207,12 +211,14 @@
 				<tr>
 					<td><?php echo __('Item Types'); ?></td>
 					<td class="boxes">
-						<?php echo $view->formCheckbox(
-							"facets_item_types_active",
-							get_option('facets_item_types_popularity'), 
-							null, 
-							array('1', '0')
-						); ?>
+						<?php 
+							echo $view->formCheckbox(
+								"facets_item_types_active",
+								get_option('facets_item_types_popularity'), 
+								null, 
+								array('1', '0')
+							); 
+						?>
 					</td>
 					<td class="boxes">
 						&nbsp
@@ -262,12 +268,14 @@
 				<tr>
 					<td><?php echo __('Collections'); ?></td>
 					<td class="boxes">
-						<?php echo $view->formCheckbox(
-							"facets_collections_active",
-							get_option('facets_collections_popularity'), 
-							null, 
-							array('1', '0')
-						); ?>
+						<?php 
+							echo $view->formCheckbox(
+								"facets_collections_active",
+								get_option('facets_collections_popularity'), 
+								null, 
+								array('1', '0')
+							); 
+						?>
 					</td>
 					<td class="boxes">
 						&nbsp
@@ -317,12 +325,14 @@
 				<tr>
 					<td><?php echo __('Tags'); ?></td>
 					<td class="boxes">
-						<?php echo $view->formCheckbox(
-							"facets_tags_active",
-							get_option('facets_tags_popularity'), 
-							null, 
-							array('1', '0')
-						); ?>
+						<?php 
+							echo $view->formCheckbox(
+								"facets_tags_active",
+								get_option('facets_tags_popularity'), 
+								null, 
+								array('1', '0')
+							); 
+						?>
 					</td>
 					<td class="boxes">
 						&nbsp
