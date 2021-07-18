@@ -205,7 +205,7 @@
 			<?php endforeach; ?>
 				<tr>
 					<th colspan="6">
-						<strong><?php echo __('Item Types'); ?></strong>
+						<strong><?php echo __('Extra parameters'); ?></strong>
 					</th>
 				</tr>
 				<tr>
@@ -261,11 +261,6 @@
 					</td>
 				</tr>				
 				<tr>
-					<th colspan="6">
-						<strong><?php echo __('Collections'); ?></strong>
-					</th>
-				</tr>
-				<tr>
 					<td><?php echo __('Collections'); ?></td>
 					<td class="boxes">
 						<?php 
@@ -317,11 +312,6 @@
 						?>
 					</td>
 				</tr>				
-				<tr>
-					<th colspan="6">
-						<strong><?php echo __('Tags'); ?></strong>
-					</th>
-				</tr>
 				<tr>
 					<td><?php echo __('Tags'); ?></td>
 					<td class="boxes">
