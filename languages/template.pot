@@ -10,6 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2021-06-08 13:56-0001\n"
 "PO-Revision-Date: 2021-06-13 15:39-0001\n"
 "PO-Revision-Date: 2021-07-05 15:17-0001\n"
+"PO-Revision-Date: 2021-07-18 17:16-0001\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -21,17 +22,17 @@ msgstr ""
 msgid "Refine search"
 msgstr ""
 
-#: FacetsFunctions.php:59
-#: FacetsFunctions.php:135
-#: FacetsFunctions.php:212
-#: FacetsFunctions.php:315
+#: FacetsFunctions.php:62
+#: FacetsFunctions.php:201
+#: FacetsFunctions.php:346
+#: FacetsFunctions.php:534
 msgid "Remove filter"
 msgstr ""
 
-#: FacetsFunctions.php:63
-#: FacetsFunctions.php:139
-#: FacetsFunctions.php:216
-#: FacetsFunctions.php:319
+#: FacetsFunctions.php:66
+#: FacetsFunctions.php:205
+#: FacetsFunctions.php:350
+#: FacetsFunctions.php:538
 msgid "Select"
 msgstr ""
 
@@ -71,11 +72,11 @@ msgid "If checked, values with just one entry will not be listed (unless there's
 msgstr ""
 
 #: config_form.php:63
-msgid "Block collapsible"
+msgid "Minimum checkbox count"
 msgstr ""
 
 #: config_form.php:67
-msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
+msgid "For all fields using the checkbox style, minimum amount of values to be displayed (0 means all values displayed)."
 msgstr ""
 
 #: config_form.php:75
@@ -94,61 +95,88 @@ msgstr ""
 msgid "Vertical (useful for themes with side main navigation menu)"
 msgstr ""
 
-#: config_form.php:93
-msgid "Elements"
+#: config_form.php:95
+msgid "Block collapsible"
 msgstr ""
 
-#: config_form.php:98
-msgid 
-"The elements that can be used for search refinement. Item and Collection columns to (de)activate, "
-"Sort order column to choose sorting order, Popularity column to show counters near names."
-msgstr ""
-
-#: config_form.php:103
-msgid "Element name"
-msgstr ""
-
-#: config_form.php:104
-msgid "Item"
+#: config_form.php:99
+msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
 msgstr ""
 
 #: config_form.php:105
+msgid "Elements"
+msgstr ""
+
+#: config_form.php:110
+msgid 
+"The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to "
+"choose the facet style, Sort order column to choose sorting order, Popularity column to show counters near names."
+msgstr ""
+
+#: config_form.php:115
+msgid "Element name"
+msgstr ""
+
+#: config_form.php:116
+msgid "Item"
+msgstr ""
+
+#: config_form.php:117
 msgid "Collection"
 msgstr ""
 
-#: config_form.php:106
+#: config_form.php:118
+msgid "Style"
+msgstr ""
+
+#: config_form.php:119
 msgid "Sort order"
 msgstr ""
 
-#: config_form.php:107
+#: config_form.php:120
 msgid "Popularity"
 msgstr ""
 
-#: config_form.php:159
-#: config_form.php:201
-#: config_form.php:243
-#: config_form.php:285
+#: config_form.php:172
+#: config_form.php:233
+#: config_form.php:290
+#: config_form.php:347
+msgid "Dropdown"
+msgstr ""
+
+#: config_form.php:173
+#: config_form.php:234
+#: config_form.php:291
+#: config_form.php:348
+msgid "Checkbox"
+msgstr ""
+
+#: config_form.php:186
+#: config_form.php:246
+#: config_form.php:303
+#: config_form.php:360
 msgid "Alphabetical"
 msgstr ""
 
-#: config_form.php:160
-#: config_form.php:202
-#: config_form.php:244
-#: config_form.php:286
+#: config_form.php:187
+#: config_form.php:247
+#: config_form.php:303
+#: config_form.php:361
 msgid "Popularity first, then alphabetical"
 msgstr ""
 
-#: config_form.php:178
-#: config_form.php:182
+#: config_form.php:208
+msgid "Extra parameters"
+msgstr ""
+
+#: config_form.php:212
 msgid "Item Types"
 msgstr ""
 
-#: config_form.php:220
-#: config_form.php:224
+#: config_form.php:264
 msgid "Collections"
 msgstr ""
 
-#: config_form.php:262
-#: config_form.php:266
+#: config_form.php:316
 msgid "Tags"
 msgstr ""

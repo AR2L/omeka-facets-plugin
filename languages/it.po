@@ -21,17 +21,17 @@ msgstr ""
 msgid "Refine search"
 msgstr "Raffina la ricerca"
 
-#: FacetsFunctions.php:59
-#: FacetsFunctions.php:135
-#: FacetsFunctions.php:212
-#: FacetsFunctions.php:315
+#: FacetsFunctions.php:62
+#: FacetsFunctions.php:201
+#: FacetsFunctions.php:346
+#: FacetsFunctions.php:534
 msgid "Remove filter"
 msgstr "Rimuovi filtro"
 
-#: FacetsFunctions.php:63
-#: FacetsFunctions.php:139
-#: FacetsFunctions.php:216
-#: FacetsFunctions.php:319
+#: FacetsFunctions.php:66
+#: FacetsFunctions.php:205
+#: FacetsFunctions.php:350
+#: FacetsFunctions.php:538
 msgid "Select"
 msgstr "Seleziona"
 
@@ -75,14 +75,14 @@ msgid "If checked, values with just one entry will not be listed (unless there's
 msgstr "Se selezionata, i valori singoli non verranno elencati (a meno che non ci siano meno di %s valori nella lista)."
 
 #: config_form.php:63
-msgid "Block collapsible"
-msgstr "Blocco contraibile"
+msgid "Minimum checkbox count"
+msgstr "Minimo numero caselle di controllo"
 
 #: config_form.php:67
-msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
-msgstr ""
-"Se selezionata, il blocco filtri sarà contraibile (consiglio: dal momento che utilizza meno spazio, è particolarmente "
-"utile con i temi a layout orizzontale)."
+msgid "For all fields using the checkbox style, minimum amount of values to be displayed (0 means all values displayed)."
+msgstr 
+"Per tutti i campi che usano lo stile casella di controllo, numero minimo di valori da mostrare (0 significa "
+"che tutti i valori verranno mostrati)."
 
 #: config_form.php:75
 msgid "Block layout"
@@ -100,64 +100,93 @@ msgstr "Orizzontale (utile per i temi con un menu di navigazione principale supe
 msgid "Vertical (useful for themes with side main navigation menu)"
 msgstr "Verticale (utile per i temi con un menu di navigazione principale laterale)"
 
-#: config_form.php:93
+#: config_form.php:95
+msgid "Block collapsible"
+msgstr "Blocco contraibile"
+
+#: config_form.php:99
+msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
+msgstr ""
+"Se selezionata, il blocco filtri sarà contraibile (consiglio: dal momento che utilizza meno spazio, è particolarmente "
+"utile con i temi a layout orizzontale)."
+
+#: config_form.php:105
 msgid "Elements"
 msgstr "Elementi"
 
-#: config_form.php:101
+#: config_form.php:110
 msgid 
-"The elements that can be used for search refinement. Item and Collection columns to (de)activate, "
-"Sort order column to choose sorting order, Popularity column to show counters near names."
+"The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to 
+"choose the facet style, Sort order column to choose sorting order, Popularity column to show counters near names."
 msgstr 
 "Gli elementi che possono essere usati per il raffinamento della ricerca. Colonne Documento e Collezione "
-"per (dis)attivare, Ordinamento per scegliere il criterio di ordinamento, Popolarità per mostrare i "
-"contatori vicino ai nomi."
+"per (dis)attivare, Stile per scegliere lo stile del campo, Ordinamento per scegliere il criterio di ordinamento, "
+"Popolarità per mostrare i contatori vicino ai nomi."
 
-#: config_form.php:103
+#: config_form.php:115
 msgid "Element name"
 msgstr "Nome elemento"
 
-#: config_form.php:104
+#: config_form.php:116
 msgid "Item"
 msgstr "Documento"
 
-#: config_form.php:105
+#: config_form.php:117
 msgid "Collection"
 msgstr "Collezione"
 
-#: config_form.php:106
+#: config_form.php:118
+msgid "Style"
+msgstr "Stile"
+
+#: config_form.php:119
 msgid "Ordinamento"
 msgstr ""
 
-#: config_form.php:107
+#: config_form.php:120
 msgid "Popularity"
 msgstr "Popolarità"
 
-#: config_form.php:159
-#: config_form.php:201
-#: config_form.php:243
-#: config_form.php:285
+#: config_form.php:172
+#: config_form.php:233
+#: config_form.php:290
+#: config_form.php:347
+msgid "Dropdown"
+msgstr "Discesa (casella a)"
+
+#: config_form.php:173
+#: config_form.php:234
+#: config_form.php:291
+#: config_form.php:348
+msgid "Checkbox"
+msgstr "Controllo (casella di)"
+
+#: config_form.php:186
+#: config_form.php:246
+#: config_form.php:303
+#: config_form.php:360
 msgid "Alphabetical"
 msgstr "Alfabetico"
 
-#: config_form.php:160
-#: config_form.php:202
-#: config_form.php:244
-#: config_form.php:286
+#: config_form.php:187
+#: config_form.php:247
+#: config_form.php:303
+#: config_form.php:361
 msgid "Popularity first, then alphabetical"
 msgstr "Popolarità prima, poi alfabetico"
 
-#: config_form.php:178
-#: config_form.php:182
+#: config_form.php:208
+msgid "Extra parameters"
+msgstr "Parametri addizionali"
+
+#: config_form.php:212
 msgid "Item Types"
 msgstr "Tipologie documento"
 
-#: config_form.php:220
-#: config_form.php:224
+#: config_form.php:264
 msgid "Collections"
 msgstr "Collezioni"
 
-#: config_form.php:262
-#: config_form.php:266
+#: config_form.php:316
 msgid "Tags"
 msgstr "Etichette"
