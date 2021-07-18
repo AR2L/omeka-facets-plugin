@@ -96,7 +96,7 @@
 					}
 
 					if ((bool)get_option('facets_tags_active')) {
-						if (get_option('facets_item_types_style') == 'checkbox') {
+						if (get_option('facets_tags_style') == 'checkbox') {
 							$html = get_tags_facet_checkboxes($subsetSQL, $hideSingleEntries, get_option('facets_tags_sort'), get_option('facets_tags_popularity'), $checkboxMinCount);
 						} else {
 							$html = get_tags_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_tags_sort'), get_option('facets_tags_popularity'));
