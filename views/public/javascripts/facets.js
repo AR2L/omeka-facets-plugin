@@ -50,5 +50,7 @@ jQuery(window).on('load', function() {
 	}
 
 	// hides facets block (but for title) on load
-	jQuery('#facets-body').next().addClass('hidden');
+	if (jQuery('#facets-title').hasClass('facets-collapsed')) {
+		jQuery('#facets-body').addClass('hidden');
+	}
 });
