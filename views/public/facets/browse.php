@@ -4,6 +4,7 @@
 	$facetsCollapsible = (bool)get_option('facets_collapsible');
 	$facetsDirection = (string)get_option('facets_direction');
 	$checkboxMinCount = (int)get_option('facets_checkbox_minimum_amount');
+	$dateFields = array('Date', 'Date Available', 'Date Created', 'Date Accepted', 'Date Copyrighted', 'Date Submitted', 'Date Issued', 'Date Modified', 'Date Valid');
 
 	$table = get_db()->getTable('Element');
 	$select = $table->getSelect()
@@ -33,7 +34,7 @@
 				if ($recordType == 'collection') {
 					foreach ($elements as $element) {
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
-							$isDate = in_array($element->name, array('Date'));
+							$isDate = in_array($element->name, $dateFields);
 							$facetElement = $facetsElements['elements'][$element->name];
 							if (isset($facetElement['type']) && $facetElement['type'] == 'checkbox') {
 								$html = get_element_facet_checkboxes('collection', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''), $checkboxMinCount);
@@ -51,7 +52,7 @@
 				} else {	
 					foreach ($elements as $element) {
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
-							$isDate = in_array($element->name, array('Date'));
+							$isDate = in_array($element->name, $dateFields);
 							$facetElement = $facetsElements['elements'][$element->name];
 							if (isset($facetElement['type']) && $facetElement['type'] == 'checkbox') {
 								$html = get_element_facet_checkboxes('item', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''), $checkboxMinCount);
