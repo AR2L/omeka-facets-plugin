@@ -5,12 +5,11 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @package FacetsPlugin
  */
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 define('FACETS_PLUGIN_DIR', dirname(__FILE__));
 define('FACETS_MINIMUM_AMOUNT', 5);
+define('FACETS_SHOW_MORE', __('show more'));
+define('FACETS_SHOW_LESS', __('show less'));
 
 require_once FACETS_PLUGIN_DIR . '/helpers/FacetsFunctions.php';
 
@@ -262,8 +261,8 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		
 		if (($action == 'browse' && ($controller == 'items' || $controller == 'collections')) || ($controller == 'search' && $action == 'index')) {
 			$language = array(
-				'ShowMore' => __('show more'),
-				'ShowLess' => __('show less')
+				'ShowMore' => FACETS_SHOW_MORE,
+				'ShowLess' => FACETS_SHOW_LESS
 			);
 			$language = json_encode($language);
 			queue_js_string("facetsLanguage = {language: $language};");
