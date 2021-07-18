@@ -35,7 +35,12 @@
 						if (isFacetActive($recordType, $element->name, $facetsElements)) {
 							$isDate = in_array($element->name, array('Date'));
 							$facetElement = $facetsElements['elements'][$element->name];
-							if ($html = get_element_facet_select('collection', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''))) {
+							if (isset($facetElement['type']) && $facetElement['type'] == 'checkbox') {
+								$html = get_element_facet_checkboxes('collection', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''), $checkboxMinCount);
+							} else {
+								$html = get_element_facet_select('collection', $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetElement['sort']) ? $facetElement['sort'] : ''), (isset($facetElement['popularity']) ? $facetElement['popularity'] : ''));
+							}
+							if ($html != '') {
 								echo "<div id=\"facets-field-" . $element->id . "\" class=\"facets-container-" . $facetsDirection . "\">\n";
 								echo "<label for=\"\">" . html_escape(__($element->name)) . "</label>\n";
 								echo $html . "\n";
@@ -63,7 +68,12 @@
 					}
 
 					if ((bool)get_option('facets_item_types_active')) {
-						if ($html = get_item_types_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_item_types_sort'), get_option('facets_item_types_popularity'))) {
+						if (get_option('facets_item_types_style') == 'checkbox') {
+							$html = get_item_types_facet_checkboxes($subsetSQL, $hideSingleEntries, get_option('facets_item_types_sort'), get_option('facets_item_types_popularity'), $checkboxMinCount);
+						} else {
+							$html = get_item_types_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_item_types_sort'), get_option('facets_item_types_popularity'));
+						}
+						if ($html != '') {
 							echo "<div id=\"facets-field-item-type\" class=\"facets-container-" . $facetsDirection . "\">\n";
 							echo "<label for=\"\">" . html_escape(__('Item Type')) . "</label>\n";
 							echo $html . "\n";
@@ -72,7 +82,12 @@
 					}
 
 					if ((bool)get_option('facets_collections_active')) {
-						if ($html = get_collections_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_collections_sort'), get_option('facets_collections_popularity'))) {
+						if (get_option('facets_collections_style') == 'checkbox') {
+							$html = get_collections_facet_checkboxes($subsetSQL, $hideSingleEntries, get_option('facets_collections_sort'), get_option('facets_collections_popularity'), $checkboxMinCount);
+						} else {
+							$html = get_collections_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_collections_sort'), get_option('facets_collections_popularity'));
+						}
+						if ($html != '') {
 							echo "<div id=\"facets-field-collection\" class=\"facets-container-" . $facetsDirection . "\">\n";
 							echo "<label for=\"\">" . html_escape(__('Collection')) . "</label>\n";
 							echo $html . "\n";
@@ -81,7 +96,12 @@
 					}
 
 					if ((bool)get_option('facets_tags_active')) {
-						if ($html = get_tags_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_tags_sort'), get_option('facets_tags_popularity'))) {
+						if (get_option('facets_item_types_style') == 'checkbox') {
+							$html = get_tags_facet_checkboxes($subsetSQL, $hideSingleEntries, get_option('facets_tags_sort'), get_option('facets_tags_popularity'), $checkboxMinCount);
+						} else {
+							$html = get_tags_facet_select($subsetSQL, $hideSingleEntries, get_option('facets_tags_sort'), get_option('facets_tags_popularity'));
+						}
+						if ($html != '') {
 							echo "<div id=\"facets-field-tag\" class=\"facets-container-" . $facetsDirection . "\">\n";
 							echo "<label for=\"\">" . html_escape(__('Tags')) . "</label>\n";
 							echo $html . "\n";
