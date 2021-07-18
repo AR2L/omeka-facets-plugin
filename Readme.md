@@ -2,9 +2,9 @@
 
 ## Description
 
-Plugin for Omeka Classic. Once installed and active, allows to insert a Facets block made of option dropdown boxes containing available metadata values extracted from browsing context. Works for both Items and Collections.
+Plugin for Omeka Classic. Once installed and active, allows to insert a Faceted search refining block containing available metadata values extracted from browsing context. Works for both Items and Collections.
 
-Settings allow to choose the hook to be used, which criteria use for search refinement, whether to ignore single entries, sorting order for values, whether to show values popolarity, whether to use an horizontal or vertical layout, etc.
+Settings allow to choose the hook to be used, which criteria to use for search refinement, whether to ignore single entries, sorting order for values, whether to show values popularity, whether to use an horizontal or vertical layout, whether to make the block collapsible, etc.
 
 ## Credits
 
@@ -35,7 +35,9 @@ For **Thanks, Roy** theme, for example, best way is to change `common/header.php
 For **Berlin** theme, instead, check **Block collapsible** option, set **Horizontal** as **Block layout** and then add the custom hook in `items/browse.php` and `collections/browse.php`:
 ```php
 <?php echo item_search_filters(); ?>
+
 <?php echo get_specific_plugin_hook_output('Facets', 'public_facets', array('view' => $this)); ?>
+
 <?php echo pagination_links(); ?>
 ```
 
@@ -48,6 +50,8 @@ Similarly, one can choose to also include **Item Types**, **Collections** and **
 **Single values** can be exluded as not really significant, although they will be listed anyway if less than 5 values are available.
 
 Facets block can be set up for **vertical** or **horizontal** layout, according to the theme layout; and it can be made **collapsible**, to use less vertical space (recommended for horizontal layout).
+
+Style for facets can be either **dropdown selectbox**, or **checkbox**; this last one allows to choose more values, while with the first one one value excludes other. For checkbox style, a **minimum amount of values** can be set too.
 
 Sorting order can be **alphabetical**, or **first by popularity and then alphabetical**. Popularity count can be shown, if needed.
 
