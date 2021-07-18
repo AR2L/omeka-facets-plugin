@@ -95,7 +95,7 @@
 }
 
 #facets-container form {
-	padding: 20px 10px;
+	padding: 10px 10px 20px 10px;
 }
 
 #facets-container form label {
@@ -119,6 +119,10 @@
 .facet-checkbox, .facet-checkbox-all, .facet-visibility-toggle {
 	display: block;
 	font-size: 90%;
+}
+
+.facet-checkbox {
+	clear: both;
 }
 
 .facet-visibility-toggle {
