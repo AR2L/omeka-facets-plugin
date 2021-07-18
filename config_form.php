@@ -219,15 +219,15 @@
 					</td>
 					<td class="boxes">
 						<?php 
-							$type = (isset($settings['facets_item_types_style']) ? $settings['facets_item_types_style'] : '');
 							echo $view->formSelect(
-							"facets_item_types_style",
-							$type,
-							array(),
-							array(
-								'dropdown' => __('Dropdown'),
-								'checkbox' => __('Checkbox')
-							)); 
+								"facets_item_types_style",
+								get_option('facets_item_types_style'),
+								array(),
+								array(
+									'dropdown' => __('Dropdown'),
+									'checkbox' => __('Checkbox')
+								)
+							); 
 						?>
 					</td>
 					<td class="boxes">
@@ -274,15 +274,15 @@
 					</td>
 					<td class="boxes">
 						<?php 
-							$type = (isset($settings['facets_collections_style']) ? $settings['facets_collections_style'] : '');
 							echo $view->formSelect(
-							"facets_collections_style",
-							$type,
-							array(),
-							array(
-								'dropdown' => __('Dropdown'),
-								'checkbox' => __('Checkbox')
-							)); 
+								"facets_collections_style",
+								get_option('facets_collections_style'),
+								array(),
+								array(
+									'dropdown' => __('Dropdown'),
+									'checkbox' => __('Checkbox')
+								)
+							); 
 						?>
 					</td>
 					<td class="boxes">
@@ -329,15 +329,15 @@
 					</td>
 					<td class="boxes">
 						<?php 
-							$type = (isset($settings['facets_tags_style']) ? $settings['facets_tags_style'] : '');
 							echo $view->formSelect(
-							"facets_tags_style",
-							$type,
-							array(),
-							array(
-								'dropdown' => __('Dropdown'),
-								'checkbox' => __('Checkbox')
-							)); 
+								"facets_tags_style",
+								get_option('facets_tags_style'),
+								array(),
+								array(
+									'dropdown' => __('Dropdown'),
+									'checkbox' => __('Checkbox')
+								)
+							); 
 						?>
 					</td>
 					<td class="boxes">
