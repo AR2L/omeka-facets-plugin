@@ -214,7 +214,7 @@
 						<?php 
 							echo $view->formCheckbox(
 								"facets_item_types_active",
-								get_option('facets_item_types_popularity'), 
+								get_option('facets_item_types_active'), 
 								null, 
 								array('1', '0')
 							); 
@@ -271,7 +271,7 @@
 						<?php 
 							echo $view->formCheckbox(
 								"facets_collections_active",
-								get_option('facets_collections_popularity'), 
+								get_option('facets_collections_active'), 
 								null, 
 								array('1', '0')
 							); 
@@ -328,7 +328,7 @@
 						<?php 
 							echo $view->formCheckbox(
 								"facets_tags_active",
-								get_option('facets_tags_popularity'), 
+								get_option('facets_tags_active'), 
 								null, 
 								array('1', '0')
 							); 
