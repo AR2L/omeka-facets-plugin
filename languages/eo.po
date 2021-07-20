@@ -117,8 +117,8 @@ msgstr ""
 
 #: config_form.php:110
 msgid 
-"The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to choose the facet style, "
-"Sort order column to choose sorting order, Popularity column to show counters near names."
+"The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to "
+"choose the facet style, Sort order column to choose sorting order, Popularity column to show counters near names."
 msgstr ""
 
 #: config_form.php:115
@@ -145,46 +145,50 @@ msgstr ""
 msgid "Popularity"
 msgstr ""
 
-#: config_form.php:172
-#: config_form.php:233
-#: config_form.php:290
-#: config_form.php:347
+#: config_form.php:174
+#: config_form.php:262
 msgid "Dropdown"
 msgstr ""
 
-#: config_form.php:173
-#: config_form.php:234
-#: config_form.php:291
-#: config_form.php:348
+#: config_form.php:175
+#: config_form.php:263
 msgid "Checkbox"
 msgstr ""
 
-#: config_form.php:186
-#: config_form.php:246
-#: config_form.php:303
-#: config_form.php:360
+#: config_form.php:188
+#: config_form.php:276
 msgid "Alphabetical"
 msgstr ""
 
-#: config_form.php:187
-#: config_form.php:247
-#: config_form.php:303
-#: config_form.php:361
+#: config_form.php:189
+#: config_form.php:277
 msgid "Popularity first, then alphabetical"
 msgstr ""
 
-#: config_form.php:208
+#: config_form.php:210
 msgid "Extra parameters"
 msgstr ""
 
-#: config_form.php:212
+#: config_form.php:225
 msgid "Item Types"
 msgstr ""
 
-#: config_form.php:264
+#: config_form.php:225
 msgid "Collections"
 msgstr ""
 
-#: config_form.php:316
+#: config_form.php:225
 msgid "Tags"
+msgstr ""
+
+#: config_form.php:225
+msgid "Owners"
+msgstr ""
+
+#: config_form.php:225
+msgid "Public"
+msgstr ""
+
+#: config_form.php:225
+msgid "Featured"
 msgstr ""
