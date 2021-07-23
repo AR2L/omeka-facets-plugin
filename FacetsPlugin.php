@@ -314,19 +314,16 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		$request = Zend_Controller_Front::getInstance()->getRequest();
 		$controller = $request->getControllerName();
 		$action = $request->getActionName();
+		$params = array();
 		
 		if ($controller == 'items' && $action == 'browse') {
-			$params = array(
-				'advanced' => (isset($_GET['advanced']) ? $_GET['advanced'] : ''), 
-				'collection' => (isset($_GET['collection']) ? $_GET['collection'] : ''), 
-				'type' => (isset($_GET['type']) ? $_GET['type'] : ''),
-				'tags' => (isset($_GET['tags']) ? $_GET['tags'] : ''),
-				'user' => (isset($_GET['user']) ? $_GET['user'] : ''),
-				'public' => (isset($_GET['public']) ? $_GET['public'] : ''),
-				'featured' => (isset($_GET['featured']) ? $_GET['featured'] : '')
-
-			);
-
+			if (isset($_GET['advanced'])) $params['advanced'] = $_GET['advanced'];
+			if (isset($_GET['collection'])) $params['collection'] = $_GET['collection'];
+			if (isset($_GET['type'])) $params['type'] = $_GET['type'];
+			if (isset($_GET['tags'])) $params['tags'] = $_GET['tags'];
+			if (isset($_GET['user'])) $params['user'] = $_GET['user'];
+			if (isset($_GET['public'])) $params['public'] = $_GET['public'];
+			if (isset($_GET['featured'])) $params['featured'] = $_GET['featured'];
 			if (recordTypeActive('item', $settings['elements']) && count(get_records('item', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
 					'params' => $params,
@@ -334,12 +331,10 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 				));
 			}
 		} elseif ($controller == 'collections' && $action == 'browse') {
-			$params = array(
-				'advanced' => (isset($_GET['advanced']) ? $_GET['advanced'] : ''),
-				'user' => (isset($_GET['user']) ? $_GET['user'] : ''),
-				'public' => (isset($_GET['public']) ? $_GET['public'] : ''),
-				'featured' => (isset($_GET['featured']) ? $_GET['featured'] : '')
-			);
+			if (isset($_GET['advanced'])) $params['advanced'] = $_GET['advanced'];
+			if (isset($_GET['user'])) $params['user'] = $_GET['user'];
+			if (isset($_GET['public'])) $params['public'] = $_GET['public'];
+			if (isset($_GET['featured'])) $params['featured'] = $_GET['featured'];
 			if (recordTypeActive('collection', $settings['elements']) && count(get_records('collection', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
 					'params' => $params,
