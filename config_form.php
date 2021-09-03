@@ -214,8 +214,8 @@
 				</tr>
 			<?php 
 				$extraParameters = array(
-					'item_types' => array('label' => 'Item Types', 'collection' => 0),
-					'collections' => array('label' => 'Collections', 'collection' => 0),
+					'item_types' => array('label' => 'Item Type', 'collection' => 0),
+					'collections' => array('label' => 'Collection', 'collection' => 0),
 					'tags' => array('label' => 'Tags', 'collection' => 0),
 					'users' => array('label' => 'Owner', 'collection' => 1),
 					'public' => array('label' => 'Public', 'collection' => 1),
