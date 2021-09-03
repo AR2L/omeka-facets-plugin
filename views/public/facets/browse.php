@@ -71,7 +71,7 @@
 						if ($html != '') printHtml($html, 'collection', $facetsDirection, 'Collection');
 					}
 
-					// Tags (only for items)
+					// Tag (only for items)
 					if (isFacetActive($recordType, null, $facetParameters, 'tags')) {
 						$facetParameter = $facetParameters['tags'];
 						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
@@ -84,7 +84,7 @@
 					}
 				}
 				
-				// Users
+				// Owner
 				if (isFacetActive($recordType, null, $facetParameters, 'users')) {
 					$facetParameter = $facetParameters['users'];
 					if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
