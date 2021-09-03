@@ -215,7 +215,7 @@
 					'item_types' => array('label' => 'Item Types', 'collection' => 0),
 					'collections' => array('label' => 'Collections', 'collection' => 0),
 					'tags' => array('label' => 'Tags', 'collection' => 0),
-					'users' => array('label' => 'Owners', 'collection' => 1),
+					'users' => array('label' => 'Owner', 'collection' => 1),
 					'public' => array('label' => 'Public', 'collection' => 1),
 					'featured' => array('label' => 'Featured', 'collection' => 1)
 				);
