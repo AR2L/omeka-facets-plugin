@@ -2,9 +2,11 @@
 	$view = get_view();
 ?>
 <style type = "text/css">
+	.boxes, .boxes-left {
+		vertical-align: middle;
+	}
 	.boxes {
 		text-align: center;
-		vertical-align: middle;
 	}
 	.field select {
 		margin-bottom: 0;
@@ -134,7 +136,7 @@
 				</tr>
 				<?php 	endif; ?>
 				<tr>
-					<td><?php echo __($element->name); ?></td>
+					<td class="boxes-left"><?php echo __($element->name); ?></td>
 					<td class="boxes">
 						<?php 
 							echo $view->formCheckbox(
@@ -222,7 +224,7 @@
 				foreach ($extraParameters as $key => $value):
 			?>
 				<tr>
-					<td><?php echo __($value['label']); ?></td>
+					<td class="boxes-left"><?php echo __($value['label']); ?></td>
 					<td class="boxes">
 						<?php 
 							echo $view->formCheckbox(
