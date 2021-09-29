@@ -324,6 +324,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 			if (isset($_GET['user'])) $params['user'] = $_GET['user'];
 			if (isset($_GET['public'])) $params['public'] = $_GET['public'];
 			if (isset($_GET['featured'])) $params['featured'] = $_GET['featured'];
+			if (isset($_GET['search'])) $params['search'] = $_GET['search'];
 			if (recordTypeActive('item', $settings['elements']) && count(get_records('item', $params, null)) > 0) {
 				echo get_view()->partial('facets/browse.php', array(
 					'params' => $params,
