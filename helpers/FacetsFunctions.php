@@ -61,7 +61,7 @@
 			// Build first part of the select tag
 			if (isset($selectedExtra)) {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($extraType, null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, $extraType, null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . __(getExtraName($extraType, $selectedExtra)) . "</option>";
 			} elseif (count($facetExtras) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"" . $extraType . "\">";
@@ -72,7 +72,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetExtras as $value => $count) {
-					$html .= "<option value=\"" . $value . "\" data-url=\"" . getFieldUrl($extraType, $value) . "\">" . __(getExtraName($extraType, $value)) . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
+					$html .= "<option value=\"" . $value . "\" data-url=\"" . getFieldUrl($recordType, $extraType, $value) . "\">" . __(getExtraName($extraType, $value)) . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -112,7 +112,7 @@
 			$html = '<div>';
 			// Build first part of the checkboxes tag
 			if (isset($selectedExtra)) {
-				$url = getFieldUrl($extraType, null, $selectedExtra);
+				$url = getFieldUrl($recordType, $extraType, null, $selectedExtra);
 				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape(__(getExtraName($extraType, $selectedExtra))) . "</b></div>";
 				$countCheckboxes++;
 			}
@@ -127,7 +127,7 @@
 						$hidingSeparator = true;
 					}
 
-					$url = getFieldUrl($extraType, $value);
+					$url = getFieldUrl($recordType, $extraType, $value);
 					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $value . "\" data-url=\"" . $url . "\">" . html_escape(__(getExtraName($extraType, $value))) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $count . ")</span>" : "") . "</div>";
 					$countCheckboxes++;
 				}
@@ -208,7 +208,7 @@
 			// Build first part of the select tag
 			if (isset($selectedUser)) {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('user', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'user', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . $selectedUser['name'] . "</option>";
 			} elseif (count($facetUsers) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"user\">";
@@ -219,7 +219,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetUsers as $user) {
-					$html .= "<option value=\"" . $user['id'] . "\" data-url=\"" . getFieldUrl('user', $user['id']) . "\">" . $user['name'] . ($showPopularity ? " (" . $user['count'] . ")" : "") . "</option>";
+					$html .= "<option value=\"" . $user['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'user', $user['id']) . "\">" . $user['name'] . ($showPopularity ? " (" . $user['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -257,7 +257,7 @@
 			$html = '<div>';
 			// Build first part of the checkboxes tag
 			if (isset($selectedUser)) {
-				$url = getFieldUrl('user', null, $selectedUser);
+				$url = getFieldUrl($recordType, 'user', null, $selectedUser);
 				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedUser['name']) . "</b></div>";
 				$countCheckboxes++;
 			}
@@ -272,7 +272,7 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getFieldUrl('user', $user['id']);
+					$url = getFieldUrl($recordType, 'user', $user['id']);
 					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $user['name'] . "\" data-url=\"" . $url . "\">" . html_escape($user['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $user['count'] . ")</span>" : "") . "</div>";
 					$countCheckboxes++;
 				}
@@ -347,7 +347,7 @@
 			// Build first part of the select tag
 			if ($selectedTagName != '') {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('tags', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'tags', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . $selectedTagName . "</option>";
 			} elseif (count($facetTags) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"tag\">";
@@ -358,7 +358,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetTags as $tag) {
-					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl('tags', $tag['name']) . "\">" . $tag['name'] . ($showPopularity ? " (" . $tag['count'] . ")" : "") . "</option>";
+					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'tags', $tag['name']) . "\">" . $tag['name'] . ($showPopularity ? " (" . $tag['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -486,7 +486,7 @@
 			// Build first part of the select tag
 			if (isset($selectedCollection)) {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"collection\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('collection', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'collection', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . $selectedCollection['name'] . "</option>";
 			} elseif (count($facetCollections) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"collection\">";
@@ -497,7 +497,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetCollections as $collection) {
-					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl('collection', $collection['id']) . "\">" . $collection['name'] . ($showPopularity ? " (" . $collection['count'] . ")" : "") . "</option>";
+					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'collection', $collection['id']) . "\">" . $collection['name'] . ($showPopularity ? " (" . $collection['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -538,7 +538,7 @@
 			$html = '<div>';
 			// Build first part of the checkboxes tag
 			if (isset($selectedCollection)) {
-				$url = getFieldUrl('collection', null, $selectedCollection);
+				$url = getFieldUrl($recordType, 'collection', null, $selectedCollection);
 				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedCollection['name']) . "</b></div>";
 				$countCheckboxes++;
 			}
@@ -553,7 +553,7 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getFieldUrl('collection', $collection['id']);
+					$url = getFieldUrl($recordType, 'collection', $collection['id']);
 					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $collection['name'] . "\" data-url=\"" . $url . "\">" . html_escape($collection['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $collection['count'] . ")</span>" : "") . "</div>";
 					$countCheckboxes++;
 				}
@@ -631,7 +631,7 @@
 			// Build first part of the select tag
 			if (!empty($selectedItemType)) {
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"type\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl('type', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'type', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . $selectedItemType['name'] . "</option>";
 			} elseif (count($facetItemTypes) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"type\">";
@@ -642,7 +642,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetItemTypes as $itemType) {
-					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl('type', $itemType['id']) . "\">" . $itemType['name'] . ($showPopularity ? " (" . $itemType['count'] . ")" : "") . "</option>";
+					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'type', $itemType['id']) . "\">" . $itemType['name'] . ($showPopularity ? " (" . $itemType['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -679,7 +679,7 @@
 			$html = '<div>';
 			// Build first part of the checkboxes tag
 			if (isset($selectedItemType)) {
-				$url = getFieldUrl('type', null, $selectedItemType);
+				$url = getFieldUrl($recordType, 'type', null, $selectedItemType);
 				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedItemType['name']) . "</b></div>";
 				$countCheckboxes++;
 			}
@@ -694,7 +694,7 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getFieldUrl('type', $itemType['id']);
+					$url = getFieldUrl($recordType, 'type', $itemType['id']);
 					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $itemType['name'] . "\" data-url=\"" . $url . "\">" . html_escape($itemType['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $itemType['count'] . ")</span>" : "") . "</div>";
 					$countCheckboxes++;
 				}
@@ -818,7 +818,7 @@
 			// Build first part of the select tag
 			if (isset($term)){
 				$html =	"<div class=\"select-cross\"><select id=\"" . $element_id . "\" class=\"facet-selected\" name=\"" . $elementId . "\">";
-				$url = getElementFieldUrl($element_id, null, $isDate);
+				$url = getElementFieldUrl($recordType, $element_id, null, $isDate);
 				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">$term</option>";
 			} elseif (count($facetElement) > 0) {
@@ -830,7 +830,7 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetElement as $name => $count) {
-					$url = getElementFieldUrl($element_id, $name, $isDate);
+					$url = getElementFieldUrl($recordType, $element_id, $name, $isDate);
 					$html .= "<option value=\"" . $name . "\" data-url=\"" . $url . "\">" . $name . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
 				}
 			}
@@ -889,7 +889,7 @@
 			// Build first part of the checkboxes tag
 			if (!empty($selectedTerms)) {
 				foreach ($selectedTerms as $term){
-					$url = getElementFieldUrl($element_id, null, $isDate, $term);
+					$url = getElementFieldUrl($recordType, $element_id, null, $isDate, $term);
 					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($term) . "</b></div>";
 					$countCheckboxes++;
 				}
@@ -905,7 +905,7 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getElementFieldUrl($element_id, $name, $isDate);
+					$url = getElementFieldUrl($recordType, $element_id, $name, $isDate);
 					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $name . "\" data-url=\"" . $url . "\">" . html_escape($name) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $count . ")</span>" : "") . "</div>";
 					$countCheckboxes++;
 				}
@@ -932,7 +932,7 @@
 	 * @param string $isDate 
 	 * @return string The new URL.
 	 */
-	function getElementFieldUrl($field_id, $value = null, $isDate = false, $oldValue = null)
+	function getElementFieldUrl($recordType, $field_id, $value = null, $isDate = false, $oldValue = null)
 	{
 		// Get the current facets.
 		if (!empty($_GET['advanced'])) {
@@ -965,18 +965,13 @@
 				$search[] = array('element_id'=>$field_id, 'type'=>'is exactly', 'terms'=>$value);
 			}
 		}
-		$params['advanced'] = $search;
-		if (isset($_GET['origin'])) $params['origin'] = $_GET['origin'];
-		if (isset($_GET['origin-title'])) $params['origin-title'] = $_GET['origin-title'];
-		if (isset($_GET['type'])) $params['type'] = $_GET['type'];
-		if (isset($_GET['collection'])) $params['collection'] = $_GET['collection'];
-		if (isset($_GET['tag_id'])) $params['tag_id'] = $_GET['tag_id'];
-		if (isset($_GET['tag'])) $params['tag'] = $_GET['tag'];
-		if (isset($_GET['tags'])) $params['tags'] = $_GET['tags'];
-		if (isset($_GET['search'])) $params['search'] = $_GET['search'];
 
-		// Rebuild the route.
-		return 'browse?' . http_build_query($params);
+		// set previous parameters
+		$params['advanced'] = $search;
+		$params = setPreviousParameters($params);
+
+		// return rebuilt route
+		return getRebuiltUrl($recordType, $params);
 	}
 
 	/**
@@ -986,7 +981,7 @@
 	 * @param string $value The Element value.
 	 * @return string The new URL.
 	 */
-	function getFieldUrl($filter, $value = null, $oldValue = null)
+	function getFieldUrl($recordType, $filter, $value = null, $oldValue = null)
 	{
 		// Get the current facets.
 		if (!empty($_GET['advanced'])) {
@@ -994,16 +989,10 @@
 		} else {
 			$search = array();
 		}
+
 		// set previous parameters
 		$params['advanced'] = $search;
-		if (isset($_GET['origin'])) $params['origin'] = $_GET['origin'];
-		if (isset($_GET['origin-title'])) $params['origin-title'] = $_GET['origin-title'];
-		if (isset($_GET['type'])) $params['type'] = $_GET['type'];
-		if (isset($_GET['collection'])) $params['collection'] = $_GET['collection'];
-		if (isset($_GET['tag_id'])) $params['tag_id'] = $_GET['tag_id'];
-		if (isset($_GET['tag'])) $params['tag'] = $_GET['tag'];
-		if (isset($_GET['tags'])) $params['tags'] = $_GET['tags'];
-		if (isset($_GET['search'])) $params['search'] = $_GET['search'];
+		$params = setPreviousParameters($params);
 
 		// set(unset) current
 		if (!is_null($value)){
@@ -1012,8 +1001,8 @@
 			unset($params[$filter]);
 		}
 
-		// Rebuild the route.
-		return 'browse?' . http_build_query($params);
+		// return rebuilt route
+		return getRebuiltUrl($recordType, $params);
 	}
 	
 	/**
@@ -1031,16 +1020,10 @@
 		} else {
 			$search = array();
 		}
+
 		// set previous parameters
 		$params['advanced'] = $search;
-		if (isset($_GET['origin'])) $params['origin'] = $_GET['origin'];
-		if (isset($_GET['origin-title'])) $params['origin-title'] = $_GET['origin-title'];
-		if (isset($_GET['type'])) $params['type'] = $_GET['type'];
-		if (isset($_GET['collection'])) $params['collection'] = $_GET['collection'];
-		if (isset($_GET['tag_id'])) $params['tag_id'] = $_GET['tag_id'];
-		if (isset($_GET['tag'])) $params['tag'] = $_GET['tag'];
-		if (isset($_GET['tags'])) $params['tags'] = $_GET['tags'];
-		if (isset($_GET['search'])) $params['search'] = $_GET['search'];
+		$params = setPreviousParameters($params);
 
 		// set(unset) current
 		if (!is_null($value)) {
@@ -1062,8 +1045,8 @@
 			unset($params['tags']);
 		}
 
-		// Rebuild the route.
-		return 'browse?' . http_build_query($params);
+		// return rebuilt route
+		return getRebuiltUrl($recordType, $params);
 	}
 
 	function isFacetActive($recordType, $element_name, $settings, $extra_name = null) {
@@ -1216,5 +1199,21 @@
 			echo $html . "\n";
 			echo "</div>\n";
 		}
+	}
+	
+	function getRebuiltUrl($recordType, $params) {
+		return url($recordType . 's/browse', $params);
+	}
+	
+	function setPreviousParameters($params) {
+		if (isset($_GET['collection'])) $params['collection'] = $_GET['collection'];
+		if (isset($_GET['type'])) $params['type'] = $_GET['type'];
+		if (isset($_GET['tags'])) $params['tags'] = $_GET['tags'];
+		if (isset($_GET['user'])) $params['user'] = $_GET['user'];
+		if (isset($_GET['public'])) $params['public'] = $_GET['public'];
+		if (isset($_GET['featured'])) $params['featured'] = $_GET['featured'];
+		if (isset($_GET['search'])) $params['search'] = $_GET['search'];
+		
+		return $params;
 	}
 ?>
