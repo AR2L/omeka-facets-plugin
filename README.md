@@ -41,6 +41,8 @@ For **Berlin** theme, instead, check **Block collapsible** option, set **Horizon
 <?php echo pagination_links(); ?>
 ```
 
+Background and foreground colors can be changed in `facets.css` file (`views/public/css` folder).
+
 ## Plugin configuration
 
 The elements used for search refinement can be selected in the configuration page; best practice suggestion is to activate only elements that are displayed in the browse page, and that are offering some kind of data aggregation (a unique id would not offer any really useful refinement).
