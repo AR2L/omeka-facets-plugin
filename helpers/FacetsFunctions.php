@@ -1081,9 +1081,12 @@
 	}
 	
 	function recordTypeActive($recordType, $elements) {
-		foreach ($elements as $element) {
-			if (array_key_exists($recordType, $element)) return true;
+		if (isset($elements)) {
+			foreach ($elements as $element) {
+				if (array_key_exists($recordType, $element)) return true;
+			}
 		}
+		
 		return false;
 	}
 	
