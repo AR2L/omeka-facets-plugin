@@ -57,7 +57,7 @@ Style for facets can be either **dropdown selectbox**, or **checkbox**; this las
 
 Sorting order can be **alphabetical**, or **first by popularity and then alphabetical**. Popularity count can be shown, if needed.
 
-**Date** element filter's behaviour is a bit different: dates are ordered decrescently, and only year is displayed; consequently, the matching will be with the beginning of the date (assuming the format is '_yyyy-mm-dd_').
+**Date** element filter's behaviour is a bit different: dates are ordered decrescently, and only year is displayed; consequently, the matching will be with the beginning of the date (assuming the format is '_yyyy-mm-dd_'). By default, the following are considered date fields: '**Date**', '**Date Available**', '**Date Created**', '**Date Accepted**', '**Date Copyrighted**', '**Date Submitted**', '**Date Issued**', '**Date Modified**', '**Date Valid**' (the list can be changed in browse.php file).
 
 ## Licence
 MIT Licence, please credit AR2L [AR2L Hauts de France](http://www.ar2l-hdf.fr/) and [Daniele Binaghi](https://github.com/DBinaghi).
