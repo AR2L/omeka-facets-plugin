@@ -80,7 +80,7 @@
 							$html = getFacetSelectForTag($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
 						}
 
-						if ($html != '') printHtml($html, 'tags', $facetsDirection, 'Tag');
+						if ($html != '') printHtml($html, 'tags', $facetsDirection, 'Tags');
 					}
 				}
 				
