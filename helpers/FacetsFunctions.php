@@ -60,8 +60,9 @@
 			$addOptions = false;
 			// Build first part of the select tag
 			if (isset($selectedExtra)) {
+				$url = getFieldUrl($recordType, $extraType, null);
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, $extraType, null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . __(getExtraName($extraType, $selectedExtra)) . "</option>";
 			} elseif (count($facetExtras) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"" . $extraType . "\">";
@@ -72,7 +73,8 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetExtras as $value => $count) {
-					$html .= "<option value=\"" . $value . "\" data-url=\"" . getFieldUrl($recordType, $extraType, $value) . "\">" . __(getExtraName($extraType, $value)) . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
+					$url = getFieldUrl($recordType, $extraType, $value);
+					$html .= "<option value=\"" . $value . "\" data-url=\"" . $url . "\">" . __(getExtraName($extraType, $value)) . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -113,7 +115,7 @@
 			// Build first part of the checkboxes tag
 			if (isset($selectedExtra)) {
 				$url = getFieldUrl($recordType, $extraType, null, $selectedExtra);
-				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape(__(getExtraName($extraType, $selectedExtra))) . "</b></div>";
+				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><label><strong>" . html_escape(__(getExtraName($extraType, $selectedExtra))) . "</strong></label></div>";
 				$countCheckboxes++;
 			}
 
@@ -128,7 +130,7 @@
 					}
 
 					$url = getFieldUrl($recordType, $extraType, $value);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $value . "\" data-url=\"" . $url . "\">" . html_escape(__(getExtraName($extraType, $value))) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $count . ")</span>" : "") . "</div>";
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $value . "\" data-url=\"" . $url . "\"><label>" . html_escape(__(getExtraName($extraType, $value))) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $count . ")</span>" : "") . "</label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -207,9 +209,10 @@
 			$addOptions = false;
 			// Build first part of the select tag
 			if (isset($selectedUser)) {
+				$url = getFieldUrl($recordType, 'user', null);
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'user', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
-				$html .= "<option selected value=\"\">" . $selectedUser['name'] . "</option>";
+				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option selected value=\"\">" . trim($selectedUser['name']) . "</option>";
 			} elseif (count($facetUsers) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"user\">";
 				$html .= "<option value=\"\">" . html_escape(__('Select')) . "...</option>";
@@ -219,7 +222,8 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetUsers as $user) {
-					$html .= "<option value=\"" . $user['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'user', $user['id']) . "\">" . $user['name'] . ($showPopularity ? " (" . $user['count'] . ")" : "") . "</option>";
+					$url = getFieldUrl($recordType, 'user', $user['id']);
+					$html .= "<option value=\"" . $user['id'] . "\" data-url=\"" . $url . "\">" . trim($user['name']) . ($showPopularity ? " (" . $user['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -258,7 +262,7 @@
 			// Build first part of the checkboxes tag
 			if (isset($selectedUser)) {
 				$url = getFieldUrl($recordType, 'user', null, $selectedUser);
-				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedUser['name']) . "</b></div>";
+				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><label><strong>" . trim(html_escape($selectedUser['name'])) . "</strong></label></div>";
 				$countCheckboxes++;
 			}
 
@@ -273,7 +277,7 @@
 					}
 					
 					$url = getFieldUrl($recordType, 'user', $user['id']);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $user['name'] . "\" data-url=\"" . $url . "\">" . html_escape($user['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $user['count'] . ")</span>" : "") . "</div>";
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . trim($user['name']) . "\" data-url=\"" . $url . "\"><label>" . trim(html_escape($user['name'])) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $user['count'] . ")</span>" : "") . "</label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -346,8 +350,9 @@
 			$addOptions = false;
 			// Build first part of the select tag
 			if ($selectedTagName != '') {
+				$url = getFieldUrl('item', 'tags', null);
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"tag\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'tags', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
 				$html .= "<option selected value=\"\">" . $selectedTagName . "</option>";
 			} elseif (count($facetTags) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"tag\">";
@@ -358,7 +363,8 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetTags as $tag) {
-					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'tags', $tag['name']) . "\">" . $tag['name'] . ($showPopularity ? " (" . $tag['count'] . ")" : "") . "</option>";
+					$url = getFieldUrl('item', 'tags', $tag['name']);
+					$html .= "<option value=\"" . $tag['id'] . "\" data-url=\"" . $url . "\">" . trim($tag['name']) . ($showPopularity ? " (" . $tag['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -398,8 +404,8 @@
 			if ($selectedTags != '') {
 				$selectedTagNames = explode(option('tag_delimiter'), $selectedTags);
 				foreach ($selectedTagNames as $selectedTagName) {
-					$url = getTagUrl($selectedTagName);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedTagName) . "</b></div>";
+					$url = getFieldUrl('item', 'tags', null, $selectedTagName);
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><label><strong>" . trim(html_escape($selectedTagName)) . "</strong></label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -414,8 +420,8 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getTagUrl($tag['name']);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $tag['name'] . "\" data-url=\"" . $url . "\">" . html_escape($tag['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $tag['count'] . ")</span>" : "") . "</div>";
+					$url = getFieldUrl('item', 'tags', $tag['name']);
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . trim($tag['name']) . "\" data-url=\"" . $url . "\"><label>" . trim(html_escape($tag['name'])) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $tag['count'] . ")</span>" : "") . "</label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -485,9 +491,10 @@
 			$addOptions = false;
 			// Build first part of the select tag
 			if (isset($selectedCollection)) {
+				$url = getFieldUrl('item', 'collection', null);
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"collection\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'collection', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
-				$html .= "<option selected value=\"\">" . $selectedCollection['name'] . "</option>";
+				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option selected value=\"\">" . trim($selectedCollection['name']) . "</option>";
 			} elseif (count($facetCollections) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"collection\">";
 				$html .= "<option value=\"\">" . html_escape(__('Select')) . "...</option>";
@@ -497,7 +504,8 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetCollections as $collection) {
-					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'collection', $collection['id']) . "\">" . $collection['name'] . ($showPopularity ? " (" . $collection['count'] . ")" : "") . "</option>";
+					$url = getFieldUrl('item', 'collection', $collection['id']);
+					$html .= "<option value=\"" . $collection['id'] . "\" data-url=\"" . $url . "\">" . trim($collection['name']) . ($showPopularity ? " (" . $collection['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -538,8 +546,8 @@
 			$html = '<div>';
 			// Build first part of the checkboxes tag
 			if (isset($selectedCollection)) {
-				$url = getFieldUrl($recordType, 'collection', null, $selectedCollection);
-				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedCollection['name']) . "</b></div>";
+				$url = getFieldUrl('item', 'collection', null);
+				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><label><strong>" . trim(html_escape($selectedCollection['name'])) . "</strong></label></div>";
 				$countCheckboxes++;
 			}
 
@@ -553,8 +561,8 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getFieldUrl($recordType, 'collection', $collection['id']);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $collection['name'] . "\" data-url=\"" . $url . "\">" . html_escape($collection['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $collection['count'] . ")</span>" : "") . "</div>";
+					$url = getFieldUrl('item', 'collection', $collection['id']);
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . trim($collection['name']) . "\" data-url=\"" . $url . "\"><label>" . trim(html_escape($collection['name'])) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $collection['count'] . ")</span>" : "") . "</label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -630,9 +638,10 @@
 			$addOptions = false;
 			// Build first part of the select tag
 			if (!empty($selectedItemType)) {
+				$url = getFieldUrl('item', 'type', null);
 				$html  = "<div class=\"select-cross\"><select class=\"facet-selected\" name=\"type\">";
-				$html .= "<option value=\"\" data-url=\"" . getFieldUrl($recordType, 'type', null) . "\"> " . html_escape(__('Remove filter')) . "...</option>";
-				$html .= "<option selected value=\"\">" . $selectedItemType['name'] . "</option>";
+				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
+				$html .= "<option selected value=\"\">" . trim($selectedItemType['name']) . "</option>";
 			} elseif (count($facetItemTypes) > 0) {
 				$html  = "<div class=\"select-arrow\"><select class=\"facet\" name=\"type\">";
 				$html .= "<option value=\"\">" . html_escape(__('Select')) . "...</option>";
@@ -642,7 +651,8 @@
 			// Build additional part of the select tag (if needed)
 			if ($addOptions) {
 				foreach ($facetItemTypes as $itemType) {
-					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . getFieldUrl($recordType, 'type', $itemType['id']) . "\">" . $itemType['name'] . ($showPopularity ? " (" . $itemType['count'] . ")" : "") . "</option>";
+					$url = getFieldUrl('item', 'type', $itemType['id']);
+					$html .= "<option value=\"" . $itemType['id'] . "\" data-url=\"" . $url . "\">" . trim($itemType['name']) . ($showPopularity ? " (" . $itemType['count'] . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -679,8 +689,8 @@
 			$html = '<div>';
 			// Build first part of the checkboxes tag
 			if (isset($selectedItemType)) {
-				$url = getFieldUrl($recordType, 'type', null, $selectedItemType);
-				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($selectedItemType['name']) . "</b></div>";
+				$url = getFieldUrl('item', 'type', null);
+				$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><label><strong>" . trim(html_escape($selectedItemType['name'])) . "</strong></label></div>";
 				$countCheckboxes++;
 			}
 
@@ -694,8 +704,8 @@
 						$hidingSeparator = true;
 					}
 					
-					$url = getFieldUrl($recordType, 'type', $itemType['id']);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $itemType['name'] . "\" data-url=\"" . $url . "\">" . html_escape($itemType['name']) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $itemType['count'] . ")</span>" : "") . "</div>";
+					$url = getFieldUrl('item', 'type', $itemType['id']);
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . trim($itemType['name']) . "\" data-url=\"" . $url . "\"><label>" . trim(html_escape($itemType['name'])) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $itemType['count'] . ")</span>" : "") . "</label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -820,7 +830,7 @@
 				$html =	"<div class=\"select-cross\"><select id=\"" . $element_id . "\" class=\"facet-selected\" name=\"" . $elementId . "\">";
 				$url = getElementFieldUrl($recordType, $element_id, null, $isDate);
 				$html .= "<option value=\"\" data-url=\"" . $url . "\"> " . html_escape(__('Remove filter')) . "...</option>";
-				$html .= "<option selected value=\"\">$term</option>";
+				$html .= "<option selected value=\"\">" . trim($term) . "</option>";
 			} elseif (count($facetElement) > 0) {
 				$html =	"<div class=\"select-arrow\"><select id=\"" . $element_id . "\" class=\"facet\" name=\"" . $elementId . "\">";
 				$html .= "<option value=\"\">" . html_escape(__('Select')) . "...</option>";
@@ -831,7 +841,7 @@
 			if ($addOptions) {
 				foreach ($facetElement as $name => $count) {
 					$url = getElementFieldUrl($recordType, $element_id, $name, $isDate);
-					$html .= "<option value=\"" . $name . "\" data-url=\"" . $url . "\">" . $name . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
+					$html .= "<option value=\"" . trim($name) . "\" data-url=\"" . $url . "\">" . trim($name) . ($showPopularity ? " (" . $count . ")" : "") . "</option>";
 				}
 			}
 			$html .= "</select></div>";
@@ -855,7 +865,7 @@
 	 * @param limitCheckboxes
 	 * @return html
 	 */
-	function getFacetCheckboxesForelement($recordType, $subsetSQL, $elementId = 50, $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForElement($recordType, $subsetSQL, $elementId = 50, $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
 		// Build array
 		if ($elements = getObjectsForElement($recordType, $subsetSQL, $elementId, $isDate, $sortOrder)) {
 			$facetElement = array();
@@ -890,7 +900,7 @@
 			if (!empty($selectedTerms)) {
 				foreach ($selectedTerms as $term){
 					$url = getElementFieldUrl($recordType, $element_id, null, $isDate, $term);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><b>" . html_escape($term) . "</b></div>";
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"\" data-url=\"" . $url . "\" checked><label><strong>" . trim(html_escape($term)) . "</strong></label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -906,7 +916,7 @@
 					}
 					
 					$url = getElementFieldUrl($recordType, $element_id, $name, $isDate);
-					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . $name . "\" data-url=\"" . $url . "\">" . html_escape($name) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $count . ")</span>" : "") . "</div>";
+					$html .= "<div class=\"facet-checkbox\"><input type=\"checkbox\" value=\"" . trim($name) . "\" data-url=\"" . $url . "\"><label>" . trim(html_escape($name)) . ($showPopularity ? "<span class=\"facet-checkbox-count\"> (" . $count . ")</span>" : "") . "</label></div>";
 					$countCheckboxes++;
 				}
 			}
@@ -930,6 +940,7 @@
 	 * @param string $field_id The Element id.
 	 * @param string $value The Element value.
 	 * @param string $isDate 
+	 * @param string $oldValue The Element old value.
 	 * @return string The new URL.
 	 */
 	function getElementFieldUrl($recordType, $field_id, $value = null, $isDate = false, $oldValue = null)
@@ -979,6 +990,7 @@
 	 *
 	 * @param string $filter The filter field name (tags|tag_id|type|collection).
 	 * @param string $value The Element value.
+	 * @param string $oldValue The Element old value.
 	 * @return string The new URL.
 	 */
 	function getFieldUrl($recordType, $filter, $value = null, $oldValue = null)
@@ -996,53 +1008,24 @@
 
 		// set(unset) current
 		if (!is_null($value)){
-			$params[$filter] = $value;
-		} else {
-			unset($params[$filter]);
-		}
-
-		// return rebuilt route
-		return getRebuiltUrl($recordType, $params);
-	}
-	
-	/**
-	 * Add a Tag Field to Search to the current URL.
-	 *
-	 * @param string $filter The filter field name (tags|tag_id|type|collection).
-	 * @param string $value The Element value.
-	 * @return string The new URL.
-	 */
-	function getTagUrl($value = null)
-	{
-		// Get the current facets.
-		if (!empty($_GET['advanced'])) {
-			$search = $_GET['advanced'];
-		} else {
-			$search = array();
-		}
-
-		// set previous parameters
-		$params['advanced'] = $search;
-		$params = setPreviousParameters($params);
-
-		// set(unset) current
-		if (!is_null($value)) {
-			if (isset($params['tags'])) {
-				$tags = explode(option('tag_delimiter'), $params['tags']);
-				if (in_array($value, $tags)) {
-					$tagToRemove = array($value);
-					$tags = array_diff($tags, $tagToRemove);
-				} else {
-					$tags[] = $value;
-				}
-				$params['tags'] = implode(option('tag_delimiter'), $tags);
-		
-				if (empty($params['tags'])) unset($params['tags']);
+			if ($filter != 'tags' || empty($params[$filter])) {
+				$params[$filter] = $value;
 			} else {
-				$params['tags'] = $value;
+				$tags = explode(option('tag_delimiter'), $params[$filter]);
+				array_push($tags, $value);
+				$params[$filter] = implode(option('tag_delimiter'), $tags);
 			}
 		} else {
-			unset($params['tags']);
+			if ($filter == 'tags' && $oldValue != '') {
+				if (!empty($params[$filter])) {
+					$tags = explode(option('tag_delimiter'), $params[$filter]);
+					$tags = array_diff($tags, array($oldValue));
+					$params[$filter] = implode(option('tag_delimiter'), $tags);
+				}
+				if (empty($params[$filter])) unset($params[$filter]);
+			} else {
+				unset($params[$filter]);
+			}
 		}
 
 		// return rebuilt route
