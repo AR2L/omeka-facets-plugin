@@ -47,8 +47,8 @@
 				}
 
 				if ($recordType == 'item') {
-					// Collections (only for items)
-					if (isFacetActive($recordType, null, $facetParameters, 'item_types')) {
+					// Collection (only for items)
+					if (isFacetActive('item', null, $facetParameters, 'item_types')) {
 						$facetParameter = $facetParameters['item_types'];
 						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
 							$html = getFacetCheckboxesForItemType($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
@@ -60,7 +60,7 @@
 					}
 
 					// Item Type (only for items)
-					if (isFacetActive($recordType, null, $facetParameters, 'collections')) {
+					if (isFacetActive('item', null, $facetParameters, 'collections')) {
 						$facetParameter = $facetParameters['collections'];
 						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
 							$html = getFacetCheckboxesForCollection($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
@@ -71,8 +71,8 @@
 						if ($html != '') printHtml($html, 'collection', $facetsDirection, 'Collection');
 					}
 
-					// Tag (only for items)
-					if (isFacetActive($recordType, null, $facetParameters, 'tags')) {
+					// Tags (only for items)
+					if (isFacetActive('item', null, $facetParameters, 'tags')) {
 						$facetParameter = $facetParameters['tags'];
 						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
 							$html = getFacetCheckboxesForTag($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
