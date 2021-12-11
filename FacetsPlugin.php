@@ -65,7 +65,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('facets_parameters');
 	}
 
-	public function hookUpgrade()
+	public function hookUpgrade($args)
 	{
         $oldVersion = $args['old_version'];
         $newVersion = $args['new_version'];
