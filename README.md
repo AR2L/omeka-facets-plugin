@@ -41,7 +41,7 @@ For **Berlin** theme, instead, check **Block collapsible** option, set **Horizon
 <?php echo pagination_links(); ?>
 ```
 
-Background and foreground colors can be changed in `facets.css` file (`views/public/css` folder).
+Background and foreground colors, as well as other parameters, can be customized in `facets.css` file (`views/public/css` folder).
 
 ## Plugin configuration
 
