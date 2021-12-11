@@ -135,6 +135,10 @@
 	font-weight: normal!important;
 }
 
+.facet-checkbox label {
+	font-weight: normal;
+}
+
 .facet-checkbox-count {
 	float: right;
 	color: #545759;
