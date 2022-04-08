@@ -1,139 +1,125 @@
 <?php
-  // $itemsArray = array();
-  $facetCollection = array();
-  $facetItemType = array();
-  $facetTag = array();
+	$facetParameters = json_decode(get_option('facets_parameters'), true);
+	$hideSingleEntries = (bool)get_option('facets_hide_single_entries');
+	$facetsCollapsible = (bool)get_option('facets_collapsible');
+	$facetsDirection = (string)get_option('facets_direction');
+	$checkboxMinCount = (int)get_option('facets_checkbox_minimum_amount');
+	$dateFields = array('Date', 'Date Available', 'Date Created', 'Date Accepted', 'Date Copyrighted', 'Date Submitted', 'Date Issued', 'Date Modified', 'Date Valid');
 
+	$table = get_db()->getTable('Element');
+	$select = $table->getSelect()
+		->order('elements.element_set_id')
+		->order('ISNULL(elements.order)')
+		->order('elements.order');
+	$elements = $table->fetchObjects($select);
+	
+	if ($recordType == 'item') {
+		$subsetSQL = str_replace('`items`.*', '`items`.`id`', (string)get_db()->getTable('Item')->getSelectForFindBy($params));
+	} else {
+		$subsetSQL = str_replace('`collections`.*', '`collections`.`id`', (string)get_db()->getTable('Collection')->getSelectForFindBy($params));
+	}
 ?>
-<?php
-if (isset($items)):
-  foreach ($items as $item): ?>
-  <!-- item Ids -->
 
-  <!-- collection (Thématique) -->
-  <?php if($collection = $item->getCollection()): ?>
-    <?php $collection_name = metadata($collection, array('Dublin Core', 'Title')); ?>
-    <?php $collection_id = $collection->id; ?>
-    <?php $facetCollection[$collection_id] = $collection_name; ?>
-  <?php endif; ?>
+<div id="facets-container" class="<?php echo "facets-layout-" . $facetsDirection; ?>">
+	<button id="facets-title" <?php if ($facetsCollapsible) echo "class=\"facets-collapsed\""; ?>><?php echo html_escape(__('Refine search')) ?></button>
+	<div id="facets-body">
+		<?php 
+			if ($description = get_option('facets_description')) {
+				echo "<p class=\"description\">" . $description . "</p>\n";
+			}
+		?>
+		
+		<form action="index.html" method="post" <?php echo ($facetsDirection == 'horizontal' ? 'class="flex"': 'class=""'); ?>>
+			<?php
+				// Elements
+				foreach ($elements as $element) {
+					if (isFacetActive($recordType, $element->name, $facetParameters)) {
+						$isDate = in_array($element->name, $dateFields);
+						$facetParameter = $facetParameters['elements'][$element->name];
+						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+							$html = getFacetCheckboxesForElement($recordType, $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+						} else {
+							$html = getFacetSelectForElement($recordType, $subsetSQL, $element->id, $isDate, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+						}
 
-  <!-- itemType (Collection) -->
-  <?php if($itemType = $item->getItemType()): ?>
-    <?php $itemType_name = $itemType->name; ?>
-    <?php $itemType_id = $itemType->id; ?>
-    <?php $facetItemType[$itemType_id] = $itemType_name; ?>
-  <?php endif; ?>
+						if ($html != '') printHtml($html, $element->id, $facetsDirection, $element->name);
+					}
+				}
 
-  <?php endforeach; ?>
-<?php else: ?>
+				if ($recordType == 'item') {
+					// Collection (only for items)
+					if (isFacetActive('item', null, $facetParameters, 'item_types')) {
+						$facetParameter = $facetParameters['item_types'];
+						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+							$html = getFacetCheckboxesForItemType($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+						} else {
+							$html = getFacetSelectForItemType($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+						}
 
-<?php endif; ?>
-<?php
-  // tags
-  $tags = get_tags_for_items_array($itemsArray);
-  foreach ($tags as $tag) {
-    $facetTag[$tag->name] = $tag->id;
-    $facetTag[$tag->name] = $tag->name;
-  }
+						if ($html != '') printHtml($html, 'item-type', $facetsDirection, 'Item Type');
+					}
 
-  $facetTag = array_unique($facetTag);
+					// Item Type (only for items)
+					if (isFacetActive('item', null, $facetParameters, 'collections')) {
+						$facetParameter = $facetParameters['collections'];
+						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+							$html = getFacetCheckboxesForCollection($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+						} else {
+							$html = getFacetSelectForCollection($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+						}
 
-  // collections
-  $collections = get_collections_for_items_array($itemsArray);
-  foreach ($collections as $collection) {
-   $facetCollection[$collection->id] = $collection->getDisplayTitle();
-  }
+						if ($html != '') printHtml($html, 'collection', $facetsDirection, 'Collection');
+					}
 
-  $facetCollection = array_unique($facetCollection);
+					// Tags (only for items)
+					if (isFacetActive('item', null, $facetParameters, 'tags')) {
+						$facetParameter = $facetParameters['tags'];
+						if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+							$html = getFacetCheckboxesForTag($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+						} else {
+							$html = getFacetSelectForTag($subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+						}
 
-  // item types
-  $itemTypes = get_item_types_for_items_array($itemsArray);
-  foreach ($itemTypes as $itemType) {
-    $facetItemType[$itemType->id] = $itemType->name;
-  }
+						if ($html != '') printHtml($html, 'tags', $facetsDirection, 'Tags');
+					}
+				}
+				
+				// Owner
+				if (isFacetActive($recordType, null, $facetParameters, 'users')) {
+					$facetParameter = $facetParameters['users'];
+					if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+						$html = getFacetCheckboxesForUser($recordType, $subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+					} else {
+						$html = getFacetSelectForUser($recordType, $subsetSQL, $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+					}
 
-  $facetItemType = array_unique($facetItemType);
-   ?>
-    <div class="search-container">
-      <div class="container">
-        <h4><?php echo html_escape(__('Facets')); ?></h4>
-        <form class="" action="index.html" method="post">
-          <?php if($html = get_dc_facet_select($itemsArray, 'Creator')): ?>
-          <div class="container-fluid">
-            <label for=""><?php echo html_escape(__('Creator')); ?></label>
-          </div>
-          <?php echo $html; ?>
-          <?php endif; ?>
-          <?php if($html = get_dc_facet_select($itemsArray, 'Contributor')): ?>
-            <div class="container-fluid">
-              <label for=""><?php echo html_escape(__('Contributor')); ?></label>
-            </div>
-            <?php echo $html; ?>
-          <?php endif; ?>
-          <?php if($html = get_dc_facet_select($itemsArray, 'Publisher')): ?>
-            <div class="container-fluid">
-              <label for=""><?php echo html_escape(__('Publisher')); ?></label>
-            </div>
-            <?php echo $html; ?>
-          <?php endif; ?>
-          <?php if($html = get_dc_facet_select($itemsArray, 'Date')): ?>
-            <div class="container-fluid">
-              <label for=""><?php echo html_escape(__('Date')); ?></label>
-            </div>
-            <?php echo $html; ?>
-          <?php endif; ?>
-          <div class="container-fluid">
-            <label for=""><?php echo html_escape(__('Tag')); ?></label>
-          </div>
-          <div class="select-arrow">
-            <select class="" name="">
-              <option value="" data-url="<?php echo getFieldUrl('tag_id'); ?>"><?php echo html_escape(__('Select')); ?>...</option>
-              <?php foreach($facetTag as $tagName => $tagId):?>
-                <!-- <option value="<?php echo $tagId; ?>" data-url="<?php echo getFieldUrl('tag_id',$tagId); ?>" <?php echo (isset($_GET['tag_id']) && $tagId == $_GET['tag_id'] ? "selected": ""); ?>><?php echo $tagName ?></option> -->
-                <option value="<?php echo $tagId; ?>" data-url="<?php echo getFieldUrl('tag',$tagId); ?>" <?php echo (isset($_GET['tag']) && $tagId == $_GET['tag'] ? "selected": ""); ?>><?php echo $tagName ?></option>
-              <?php endforeach;?>
-            </select>
-          </div>
-          <div class="container-fluid">
-            <label for=""><?php echo html_escape(__('Collection')); ?></label>
-          </div>
-          <div class="select-arrow">
-            <select class="" name="">
-              <option value="" data-url="<?php echo getFieldUrl('collection'); ?>"><?php echo html_escape(__('Select')); ?>...</option>
-              <?php foreach($facetCollection as $collectionId => $collectionName):?>
-                <option value="<?php echo $collectionId ?>" data-url="<?php echo getFieldUrl('collection',$collectionId); ?>" <?php echo (isset($_GET['collection']) && $collectionId == $_GET['collection'] ? "selected": ""); ?>><?php echo $collectionName ?></option>
-              <?php endforeach;?>
-            </select>
-          </div>
-          <div class="container-fluid">
-            <label for=""><?php echo html_escape(__('Type')); ?></label>
-          </div>
-          <div class="select-arrow">
-            <select class="" name="">
-              <option value="" data-url="<?php echo getFieldUrl('type'); ?>"><?php echo html_escape(__('Select')); ?>...</option>
-              <?php foreach($facetItemType as $itemTypeId => $itemTypeName):?>
-                <option value="<?php echo $itemTypeId ?>" data-url="<?php echo getFieldUrl('type',$itemTypeId); ?>" <?php echo (isset($_GET['type']) && $itemTypeId == $_GET['type'] ? "selected": ""); ?>><?php echo $itemTypeName ?></option>
-              <?php endforeach;?>
-            </select>
-            </select>
-          </div>
-          <?php if($html = get_dc_facet_select($itemsArray, 'Provenance')): ?>
-            <div class="container-fluid">
-              <label for=""><?php echo html_escape(__('Provenance')); ?></label>
-            </div>
-            <?php echo $html; ?>
-          <?php endif; ?>
-          <!-- <div class="container-fluid">
-            <button type="submit" name="button">Filtrer</button>
-          </div> -->
-        </form>
-      </div>
-    </div>
-    <script type="text/javascript">
-    window.jQuery( document ).ready(function() {
-      window.jQuery('select').change(function() {
-        var option = window.jQuery(this).find('option:selected');
-        window.location.href = option.data("url");
-      });
-    });
-    </script>
+					if ($html != '') printHtml($html, 'user', $facetsDirection, 'Owner');
+				}
+				
+				// Public
+				if (isFacetActive($recordType, null, $facetParameters, 'public')) {
+					$facetParameter = $facetParameters['public'];
+					if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+						$html = getFacetCheckboxesForExtra($recordType, $subsetSQL, 'public', $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+					} else {
+						$html = getFacetSelectForExtra($recordType, $subsetSQL, 'public', $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+					}
+
+					if ($html != '') printHtml($html, 'public', $facetsDirection, 'Public');
+				}
+				
+				// Featured
+				if (isFacetActive($recordType, null, $facetParameters, 'featured')) {
+					$facetParameter = $facetParameters['featured'];
+					if (isset($facetParameter['style']) && $facetParameter['style'] == 'checkbox') {
+						$html = getFacetCheckboxesForExtra($recordType, $subsetSQL, 'featured', $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''), $checkboxMinCount);
+					} else {
+						$html = getFacetSelectForExtra($recordType, $subsetSQL, 'featured', $hideSingleEntries, (isset($facetParameter['sort']) ? $facetParameter['sort'] : ''), (isset($facetParameter['popularity']) ? $facetParameter['popularity'] : ''));
+					}
+
+					if ($html != '') printHtml($html, 'featured', $facetsDirection, 'Featured');
+				}
+			?>
+		</form>
+	</div>
+</div>

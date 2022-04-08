@@ -1,0 +1,204 @@
+# Translation for the Facets plugin for Omeka.
+# This file is distributed under the same license as the Omeka plugin.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Facets\n"
+"Report-Msgid-Bugs-To: https://github.com/DBinaghi/plugin-Facets/issues\n"
+"POT-Creation-Date: 2021-06-08 13:56-0001\n"
+"PO-Revision-Date: 2021-06-13 15:39-0001\n"
+"PO-Revision-Date: 2021-07-05 15:17-0001\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: FacetsPlugin.php:11
+msgid "show more"
+msgstr "mostra altro"
+
+#: FacetsPlugin.php:12
+msgid "show less"
+msgstr "mostra meno"
+
+#: browse.php:23
+msgid "Refine search"
+msgstr "Raffina la ricerca"
+
+#: FacetsFunctions.php:62
+#: FacetsFunctions.php:201
+#: FacetsFunctions.php:346
+#: FacetsFunctions.php:534
+msgid "Remove filter"
+msgstr "Rimuovi filtro"
+
+#: FacetsFunctions.php:66
+#: FacetsFunctions.php:205
+#: FacetsFunctions.php:350
+#: FacetsFunctions.php:538
+msgid "Select"
+msgstr "Seleziona"
+
+#: config_form.php:14
+msgid "Use"
+msgstr "Utilizzo"
+
+#: config_form.php:18
+msgid "Public hooks"
+msgstr "Hook pubblici"
+
+#: config_form.php:22
+msgid ""
+"The hooks you want to use: Omeka's default <code>public_items_browse</code> and <code>public_collections_browse</code>, "
+"already coded into every page (so no changes are needed), normally showing up at the end of the page; or the plugin's "
+"own <code>public_facets</code>, that has to be coded into relevant theme pages but can be used wherever deemed right."
+msgstr ""
+"Gli hook che si vogliono usare: quelli di default di Omeka (<code>public_items_browse</code> e <code>public_collections_browse</code>), "
+"già codificati in ogni pagina (così nessuna modifica è necessaria), solitamente mostrati alla fine della pagina; oppure, "
+"quello proprio del plugin (<code>public_facets</code>), che deve essere codificato nelle giuste pagine del tema "
+"ma può essere usato ovunque lo si ritenga opportuno."
+
+#: config_form.php:35
+msgid "Aspect"
+msgstr "Aspetto"
+
+#: config_form.php:39
+msgid "Description"
+msgstr "Descrizione"
+
+#: config_form.php:43
+msgid "Text to be used as additional description (tip: keep it short)."
+msgstr "Testo da usare come descrizione addizionale (consiglio: mantenerlo corto)."
+
+#: config_form.php:51
+msgid "Hide single entries"
+msgstr "Nascondi valori singoli"
+
+#: config_form.php:55
+msgid "If checked, values with just one entry will not be listed (unless there's less than %s entries in the list)."
+msgstr "Se selezionata, i valori singoli non verranno elencati (a meno che non ci siano meno di %s valori nella lista)."
+
+#: config_form.php:63
+msgid "Minimum checkbox count"
+msgstr "Minimo numero caselle di controllo"
+
+#: config_form.php:67
+msgid "For all fields using the checkbox style, minimum amount of values to be displayed (0 means all values displayed)."
+msgstr 
+"Per tutti i campi che usano lo stile casella di controllo, numero minimo di valori da mostrare (0 significa "
+"che tutti i valori verranno mostrati)."
+
+#: config_form.php:75
+msgid "Block layout"
+msgstr "Layout blocco"
+
+#: config_form.php:79
+msgid "The layout direction of the facets block."
+msgstr "La direzione del layout del blocco filtri."
+
+#: config_form.php:86
+msgid "Horizontal (useful for themes with top main navigation menu)"
+msgstr "Orizzontale (utile per i temi con un menu di navigazione principale superiore)"
+
+#: config_form.php:87
+msgid "Vertical (useful for themes with side main navigation menu)"
+msgstr "Verticale (utile per i temi con un menu di navigazione principale laterale)"
+
+#: config_form.php:95
+msgid "Block collapsible"
+msgstr "Blocco contraibile"
+
+#: config_form.php:99
+msgid "If checked, facets block will be collapsible (tip: as it saves space, it's particularly useful with horizontal theme layouts)."
+msgstr ""
+"Se selezionata, il blocco filtri sarà contraibile (consiglio: dal momento che utilizza meno spazio, è particolarmente "
+"utile con i temi a layout orizzontale)."
+
+#: config_form.php:105
+msgid "Elements"
+msgstr "Elementi"
+
+#: config_form.php:110
+msgid 
+"The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to "
+"choose the facet style, Sort order column to choose sorting order, Popularity column to show counters near names."
+msgstr 
+"Gli elementi che possono essere usati per il raffinamento della ricerca. Colonne Documento e Collezione "
+"per (dis)attivare, Stile per scegliere lo stile del campo, Ordinamento per scegliere il criterio di ordinamento, "
+"Popolarità per mostrare i contatori vicino ai nomi."
+
+#: config_form.php:115
+msgid "Element name"
+msgstr "Nome elemento"
+
+#: config_form.php:116
+msgid "Item"
+msgstr "Documento"
+
+#: config_form.php:117
+msgid "Collection"
+msgstr "Collezione"
+
+#: config_form.php:118
+msgid "Style"
+msgstr "Stile"
+
+#: config_form.php:119
+msgid "Ordinamento"
+msgstr ""
+
+#: config_form.php:120
+msgid "Popularity"
+msgstr "Popolarità"
+
+#: config_form.php:174
+#: config_form.php:262
+msgid "Dropdown"
+msgstr "Discesa (casella a)"
+
+#: config_form.php:175
+#: config_form.php:263
+msgid "Checkbox"
+msgstr "Controllo (casella di)"
+
+#: config_form.php:188
+#: config_form.php:276
+msgid "Alphabetical"
+msgstr "Alfabetico"
+
+#: config_form.php:189
+#: config_form.php:277
+msgid "Popularity first, then alphabetical"
+msgstr "Popolarità prima, poi alfabetico"
+
+#: config_form.php:210
+msgid "Extra parameters"
+msgstr "Parametri addizionali"
+
+#: config_form.php:225
+msgid "Item Types"
+msgstr "Tipologie documento"
+
+#: config_form.php:225
+msgid "Collections"
+msgstr "Collezioni"
+
+#: config_form.php:225
+msgid "Tags"
+msgstr "Etichette"
+
+#: config_form.php:225
+msgid "Owners"
+msgstr "Proprietari"
+
+#: config_form.php:225
+msgid "Public"
+msgstr "Pubblico"
+
+#: config_form.php:225
+msgid "Featured"
+msgstr "In Evidenza"
