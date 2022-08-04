@@ -107,7 +107,7 @@
 <h2><?php echo __('Elements'); ?></h2>
 
 <div class="field">
-	<div class="inputs seven columns alpha">
+	<div class="inputs seven columns omega">
 		<p class="explanation">
 			<?php echo __('The elements that can be used for search refinement. Item and Collection columns to (de)activate, Style column to choose the facet style, Sort order column to choose sorting order, Popularity column to show counters near names.'); ?>
 		</p>
