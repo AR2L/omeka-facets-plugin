@@ -47,8 +47,8 @@
 	clear: both;
 }
 
-.facets-container-vertical:not(:last-child), .facets-container-horizontal:not(:last-child) {
-	margin-bottom: 20px;
+.facets-container-vertical, .facets-container-horizontal:not(:last-child) {
+	margin-bottom: 10px;
 }
 
 .facets-container-horizontal {
@@ -99,7 +99,6 @@
 }
 
 #facets-container form label {
-	margin-bottom: 8px;
 	color: #545759;
 }
 
@@ -126,9 +125,11 @@
 }
 
 .facet-visibility-toggle {
-	float: right;
+	float: left;
 	cursor: pointer;
-	line-height: 90%;
+	font-size: 80%;
+	line-height: 100%;
+	margin-bottom: 20px;
 }
 
 .facet-visibility-toggle:hover {
@@ -137,11 +138,19 @@
 
 .facet-checkbox label {
 	font-weight: normal;
+	vertical-align: middle;
+}
+
+.facet-checkbox input[type=checkbox] {
+	margin-right: .2em;
+	vertical-align: middle;
+	position: inherit;
 }
 
 .facet-checkbox-count {
 	float: right;
 	color: #545759;
+	margin-left: .5em;
 }
 
 .hidden {
