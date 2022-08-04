@@ -39,23 +39,17 @@
 	 * @param recordType
 	 * @param subsetSQL
 	 * @param extraType
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetSelectForExtra($recordType, $subsetSQL, $extraType, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function getFacetSelectForExtra($recordType, $subsetSQL, $extraType, $sortOrder = 'count_alpha', $showPopularity = false) {
 		if ($extras = getObjectsForExtra($recordType, $subsetSQL, $extraType, $sortOrder)) {
 			// Build array
 			$facetExtras = buildExtrasArray($extras, $extraType);
 
 			// Stores data for selected extra, if any
 			$selectedExtra = getSelectedExtra($facetExtras, $extraType);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetExtras, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetExtras = array_filter($facetExtras, "isNotSingleExtra");
-			}			
 
 			$addOptions = false;
 			// Build first part of the select tag
@@ -91,24 +85,18 @@
 	 * @param recordType
 	 * @param subsetSQL
 	 * @param extraType
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
-	 * @param limitCheckboxes
+	 * @param facetsMaxCount
 	 * @return html
 	 */
-	function getFacetCheckboxesForExtra($recordType, $subsetSQL, $extraType, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForExtra($recordType, $subsetSQL, $extraType, $sortOrder = 'count_alpha', $showPopularity = false, $facetsMaxCount = 0) {
 		if ($extras = getObjectsForExtra($recordType, $subsetSQL, $extraType, $sortOrder)) {
 			// Build array
 			$facetExtras = buildExtrasArray($extras, $extraType);
 
 			// Stores data for selected extra, if any
 			$selectedExtra = getSelectedExtra($facetExtras, $extraType);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetExtras, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetExtras = array_filter($facetExtras, "isNotSingleExtra");
-			}			
 
 			$countCheckboxes = 0;
 			$html = '<div>';
@@ -123,7 +111,7 @@
 			// Build additional part of the select tag (if needed)
 			foreach ($facetExtras as $value => $count) {
 				if (!isset($selectedExtra) || $value <> $selectedExtra) {
-					if ($limitCheckboxes != 0 && $countCheckboxes >= $limitCheckboxes && !$hidingSeparator) {
+					if ($facetsMaxCount != 0 && $countCheckboxes >= $facetsMaxCount && !$hidingSeparator) {
 						// Add link to show other values
 						$html .= "<div class=\"hidden\" id=\"facet-extra-values-extras\">";
 						$hidingSeparator = true;
@@ -137,7 +125,7 @@
 			
 			if ($hidingSeparator) {
 				$html .= "</div>";
-				$html .= "<a id=\"facet-extra-link-extras\" class=\"facet-visibility-toggle\" data-element-id=\"extras\">" . __('show more') . "</a>";
+				$html .= "<a id=\"facet-extra-link-extras\" class=\"facet-visibility-toggle\" data-element-id=\"extras\">" . FACETS_LANGUAGE['ShowMore'] . "</a>";
 			}
 
 			$html .= "</div>";
@@ -188,23 +176,17 @@
 	 * Return HTML Select associated with Array of facets extra parameter values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetSelectForUser($recordType, $subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function getFacetSelectForUser($recordType, $subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false) {
 		if ($users = getObjectsForUser($recordType, $subsetSQL, $sortOrder)) {
 			// Build array
 			$facetUsers = buildUsersArray($users);
 			
 			// Stores data for selected user, if any
 			$selectedUser = getSelectedUser($facetUsers);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetUsers, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetUsers = array_filter($facetUsers, "isNotSingleExtra");
-			}			
 
 			$addOptions = false;
 			// Build first part of the select tag
@@ -238,24 +220,18 @@
 	 * Return HTML Checkboxes associated with Array of facets values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
-	 * @param limitCheckboxes
+	 * @param facetsMaxCount
 	 * @return html
 	 */
-	function getFacetCheckboxesForUser($recordType, $subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForUser($recordType, $subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false, $facetsMaxCount = 0) {
 		if ($users = getObjectsForUser($recordType, $subsetSQL, $sortOrder)) {
 			// Build array
 			$facetUsers = buildUsersArray($users);
 			
 			// Store data for selected user, if any
 			$selectedUser = getSelectedUser($facetUsers);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetUsers, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetUsers = array_filter($facetUsers, "isNotSingleExtra");
-			}			
 
 			$countCheckboxes = 0;
 			$html = '<div>';
@@ -270,7 +246,7 @@
 			// Build additional part of the select tag (if needed)
 			foreach ($facetUsers as $user) {
 				if ($user != $selectedUser) {
-					if ($limitCheckboxes != 0 && $countCheckboxes >= $limitCheckboxes && !$hidingSeparator) {
+					if ($facetsMaxCount != 0 && $countCheckboxes >= $facetsMaxCount && !$hidingSeparator) {
 						// Add link to show other values
 						$html .= "<div class=\"hidden\" id=\"facet-extra-values-users\">";
 						$hidingSeparator = true;
@@ -284,7 +260,7 @@
 			
 			if ($hidingSeparator) {
 				$html .= "</div>";
-				$html .= "<a id=\"facet-extra-link-users\" class=\"facet-visibility-toggle\" data-element-id=\"users\">" . __('show more') . "</a>";
+				$html .= "<a id=\"facet-extra-link-users\" class=\"facet-visibility-toggle\" data-element-id=\"users\">" . FACETS_LANGUAGE['ShowMore'] . "</a>";
 			}
 
 			$html .= "</div>";
@@ -329,23 +305,17 @@
 	 * Return HTML Select associated with Array of facets tag values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetSelectForTag($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function getFacetSelectForTag($subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false) {
 		if ($tags = getObjectsForTag($subsetSQL, $sortOrder)) {
 			// Build array
 			$facetTags = buildTagsArray($tags);
 			
 			// Stores data for selected tag, if any
 			$selectedTagName = (isset($_GET['tags']) ? $_GET['tags'] : '');
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetTags, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetTags = array_filter($facetTags, "isNotSingleExtra");
-			}			
 
 			$addOptions = false;
 			// Build first part of the select tag
@@ -379,12 +349,11 @@
 	 * Return HTML Checkboxes associated with Array of facets tag values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetCheckboxesForTag($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForTag($subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false, $facetsMaxCount = 0) {
 		if ($tags = getObjectsForTag($subsetSQL, $sortOrder)) {
 			// Build array
 			$facetTags = buildTagsArray($tags);
@@ -392,11 +361,6 @@
 			// Stores data for selected tags, if any
 			$selectedTags = (isset($_GET['tags']) ? $_GET['tags'] : '');
 			$selectedTagNames = explode(option('tag_delimiter'), $selectedTags);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetTags, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetTags = array_filter($facetTags, "isNotSingleExtra");
-			}			
 
 			$countCheckboxes = 0;
 			$html = '<div>';
@@ -414,7 +378,7 @@
 			// Build additional part of the select tag (if needed)
 			foreach ($facetTags as $tag) {
 				if (!in_array($tag['name'], $selectedTagNames)) {
-					if ($limitCheckboxes != 0 && $countCheckboxes >= $limitCheckboxes && !$hidingSeparator) {
+					if ($facetsMaxCount != 0 && $countCheckboxes >= $facetsMaxCount && !$hidingSeparator) {
 						// Add link to show other values
 						$html .= "<div class=\"hidden\" id=\"facet-extra-values-tags\">";
 						$hidingSeparator = true;
@@ -428,7 +392,7 @@
 			
 			if ($hidingSeparator) {
 				$html .= "</div>";
-				$html .= "<a id=\"facet-extra-link-tags\" class=\"facet-visibility-toggle\" data-element-id=\"tags\">" . __('show more') . "</a>";
+				$html .= "<a id=\"facet-extra-link-tags\" class=\"facet-visibility-toggle\" data-element-id=\"tags\">" . FACETS_LANGUAGE['ShowMore'] . "</a>";
 			}
 
 			$html .= "</div>";
@@ -467,23 +431,17 @@
 	 * Return HTML Select associated with Array of facets collection values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetSelectForCollection($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function getFacetSelectForCollection($subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false) {
 		if ($collections = getObjectsForCollection($subsetSQL, $sortOrder)) {
 			// Build array
 			$facetCollections = buildCollectionsArray($collections);
 			
 			// Store data for selected collection, if any
 			$selectedCollection = getSelectedCollection($facetCollections);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetCollections, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetCollections = array_filter($facetCollections, "isNotSingleExtra");
-			}			
 
 			// Sort array (have to do it now instead than in select because of the way we get the Collection name)
 			$facetCollections = sortCollections($facetCollections, $sortOrder);
@@ -520,24 +478,18 @@
 	 * Return HTML Checkboxes associated with Array of facets values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
-	 * @param limitCheckboxes
+	 * @param facetsMaxCount
 	 * @return html
 	 */
-	function getFacetCheckboxesForCollection($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForCollection($subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false, $facetsMaxCount = 0) {
 		if ($collections = getObjectsForCollection($subsetSQL, $sortOrder)) {
 			// Build array
 			$facetCollections = buildCollectionsArray($collections);
 			
 			// Store data for selected collection, if any
 			$selectedCollection = getSelectedCollection($facetCollections);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetCollections, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetCollections = array_filter($facetCollections, "isNotSingleExtra");
-			}			
 
 			// Sort array (have to do it now instead than in select because of the way we get the Collection's name)
 			$facetCollections = sortCollections($facetCollections, $sortOrder);
@@ -555,7 +507,7 @@
 			// Build additional part of the select tag (if needed)
 			foreach ($facetCollections as $collection) {
 				if ($collection != $selectedCollection) {
-					if ($limitCheckboxes != 0 && $countCheckboxes >= $limitCheckboxes && !$hidingSeparator) {
+					if ($facetsMaxCount != 0 && $countCheckboxes >= $facetsMaxCount && !$hidingSeparator) {
 						// Add link to show other values
 						$html .= "<div class=\"hidden\" id=\"facet-extra-values-collections\">";
 						$hidingSeparator = true;
@@ -569,7 +521,7 @@
 			
 			if ($hidingSeparator) {
 				$html .= "</div>";
-				$html .= "<a id=\"facet-extra-link-collections\" class=\"facet-visibility-toggle\" data-element-id=\"collections\">" . __('show more') . "</a>";
+				$html .= "<a id=\"facet-extra-link-collections\" class=\"facet-visibility-toggle\" data-element-id=\"collections\">" . FACETS_LANGUAGE['ShowMore'] . "</a>";
 			}
 
 			$html .= "</div>";
@@ -617,23 +569,17 @@
 	 * Return HTML Select associated with Array of facets item type values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetSelectForItemType($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function getFacetSelectForItemType($subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false) {
 		if ($itemTypes = getObjectsForItemType($subsetSQL, $sortOrder)) {
 			// Build array
 			$facetItemTypes = buildItemTypesArray($itemTypes);
 					
 			// Store data for selected item type, if any
 			$selectedItemType = getSelectedItemType($facetItemTypes);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetItemTypes, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetItemTypes = array_filter($facetItemTypes, "isNotSingleExtra");
-			}			
 
 			$addOptions = false;
 			// Build first part of the select tag
@@ -667,23 +613,17 @@
 	 * Return HTML Checkboxes associated with Array of facets item type values.
 	 *
 	 * @param subsetSQL
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html.
 	 */
-	function getFacetCheckboxesForItemType($subsetSQL, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForItemType($subsetSQL, $sortOrder = 'count_alpha', $showPopularity = false, $facetsMaxCount = 0) {
 		if ($itemTypes = getObjectsForItemType($subsetSQL, $sortOrder)) {
 			// Build array
 			$facetItemTypes = buildItemTypesArray($itemTypes);
 					
 			// Store data for selected item type, if any
 			$selectedItemType = getSelectedItemType($facetItemTypes);
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetItemTypes, 'isNotSingleExtra')) > FACETS_MINIMUM_AMOUNT) {
-				$facetItemTypes = array_filter($facetItemTypes, "isNotSingleExtra");
-			}			
 
 			$countCheckboxes = 0;
 			$html = '<div>';
@@ -698,7 +638,7 @@
 			// Build additional part of the select tag (if needed)
 			foreach ($facetItemTypes as $itemType) {
 				if ($itemType != $selectedItemType) {
-					if ($limitCheckboxes != 0 && $countCheckboxes >= $limitCheckboxes && !$hidingSeparator) {
+					if ($facetsMaxCount != 0 && $countCheckboxes >= $facetsMaxCount && !$hidingSeparator) {
 						// Add link to show other values
 						$html .= "<div class=\"hidden\" id=\"facet-extra-values-item-types\">";
 						$hidingSeparator = true;
@@ -712,7 +652,7 @@
 			
 			if ($hidingSeparator) {
 				$html .= "</div>";
-				$html .= "<a id=\"facet-extra-link-item-types\" class=\"facet-visibility-toggle\" data-element-id=\"item-types\">" . __('show more') . "</a>";
+				$html .= "<a id=\"facet-extra-link-item-types\" class=\"facet-visibility-toggle\" data-element-id=\"item-types\">" . FACETS_LANGUAGE['ShowMore'] . "</a>";
 			}
 
 			$html .= "</div>";
@@ -790,12 +730,11 @@
 	 * @param subsetSQL
 	 * @param elementId
 	 * @param isDate
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
 	 * @return html
 	 */
-	function getFacetSelectForElement($recordType, $subsetSQL, $elementId = 50, $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false) {
+	function getFacetSelectForElement($recordType, $subsetSQL, $elementId = 50, $isDate = false, $sortOrder = 'count_alpha', $showPopularity = false) {
 		// Build array
 		if ($elements = getObjectsForElement($recordType, $subsetSQL, $elementId, $isDate, $sortOrder)) {
 			$facetElement = array();
@@ -807,11 +746,6 @@
 				}
 			}
 			$element_id = $element->element_id;
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetElement, 'isNotSingleElement')) > FACETS_MINIMUM_AMOUNT) {
-				$facetElement = array_filter($facetElement, "isNotSingleElement");
-			}			
 
 			// Get current parameters to check if one is selected
 			if (!empty($_GET['advanced'])) {
@@ -859,13 +793,12 @@
 	 * @param subsetSQL
 	 * @param elementId
 	 * @param isDate
-	 * @param hideSingleEntries
 	 * @param sortOrder
 	 * @param showPopularity
-	 * @param limitCheckboxes
+	 * @param facetsMaxCount
 	 * @return html
 	 */
-	function getFacetCheckboxesForElement($recordType, $subsetSQL, $elementId = 50, $isDate = false, $hideSingleEntries = false, $sortOrder = 'count_alpha', $showPopularity = false, $limitCheckboxes = 0) {
+	function getFacetCheckboxesForElement($recordType, $subsetSQL, $elementId = 50, $isDate = false, $sortOrder = 'count_alpha', $showPopularity = false, $facetsMaxCount = 0) {
 		// Build array
 		if ($elements = getObjectsForElement($recordType, $subsetSQL, $elementId, $isDate, $sortOrder)) {
 			$facetElement = array();
@@ -877,11 +810,6 @@
 				}
 			}
 			$element_id = $element->element_id;
-
-			// Remove single entries if required
-			if ($hideSingleEntries && count(array_filter($facetElement, 'isNotSingleElement')) > FACETS_MINIMUM_AMOUNT) {
-				$facetElement = array_filter($facetElement, "isNotSingleElement");
-			}			
 
 			$selectedTerms = array();
 			// Get current parameters to check if one or more are selected
@@ -909,7 +837,7 @@
 			// Build additional part of the select tag (if needed)
 			foreach ($facetElement as $name => $count) {
 				if (!in_array($name, $selectedTerms)) {
-					if ($limitCheckboxes != 0 && $countCheckboxes >= $limitCheckboxes && !$hidingSeparator) {
+					if ($facetsMaxCount != 0 && $countCheckboxes >= $facetsMaxCount && !$hidingSeparator) {
 						// Add link to show other values
 						$html .= "<div class=\"hidden\" id=\"facet-extra-values-" . $elementId . "\">";
 						$hidingSeparator = true;
@@ -923,7 +851,7 @@
 			
 			if ($hidingSeparator) {
 				$html .= "</div>";
-				$html .= "<a id=\"facet-extra-link-" . $elementId . "\" class=\"facet-visibility-toggle\" data-element-id=\"" . $elementId . "\">" . __('show more') . "</a>";
+				$html .= "<a id=\"facet-extra-link-" . $elementId . "\" class=\"facet-visibility-toggle\" data-element-id=\"" . $elementId . "\">" . FACETS_LANGUAGE['ShowMore'] . "</a>";
 			}
 
 			$html .= "</div>";
@@ -1041,14 +969,6 @@
 			return ((bool)$settings['elements'][$element_name][$recordType]);
 		}
 		return false;
-	}
-	
-	function isNotSingleElement($count) {
-		if ($count > 1) return $count;
-	}
-
-	function isNotSingleExtra($element) {
-		if ($element['count'] > 1) return $element;
 	}
 	
 	function createWhereRecordTypeClause($recordType) {
