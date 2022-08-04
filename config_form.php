@@ -17,7 +17,7 @@
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_public_hook', __('Public hooks')); ?>
+		<?php echo $view->formLabel('facets_public_hook', __('Public Hooks')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
@@ -42,39 +42,27 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('Text to be used as additional description (tip: keep it short).'); ?>
+			<?php echo __('If checked, a short description will be shown above all values.'); ?>
 		</p>
-		<?php echo $view->formText('facets_description', get_option('facets_description')); ?>
+		<?php echo $view->formCheckbox('facets_description', get_option('facets_description'), null, array('1', '0')); ?>
     </div>
 </div>
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_hide_single_entries', __('Hide single entries')); ?>
+		<?php echo $view->formLabel('facets_count', __('Facet Count')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, values with just one entry will not be listed (unless there\'s less than %s entries in the list).', FACETS_MINIMUM_AMOUNT); ?>
+			<?php echo __('For all checkbox style fields, the maximum amount of values to be displayed (0 means all values will be displayed).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('facets_hide_single_entries', get_option('facets_hide_single_entries'), null, array('1', '0')); ?>
+		<?php echo $view->formText('facets_count', get_option('facets_count')); ?>
     </div>
 </div>
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_checkbox_minimum_amount', __('Minimum checkbox count')); ?>
-	</div>
-	<div class="inputs five columns omega">
-		<p class="explanation">
-			<?php echo __('For all fields using the checkbox style, minimum amount of values to be displayed (0 means all values displayed).', FACETS_MINIMUM_AMOUNT); ?>
-		</p>
-		<?php echo $view->formText('facets_checkbox_minimum_amount', get_option('facets_checkbox_minimum_amount')); ?>
-    </div>
-</div>
-
-<div class="field">
-	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_direction', __('Block layout')); ?>
+		<?php echo $view->formLabel('facets_direction', __('Block Layout')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
@@ -94,7 +82,7 @@
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('facets_collapsible', __('Block collapsible')); ?>
+		<?php echo $view->formLabel('facets_collapsible', __('Collapsible Block')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
@@ -114,11 +102,11 @@
 		<table id="facets_elements-table">
 			<thead>
 				<tr>
-					<th class="boxes"><?php echo __('Element name'); ?></th>
+					<th class="boxes"><?php echo __('Element Name'); ?></th>
 					<th class="boxes"><?php echo __('Item'); ?></th>
 					<th class="boxes"><?php echo __('Collection'); ?></th>
 					<th class="boxes"><?php echo __('Style'); ?></th>
-					<th class="boxes"><?php echo __('Sort order'); ?></th>
+					<th class="boxes"><?php echo __('Sort Order'); ?></th>
 					<th class="boxes"><?php echo __('Popularity'); ?></th>
 				</tr>
 			</thead>
