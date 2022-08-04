@@ -1,13 +1,17 @@
 <?php
 /**
  * @copyright Jean-Baptiste HEREN, 2018
- * @copyright Daniele BINAGHI, 2021
+ * @copyright Daniele BINAGHI, 2021-2022
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  * @package FacetsPlugin
  */
 
 define('FACETS_PLUGIN_DIR', dirname(__FILE__));
-define('FACETS_MINIMUM_AMOUNT', 5);
+
+define('FACETS_LANGUAGE', array(
+	'ShowMore' => __('show all'),
+	'ShowLess' => __('show less')
+));
 
 require_once FACETS_PLUGIN_DIR . '/helpers/FacetsFunctions.php';
 
@@ -33,11 +37,10 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	public function hookInstall()
 	{
 		set_option('facets_public_hook', 'default');
-		set_option('facets_description', '');
-		set_option('facets_hide_single_entries', 0);
+		set_option('facets_description', 0);
 		set_option('facets_direction', 'vertical');
 		set_option('facets_collapsible', 0);
-		set_option('facets_checkbox_minimum_amount', FACETS_MINIMUM_AMOUNT);
+		set_option('facets_count', 0);
 
 		$defaults = array(
 			'elements' => array('item', 'collection', 'style', 'sort', 'popularity'),
@@ -58,10 +61,9 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 	{
 		delete_option('facets_public_hook');
 		delete_option('facets_description');
-		delete_option('facets_hide_single_entries');
 		delete_option('facets_direction');
 		delete_option('facets_collapsible');
-		delete_option('facets_checkbox_minimum_amount');
+		delete_option('facets_count');
 		delete_option('facets_parameters');
 	}
 
@@ -103,6 +105,11 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 			delete_option('facets_tags_style');
 			delete_option('facets_tags_sort');
 			delete_option('facets_tags_popularity');
+		} elseif (version_compare($oldVersion, '2.9', '<')) {
+			set_option('facets_description', (get_option('facets_description') != '' ? 1 : 0));
+			set_option('facets_count', 0);
+			delete_option('facets_checkbox_minimum_amount');
+			delete_option('facets_hide_single_entries');
 		}
 	}
 
@@ -148,7 +155,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('facets_hide_single_entries', $post['facets_hide_single_entries']);
 		set_option('facets_direction', $post['facets_direction']);
 		set_option('facets_collapsible', $post['facets_collapsible']);
-		set_option('facets_checkbox_minimum_amount', $post['facets_checkbox_minimum_amount']);
+		set_option('facets_count', $post['facets_count']);
 
 		$settings = array(
 			'elements' => isset($post['elements']) ? $post['elements'] : array(),
@@ -274,11 +281,7 @@ class FacetsPlugin extends Omeka_Plugin_AbstractPlugin
 		$action = $request->getActionName();
 		
 		if (($action == 'browse' && ($controller == 'items' || $controller == 'collections')) || ($controller == 'search' && $action == 'index')) {
-			$language = array(
-				'ShowMore' => __('show more'),
-				'ShowLess' => __('show less')
-			);
-			$language = json_encode($language);
+			$language = json_encode(FACETS_LANGUAGE);
 			queue_js_string("facetsLanguage = {language: $language};");
 			queue_js_file('facets');
 			queue_css_file('facets');
