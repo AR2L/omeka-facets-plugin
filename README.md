@@ -19,7 +19,7 @@ Then install it like any other Omeka plugin.
 
 ## (optional) Theme customization
 
-Facets will appear by default in the **Items browse** and **Collections browse** pages, where the `public_items_browse` and `public_collections_browse` hooks are set. It is possible to use instead a custom `public_items_facets` hook, that can be positioned wherever needed (`YOUR_THEME/items/browse.php` or `YOUR_THEME/common/header.php`, f.i.) according to the theme used; in such a case, the use of [get_specific_plugin_hook_output](http://omeka.readthedocs.io/en/latest/Reference/libraries/globals/get_specific_plugin_hook_output.html) function is suggested. 
+Facets will appear by default in the **Items browse** and **Collections browse** pages, where the `public_items_browse` and `public_collections_browse` hooks are set. It is possible to use instead a custom `public_facets` hook, that can be positioned wherever needed (`YOUR_THEME/items/browse.php` or `YOUR_THEME/common/header.php`, f.i.) according to the theme used; in such a case, the use of [get_specific_plugin_hook_output](http://omeka.readthedocs.io/en/latest/Reference/libraries/globals/get_specific_plugin_hook_output.html) function is suggested. 
 
 For **Thanks, Roy** theme, for example, best way is to change `common/header.php` code using the custom hook, while unchecking **Block collapsible** option and setting **Vertical** as **Block layout**:
 ```php
